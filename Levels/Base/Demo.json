@@ -1,0 +1,2159 @@
+{
+    "index_manager_data": {
+        "global_index": 49,
+        "unused_indices": []
+    },
+    "objects": {
+        "5": {
+            "name": "tetrahedron_5",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            1.0,
+                            8.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "tetrahedron",
+                    "material": "blue_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                }
+            }
+        },
+        "6": {
+            "name": "octahedron_6",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            1.0,
+                            5.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "octahedron",
+                    "material": "red_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                }
+            }
+        },
+        "7": {
+            "name": "cube_7",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            1.0,
+                            2.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "cube",
+                    "material": "green_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                }
+            }
+        },
+        "8": {
+            "name": "point_8",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            0.0,
+                            4.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "9": {
+            "name": "point_9",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            4.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            1.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "10": {
+            "name": "segment_10",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": false,
+                    "enable": true
+                },
+                "Segment": {
+                    "p1": [
+                        "id",
+                        8
+                    ],
+                    "p2": [
+                        "id",
+                        9
+                    ],
+                    "color": [
+                        "vec",
+                        [
+                            0.6000000238418579,
+                            0.10000000149011612,
+                            0.5,
+                            1.0
+                        ]
+                    ],
+                    "size": 100,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "11": {
+            "name": "point_11",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            3.0,
+                            4.0,
+                            12.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "12": {
+            "name": "point_12",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            3.0,
+                            6.0,
+                            14.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "13": {
+            "name": "point_13",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            2.0,
+                            12.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "14": {
+            "name": "plane_14",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            10.0,
+                            1.0,
+                            10.0
+                        ]
+                    ],
+                    "moveable": false,
+                    "enable": true
+                },
+                "Plane": {
+                    "color": [
+                        "vec",
+                        [
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.5
+                        ]
+                    ],
+                    "p1": [
+                        "id",
+                        11
+                    ],
+                    "p2": [
+                        "id",
+                        12
+                    ],
+                    "p3": [
+                        "id",
+                        13
+                    ],
+                    "render_mode": "Transparency",
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "15": {
+            "name": "point_15",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.20000000298023224,
+                            0.5,
+                            0.4000000059604645,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "16": {
+            "name": "point_16",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            0.0,
+                            -3.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "17": {
+            "name": "point_17",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            0.0,
+                            -1.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "18": {
+            "name": "point_18",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            2.0,
+                            -3.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "19": {
+            "name": "point_19",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            2.0,
+                            -1.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "20": {
+            "name": "point_20",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            0.0,
+                            -3.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "21": {
+            "name": "point_21",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            0.0,
+                            -1.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "22": {
+            "name": "point_22",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            2.0,
+                            -3.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "23": {
+            "name": "point_23",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            2.0,
+                            -1.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "24": {
+            "name": "cube_24",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            1.0,
+                            -6.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "cube",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                }
+            }
+        },
+        "25": {
+            "name": "point_25",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            0.0,
+                            -7.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "26": {
+            "name": "point_26",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            2.0,
+                            -5.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            1.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "27": {
+            "name": "point_27",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            2.0,
+                            -5.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "28": {
+            "name": "plane_28",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            10.0,
+                            1.0,
+                            10.0
+                        ]
+                    ],
+                    "moveable": false,
+                    "enable": true
+                },
+                "Plane": {
+                    "color": [
+                        "vec",
+                        [
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.5
+                        ]
+                    ],
+                    "p1": [
+                        "id",
+                        25
+                    ],
+                    "p2": [
+                        "id",
+                        26
+                    ],
+                    "p3": [
+                        "id",
+                        27
+                    ],
+                    "render_mode": "Transparency",
+                    "save_size": false,
+                    "enable": true
+                },
+                "Section": {
+                    "inverse": false,
+                    "enable": true
+                }
+            }
+        },
+        "29": {
+            "name": "cube_29",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            1.0,
+                            -12.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "cube",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                }
+            }
+        },
+        "30": {
+            "name": "point_30",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            0.0,
+                            -13.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "31": {
+            "name": "point_31",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.0,
+                            2.0,
+                            -11.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            1.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "32": {
+            "name": "point_32",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            6.0,
+                            2.0,
+                            -11.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "33": {
+            "name": "plane_33",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            10.0,
+                            1.0,
+                            10.0
+                        ]
+                    ],
+                    "moveable": false,
+                    "enable": true
+                },
+                "Plane": {
+                    "color": [
+                        "vec",
+                        [
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.5
+                        ]
+                    ],
+                    "p1": [
+                        "id",
+                        30
+                    ],
+                    "p2": [
+                        "id",
+                        31
+                    ],
+                    "p3": [
+                        "id",
+                        32
+                    ],
+                    "render_mode": "Transparency",
+                    "save_size": false,
+                    "enable": true
+                },
+                "Section": {
+                    "inverse": true,
+                    "enable": true
+                }
+            }
+        },
+        "34": {
+            "name": "cube_34",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.0,
+                            0.213460311293602,
+                            -20.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            623.0,
+                            623.0,
+                            623.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "cube",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                },
+                "Translator": {
+                    "speed": 1,
+                    "radius": 2,
+                    "translate_by": 1,
+                    "enable": true
+                },
+                "Rotator": {
+                    "speed": 1,
+                    "rotate_by": 7,
+                    "enable": true
+                }
+            }
+        },
+        "35": {
+            "name": "octahedron_35",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            9.0,
+                            1.0,
+                            -22.1798095703125
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            623.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "octahedron",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                },
+                "Translator": {
+                    "speed": 1,
+                    "radius": 3,
+                    "translate_by": 2,
+                    "enable": true
+                },
+                "Rotator": {
+                    "speed": 1,
+                    "rotate_by": 1,
+                    "enable": true
+                }
+            }
+        },
+        "36": {
+            "name": "tetrahedron_36",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.213460445404053,
+                            1.0,
+                            -24.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            623.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "tetrahedron",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                },
+                "Translator": {
+                    "speed": 1,
+                    "radius": 2,
+                    "translate_by": 4,
+                    "enable": true
+                },
+                "Rotator": {
+                    "speed": 1,
+                    "rotate_by": 2,
+                    "enable": true
+                }
+            }
+        },
+        "37": {
+            "name": "point_37",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            7.0,
+                            1.0,
+                            -22.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "38": {
+            "name": "point_38",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            3.0,
+                            1.0,
+                            -22.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            1.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "39": {
+            "name": "point_39",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            7.0,
+                            1.0,
+                            -18.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "40": {
+            "name": "plane_40",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            10.0,
+                            1.0,
+                            10.0
+                        ]
+                    ],
+                    "moveable": false,
+                    "enable": true
+                },
+                "Plane": {
+                    "color": [
+                        "vec",
+                        [
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.5
+                        ]
+                    ],
+                    "p1": [
+                        "id",
+                        37
+                    ],
+                    "p2": [
+                        "id",
+                        38
+                    ],
+                    "p3": [
+                        "id",
+                        39
+                    ],
+                    "render_mode": "Transparency",
+                    "save_size": false,
+                    "enable": true
+                },
+                "Section": {
+                    "inverse": true,
+                    "enable": true
+                }
+            }
+        },
+        "41": {
+            "name": "cube_41",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -6.0,
+                            0.213460311293602,
+                            -20.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            623.0,
+                            623.0,
+                            623.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "cube",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                },
+                "Translator": {
+                    "speed": 1,
+                    "radius": 2,
+                    "translate_by": 1,
+                    "enable": true
+                },
+                "Rotator": {
+                    "speed": 1,
+                    "rotate_by": 7,
+                    "enable": true
+                }
+            }
+        },
+        "42": {
+            "name": "octahedron_42",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -2.0,
+                            1.0,
+                            -22.1798095703125
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            623.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "octahedron",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                },
+                "Translator": {
+                    "speed": 1,
+                    "radius": 3,
+                    "translate_by": 2,
+                    "enable": true
+                },
+                "Rotator": {
+                    "speed": 1,
+                    "rotate_by": 1,
+                    "enable": true
+                }
+            }
+        },
+        "43": {
+            "name": "tetrahedron_43",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -6.786539554595947,
+                            1.0,
+                            -24.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            623.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "tetrahedron",
+                    "material": "transparency_white_unlit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Secateur": {
+                    "enable": true
+                },
+                "Translator": {
+                    "speed": 1,
+                    "radius": 2,
+                    "translate_by": 4,
+                    "enable": true
+                },
+                "Rotator": {
+                    "speed": 1,
+                    "rotate_by": 2,
+                    "enable": true
+                }
+            }
+        },
+        "44": {
+            "name": "point_44",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -4.0,
+                            1.0,
+                            -22.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "45": {
+            "name": "point_45",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -8.0,
+                            1.0,
+                            -22.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            1.0,
+                            0.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "46": {
+            "name": "point_46",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -4.0,
+                            1.0,
+                            -18.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Point": {
+                    "color": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "size": 200,
+                    "save_size": false,
+                    "enable": true
+                }
+            }
+        },
+        "47": {
+            "name": "plane_47",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            10.0,
+                            1.0,
+                            10.0
+                        ]
+                    ],
+                    "moveable": false,
+                    "enable": true
+                },
+                "Plane": {
+                    "color": [
+                        "vec",
+                        [
+                            0.5,
+                            0.5,
+                            0.5,
+                            0.5
+                        ]
+                    ],
+                    "p1": [
+                        "id",
+                        44
+                    ],
+                    "p2": [
+                        "id",
+                        45
+                    ],
+                    "p3": [
+                        "id",
+                        46
+                    ],
+                    "render_mode": "Transparency",
+                    "save_size": false,
+                    "enable": true
+                },
+                "Section": {
+                    "inverse": false,
+                    "enable": true
+                }
+            }
+        },
+        "48": {
+            "name": "Light",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            3.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Light": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "enable": true
+                }
+            }
+        }
+    }
+}

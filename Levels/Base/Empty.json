@@ -1,0 +1,91 @@
+{
+    "index_manager_data": {
+        "global_index": 52,
+        "unused_indices": []
+    },
+    "objects": {
+        "50": {
+            "name": "Light",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            3.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Light": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "enable": true
+                }
+            }
+        },
+        "51": {
+            "name": "cube_51",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Renderer": {
+                    "mesh": "cube",
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                }
+            }
+        }
+    }
+}
