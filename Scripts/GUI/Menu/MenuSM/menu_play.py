@@ -8,10 +8,10 @@ import copy
 class MenuPlay(menu_state_m.MenuState):
     NAME = "PLAY"
 
-    def __init__(self, menu_sm):
+    def __init__(self, menu_sm, gsm):
         super().__init__(menu_sm)
         win_size = menu_sm.app.win_size
-
+        self.gsm = gsm
         canvas = menu_sm.gui.canvas
 
         def back_button_action(button, gui, pos):
@@ -71,7 +71,8 @@ class MenuPlay(menu_state_m.MenuState):
         rcp.y = 0.1
 
         def host_button_action(button, gui, pos):
-            pass
+            self.exit()
+            self.gsm.set_state("Game")
 
         host_button = elements.Button("Host Button", canvas, win_size, self,
                                       "Host",

@@ -301,6 +301,11 @@ class Hierarchy(element_m.Element):
         self.sub_menu_plane.position.evaluate_values_by_relative()
         self.sub_menu_plane.active = False
 
+        def create_plane(button, gui, pos):
+            self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_plane('gray_lit'))
+
+        self._create_button_in_sub_menu(self.sub_menu_plane, create_plane, "Plane", 1, 0.2)
+
         def create_ask_window_element_1(button, gui, pos):
             window = elements.Window(f"Ask_plane_data_window_{len(self.gui.windows)}", self.main_block,
                                      gui.win_size,
@@ -752,10 +757,11 @@ class Hierarchy(element_m.Element):
 
             self.gui.windows.append(window)
 
-        self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_1, "By 3 points", 1, 0.2)
-        self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_2, "By point and segment", 2,
+        self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_1, "By 3 points", 2, 0.2)
+        self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_2, "By point and segment", 3,
                                         0.2)
-        self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_3, "By point and plane", 3)
+        self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_3, "By point and plane", 4)
+
 
     def _init_sub_menu_polyhedrons(self):
         self.sub_menu_polyhedrons = elements.Content("Sub Menu polyhedrons", self, self.win_size,

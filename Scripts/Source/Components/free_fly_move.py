@@ -55,13 +55,15 @@ class FreeFlyMove(component_m.Component):
             self._rel_pos = mouse_pos
         rel_x = mouse_pos.x - self._rel_pos.x
         rel_y = self._rel_pos.y - mouse_pos.y
-        self.transformation.rot.y += rel_x * SENSITIVITY
-        self.transformation.rot.x -= rel_y * SENSITIVITY
-        self.transformation.rot.x = max(-89, min(89, self.transformation.rot.x))
+        new_rot = self.transformation.rot
+        new_rot.y += rel_x * SENSITIVITY
+        new_rot.x -= rel_y * SENSITIVITY
+        new_rot.x = max(-89, min(89, self.transformation.rot.x))
+        self.transformation.rot = new_rot
         self._rel_pos = copy.copy(mouse_pos)
 
     def apply(self):
-        self._update_camera_vectors()
+        pass
 
     def _handle_right_hold(self, mouse_pos):
         self._rotate(mouse_pos)
@@ -74,17 +76,6 @@ class FreeFlyMove(component_m.Component):
     def _handle_right_release(self, mouse_pos):
         self.RIGHT_MOUSE_BUTTON_RELEASED = False
         return True
-
-    def _update_camera_vectors(self):
-        x, y = glm.radians(self.transformation.rot.y), glm.radians(self.transformation.rot.x)
-
-        self.camera_component.forward.x = glm.cos(x) * glm.cos(y)
-        self.camera_component.forward.y = glm.sin(y)
-        self.camera_component.forward.z = glm.sin(x) * glm.cos(y)
-
-        self.camera_component.forward = glm.normalize(-self.camera_component.forward)
-        self.camera_component.right = glm.normalize(glm.cross(VEC_UP, self.camera_component.forward))
-        self.camera_component.up = glm.cross(self.camera_component.forward, self.camera_component.right)
 
     @property
     def transformation(self):

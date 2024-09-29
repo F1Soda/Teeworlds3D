@@ -19,6 +19,7 @@ class Level:
         self.light = None
         self.camera = None
         self.camera_component = None
+        self.player = None
 
         self.opaque_renderer = []
         self.transparency_renderer = []
@@ -262,16 +263,25 @@ class Level:
         light = object_creator_m.ObjectCreator.create_light()
         self.objects[light.id] = light
 
-    def load(self, file_path=None):
-        self.camera = object_creator_m.ObjectCreator.create_camera()
-        self.camera_component = self.camera.get_component_by_name("Camera")
+    def load(self, file_path=None, is_game=False):
+        if is_game:
+            self.player = object_creator_m.ObjectCreator.create_player()
+            self.camera = object_creator_m.ObjectCreator.create_camera_in_game(self.player)
+            self.camera_component = self.camera.get_component_by_name("Camera")
 
+            self.player.add_children(self.camera)
+            self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0,1,0)
+            weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
+            self.player.add_children(weapon)
+            weapon.transformation.pos = -self.player.transformation.forward + self.player.transformation.up * 0.5
+        else:
+            self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
+            self.camera_component = self.camera.get_component_by_name("Camera")
         self.init_gizmo()
 
         if file_path:
             data_manager_m.DataManager.load_scene(self, file_path)
         else:
-
             self._default_load()
         for obj in self.objects.values():
             light = obj.get_component_by_name("Light")
@@ -330,3 +340,4 @@ class Level:
 
         self.camera.delete()
         self.camera_component = None
+        self.index_manager = None

@@ -11,6 +11,8 @@ import Scripts.Source.General.Managers.object_picker as object_picker_m
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.Components.light as light_m
 
+EYE = glm.mat4()
+
 
 class Gizmos:
     class SegmentByPoints:
@@ -72,7 +74,7 @@ class Gizmos:
             self.shader_program['color'] = self.color
             self.shader_program['m_proj'].write(m_proj if m_proj is not None else self.camera_component.m_proj)
             self.shader_program['m_view'].write(self.camera_component.m_view)
-            self.shader_program['m_model'].write(m_model if m_model is not None else glm.mat4())
+            self.shader_program['m_model'].write(m_model if m_model is not None else EYE)
 
             if not self.save_size:
                 distance = glm.distance(self.camera_component.transformation.pos,
@@ -299,12 +301,13 @@ class Gizmos:
 
     def render(self):
         self.ctx.enable(mgl.BLEND)
-        self.draw_word_axis_in_right_corner()
+        # self.draw_word_axis_in_right_corner()
         transform = object_picker_m.ObjectPicker.last_picked_obj_transformation
         if self.draw_grid_and_center_system:
             self.draw_center_coordinate()
             self.draw_center_axis_arrows()
             self.draw_plane_grid()
+
         if transform and transform.moveable:
             self.ctx.disable(mgl.DEPTH_TEST)
             self.scene.draw_gizmos_transformation_axis(object_picker_m.ObjectPicker.last_picked_obj_transformation)
@@ -312,11 +315,13 @@ class Gizmos:
         self.ctx.disable(mgl.BLEND)
 
     def draw_center_coordinate(self):
-        self.x_axis_center.draw(glm.mat4())
-        self.y_axis_center.draw(glm.mat4())
-        self.z_axis_center.draw(glm.mat4())
+        self.x_axis_center.draw(EYE)
+        self.y_axis_center.draw(EYE)
+        self.z_axis_center.draw(EYE)
 
     def draw_word_axis_in_right_corner(self):
+        # Временно не работает. Есть предположение, что вызвано это оптимизацией для m_view матрицы в компонентe
+        # Camera
         self.x_axis_in_right_corner.draw(m_proj=self.camera.m_ortho, m_model=self.get_model_matrix_for_world_axis())
         self.y_axis_in_right_corner.draw(m_proj=self.camera.m_ortho, m_model=self.get_model_matrix_for_world_axis())
         self.z_axis_in_right_corner.draw(m_proj=self.camera.m_ortho, m_model=self.get_model_matrix_for_world_axis())
@@ -329,14 +334,14 @@ class Gizmos:
         near = self.camera.near
         diagonal = pow(self.ctx.screen.width * self.ctx.screen.width +
                        self.ctx.screen.height * self.ctx.screen.height, 0.5)
-        size = near / diagonal * 150
+        size = near / diagonal * 10000
         up = self.camera.up
         right = self.camera.right
         forward = self.camera.forward
         m_model = glm.translate(m_model, self.camera.transformation.pos
                                 + forward * (self.camera.near + 1)
                                 + right * (self.camera.right_bound * (gui_m.EditorGUI.LEFT_INSPECTOR_CORNER - 0.5) * 2)
-                                - up * (self.camera.top_bound)
+                                - up * self.camera.top_bound
                                 + (up - right) * size
                                 )
 

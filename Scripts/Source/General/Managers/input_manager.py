@@ -17,6 +17,7 @@ class InputManager:
     mouse_states = [MouseButtonState.Idle, MouseButtonState.Idle, MouseButtonState.Idle]
     past_mouse_buttons = (False, False, False)
     mouse_position = glm.vec2(0, 0)
+    mouse_diff = (0, 0)
     keys = {}
     pressed_keyboard_char = None
 
@@ -60,20 +61,24 @@ class InputManager:
     def process():
         InputManager.update_mouse_status()
         InputManager.keys = pg.key.get_pressed()
-
         InputManager.pressed_keyboard_char = None
+
+        InputManager.mouse_diff = pg.mouse.get_rel()
+        if InputManager._app.grab_mouse_inside_bounded_window:
+            m_pos = InputManager.mouse_position
+            win_size = InputManager._app.win_size
+            if m_pos.x > win_size.x - 100 or m_pos.x < 100 or m_pos.y > win_size.y - 100 or m_pos.y < 100:
+                pg.mouse.set_pos(InputManager._app.win_size.x // 2, InputManager._app.win_size.y // 2)
 
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 InputManager._app.before_exit()
-
             elif event.type == pg.VIDEORESIZE:
-                # tr.diff()
                 InputManager._app.process_window_resize(event)
-
             elif event.type == pg.KEYDOWN:
                 if event.unicode == "G":
-                    InputManager._app.draw_gui = not InputManager._app.draw_gui
+                    if InputManager._app.gsm.state.NAME == "Editor":
+                        InputManager._app.gsm.state.draw_gui = not InputManager._app.gsm.state.draw_gui
                 if event.unicode.isalnum() and event.unicode.isascii():
                     InputManager.pressed_keyboard_char = event.unicode
                 elif event.unicode == " ":

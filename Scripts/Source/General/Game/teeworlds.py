@@ -33,6 +33,8 @@ class TeeworldsEngine:
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         pg.display.set_mode(self.win_size, flags=pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
 
+        self.grab_mouse_inside_bounded_window = False
+
         # Context
         self.ctx = mgl.create_context()
         self.ctx.enable(mgl.DEPTH_TEST | mgl.CULL_FACE)
@@ -74,6 +76,8 @@ class TeeworldsEngine:
         # Game State Machine
         self.gsm = gsm_m.GSM(self)
 
+
+
     def process_window_resize(self, event):
         self.win_size = glm.vec2(event.size)
         pg.display.set_mode((self.win_size.x, self.win_size.y), flags=pg.OPENGL | pg.DOUBLEBUF | pg.RESIZABLE)
@@ -86,6 +90,14 @@ class TeeworldsEngine:
 
     def before_exit(self):
         self.gsm.state.before_exit()
+
+    @staticmethod
+    def set_mouse_grab(value):
+        pg.event.set_grab(value)
+
+    @staticmethod
+    def set_mouse_visible(value):
+        pg.mouse.set_visible(value)
 
     def exit(self):
         pg.quit()

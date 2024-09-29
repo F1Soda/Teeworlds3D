@@ -11,9 +11,6 @@ class Camera(component_m.Component):
         super().__init__(NAME, DESCRIPTION, enable)
 
         # right-handed system
-        self.forward = glm.vec3(0, 0, -1)
-        self.up = glm.vec3(0, 1, 0)
-        self.right = glm.vec3(1, 0, 0)
 
         self.fov = fov
         self.near = near
@@ -52,20 +49,20 @@ class Camera(component_m.Component):
         self.get_view_matrix(self.m_view)
 
     def get_view_matrix(self, out_mat):
-        out_mat[0][0] = self.right.x
-        out_mat[1][0] = self.right.y
-        out_mat[2][0] = self.right.z
-        out_mat[3][0] = -glm.dot(self.transformation.pos, self.right)
+        out_mat[0][0] = self.transformation.right.x
+        out_mat[1][0] = self.transformation.right.y
+        out_mat[2][0] = self.transformation.right.z
+        out_mat[3][0] = -glm.dot(self.transformation.pos, self.transformation.right)
 
-        out_mat[0][1] = self.up.x
-        out_mat[1][1] = self.up.y
-        out_mat[2][1] = self.up.z
-        out_mat[3][1] = -glm.dot(self.transformation.pos, self.up)
+        out_mat[0][1] = self.transformation.up.x
+        out_mat[1][1] = self.transformation.up.y
+        out_mat[2][1] = self.transformation.up.z
+        out_mat[3][1] = -glm.dot(self.transformation.pos, self.transformation.up)
 
-        out_mat[0][2] = self.forward.x
-        out_mat[1][2] = self.forward.y
-        out_mat[2][2] = self.forward.z
-        out_mat[3][2] = -glm.dot(self.transformation.pos, self.forward)
+        out_mat[0][2] = self.transformation.forward.x
+        out_mat[1][2] = self.transformation.forward.y
+        out_mat[2][2] = self.transformation.forward.z
+        out_mat[3][2] = -glm.dot(self.transformation.pos, self.transformation.forward)
 
     def get_projection_matrix(self) -> glm.mat4x4:
         return glm.perspective(glm.radians(self.fov), self.aspect_ratio, self.near, self.far)

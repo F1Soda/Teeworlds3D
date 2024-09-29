@@ -16,4 +16,4 @@ class GSM(fsm_m.FSM):
         self.add_state(editor_m.Editor.NAME, editor_m.Editor(app, self))
         self.add_state(game_m.Game.NAME, game_m.Game(app, self))
 
-        self.set_state("Menu")
+        self.set_state("Game", "Levels/Player/Empty.json")

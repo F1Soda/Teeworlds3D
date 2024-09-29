@@ -157,7 +157,7 @@ class EditorGUI:
 
     def delete(self):
         self.editor = None
-        self.main_block = None
+        self.gui = None
         self.header = None
         # self.inspector = None
         self.hierarchy = None

@@ -23,6 +23,8 @@ class Editor(state_m.GameState):
         self.ctx = self.app.ctx
         self.win_size = self.app.win_size
 
+        self.draw_gui = True
+
     @property
     def time(self):
         return self.app.time
@@ -40,7 +42,7 @@ class Editor(state_m.GameState):
             self.gizmos.delete()
         self.level = level_m.Level(self, self.gui)
 
-        object_creator_m.ObjectCreator.rely_scene = self.level
+        object_creator_m.ObjectCreator.rely_level = self.level
         object_picker_m.ObjectPicker.init(self)
         self.level.load(file_path)
         self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
@@ -67,7 +69,8 @@ class Editor(state_m.GameState):
         self.ctx.disable(mgl.DEPTH_TEST)
 
         # GUI
-        self.gui.render()
+        if self.draw_gui:
+            self.gui.render()
         self.ctx.disable(mgl.BLEND)
         self.ctx.enable(mgl.DEPTH_TEST)
         pg.display.flip()

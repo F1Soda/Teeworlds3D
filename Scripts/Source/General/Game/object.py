@@ -27,6 +27,10 @@ class Object:
         self._renderer: renderer_m.Renderer = None
         self.enable = True
 
+    def add_children(self, children):
+        self.child_objects.append(children)
+        self.transformation.add_child(children.transformation)
+
     def add_component(self, component) -> component_m.Component:
         component.rely_object = self
         component.init(self.level.editor, self)
@@ -58,6 +62,8 @@ class Object:
         for component in self.components:
             if component.enable and component.name not in ["Renderer", "Plane"]:
                 component.apply()
+        for child in self.child_objects:
+            child.apply_components()
 
     def serialize(self):
         return {
