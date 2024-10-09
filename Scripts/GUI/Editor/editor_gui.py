@@ -51,7 +51,7 @@ class EditorGUI:
     DIVISION_BETWEEN_INSPECTOR_AND_HIERARCHY = 0.5
 
     def __init__(self, editor, win_size, gui):
-        self.editor = editor
+        self.app = editor
         self.win_size = glm.vec2(win_size)
         self.aspect_ratio = win_size[0] / win_size[1]
         self.gui = gui
@@ -100,11 +100,11 @@ class EditorGUI:
             file_path = easygui.fileopenbox(title='Save', filetypes='\\*.json')
             if file_path:
                 if file_path.endswith(".json"):
-                    data_manager_m.DataManager.save_scene(gui.editor.level, file_path)
+                    data_manager_m.DataManager.save_scene(gui.app.level, file_path)
                     # what to do?
                     self.editor.close_app()
                 else:
-                    window = elements.Window(f"Error_saving_file_window{len(gui.windows)}", self.main_block,
+                    window = elements.Window(f"Error_saving_file_window{len(gui.windows)}", self.gui.canvas,
                                              gui.win_size,
                                              self.gui, "Error")
                     window.position.relative_window.size = glm.vec2(0.2, 0.1)

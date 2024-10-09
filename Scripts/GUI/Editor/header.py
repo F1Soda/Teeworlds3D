@@ -36,7 +36,7 @@ class Header(element_m.Element):
             file_path = easygui.fileopenbox(title='Save', filetypes='\\*.json')
             if file_path:
                 if file_path.endswith(".json"):
-                    data_manager_m.DataManager.save_scene(gui.app.level, file_path)
+                    data_manager_m.DataManager.save_scene(editor_gui.app.level, file_path)
                     return True
                 else:
                     window = elements.Window(f"Error_saving_file_window{len(self.gui.windows)}", self.main_block,
@@ -101,7 +101,7 @@ class Header(element_m.Element):
             def load(button, gui, pos):
                 file_path = easygui.fileopenbox(title='Load', filetypes='\\*.json')
                 if file_path:
-                    self.gui.app.load_scene(file_path)
+                    self.editor_gui.app.load_level(file_path)
                     self.ask_save_file_before_load_window.close()
 
             def save(button, gui, pos):
@@ -157,7 +157,7 @@ class Header(element_m.Element):
                 button.button_text = "Lines: Off"
 
             button.update_position()
-            editor_gui.editor.level.change_hidden_line_mode()
+            editor_gui.app.level.change_hidden_line_mode()
 
         render_mode_button = elements.Button("Render Mode Button", background, self.win_size, self.gui,
                                              "Lines: Off",
@@ -173,7 +173,7 @@ class Header(element_m.Element):
 
         def grid_off_on_action(button, gui, pos):
             button.button_text = "Grid: ON" if button.button_text == "Grid: OFF" else "Grid: OFF"
-            editor_gui.editor.gizmos.draw_grid_and_center_system = not editor_gui.editor.gizmos.draw_grid_and_center_system
+            editor_gui.app.gizmos.draw_grid_and_center_system = not editor_gui.app.gizmos.draw_grid_and_center_system
             pass
 
         grid_on_off_button = elements.Button("Grid off on button", background, self.win_size, self.gui,
@@ -192,7 +192,7 @@ class Header(element_m.Element):
 
     def render(self):
         if self.text_header:
-            utils_m.rainbow_color(self.editor_gui.editor.time, self.text_header.color)
+            utils_m.rainbow_color(self.editor_gui.app.time, self.text_header.color)
         super().render()
 
     def delete(self):

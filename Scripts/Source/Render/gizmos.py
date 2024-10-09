@@ -94,11 +94,13 @@ class Gizmos:
             self.shader_program = None
 
     class WordAxisGizmo:
-        def __init__(self, ctx, start, end, color, camera, size=3.0, save_size=False, axis_id=None):
+        def __init__(self, ctx, start, end, color, camera, size=3.0, save_size=False, axis_id=None, gizmos=None):
+
             if axis_id:
                 self.id = axis_id
             else:
                 self.id = camera.app.level.index_manager.get_id()
+            self.gizmos = gizmos
             self.ctx = ctx
             self.save_size = save_size
             self.start = glm.vec3(*start)
@@ -109,6 +111,14 @@ class Gizmos:
             self.shader['color'].write(self._color)
             self.vao = library.get_segment_vao(ctx, start, end)
             self.camera = camera
+            self.enable = True
+            self.name = "World Axis Gizmo"
+
+        def init(self, app, object):
+            self.rely_object_transform = object.transformation
+
+        def apply(self):
+            self.draw(self.rely_object_transform.m_model)
 
         @property
         def size(self):
@@ -226,6 +236,7 @@ class Gizmos:
         self.ctx = ctx
         self.camera = scene.camera_component
         self.scene = scene
+        self.render_objects = []
         self.x_axis_in_right_corner = Gizmos.WordAxisGizmo(ctx, (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5),
                                                            glm.vec3(1, 0, 0),
                                                            self.scene.camera_component, axis_id=-1)
@@ -304,14 +315,16 @@ class Gizmos:
         # self.draw_word_axis_in_right_corner()
         transform = object_picker_m.ObjectPicker.last_picked_obj_transformation
         if self.draw_grid_and_center_system:
-            self.draw_center_coordinate()
-            self.draw_center_axis_arrows()
+            #self.draw_center_coordinate()
+            #self.draw_center_axis_arrows()
             self.draw_plane_grid()
 
         if transform and transform.moveable:
             self.ctx.disable(mgl.DEPTH_TEST)
             self.scene.draw_gizmos_transformation_axis(object_picker_m.ObjectPicker.last_picked_obj_transformation)
             self.ctx.enable(mgl.DEPTH_TEST)
+        for render_object in self.render_objects:
+            render_object.draw()
         self.ctx.disable(mgl.BLEND)
 
     def draw_center_coordinate(self):

@@ -33,7 +33,7 @@ class Object:
 
     def add_component(self, component) -> component_m.Component:
         component.rely_object = self
-        component.init(self.level.editor, self)
+        component.init(self.level.app, self)
         self.components.append(component)
         component.apply()
         return component

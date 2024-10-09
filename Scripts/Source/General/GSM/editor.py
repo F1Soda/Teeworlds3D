@@ -33,7 +33,7 @@ class Editor(state_m.GameState):
     def delta_time(self):
         return self.app.delta_time
 
-    def _load_level(self, file_path=None):
+    def load_level(self, file_path=None):
         if self.level:
             self.level.delete()
             object_picker_m.ObjectPicker.release()
@@ -99,4 +99,4 @@ class Editor(state_m.GameState):
     def enter(self, params=None):
         # GUI
         self.editor_gui = editorGUI_m.EditorGUI(self, self.app.win_size, self.app.gui)
-        self._load_level(params)
+        self.load_level(params)

@@ -30,12 +30,12 @@ class FPSCameraMovement(component_m.Component):
 
     def _rotate(self):
         mouse_dx, mouse_dy = input_manager_m.InputManager.mouse_diff
-        new_rot_y = self.transformation.rot.y - mouse_dx * SENSITIVITY
+        new_rot_y = self.player_transformation.rot.y - mouse_dx * SENSITIVITY
         new_rot_x = self.transformation.rot.x - mouse_dy * SENSITIVITY
         new_rot_x = max(-89, min(89, new_rot_x))
-        #self.transformation.rot = (new_rot_x, self.transformation._rot.y , self.transformation.rot.z)
         self.player_transformation.rot = (self.player_transformation.rot.x, new_rot_y, self.transformation.rot.z)
-
+        self.transformation.rot = (new_rot_x, self.transformation.rot.y, self.transformation.rot.z)
+        pass
     def apply(self):
         self._rotate()
 

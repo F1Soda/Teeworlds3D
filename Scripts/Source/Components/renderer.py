@@ -1,5 +1,5 @@
 import Scripts.Source.Components.component as component_m
-import Scripts.Source.General.Game.level as scene_m
+import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Render.mesh as mesh_m
 import Scripts.Source.Render.material as material_m
 import Scripts.Source.Render.library as library_m
@@ -34,7 +34,7 @@ class Renderer(component_m.Component):
         self._material = material
         self.picking_material = library_m.materials['object_picking']
 
-        self.scene = None
+        self.level = None
         self.camera_transform = None
         self.camera_component = None
         self.transformation = None
@@ -53,13 +53,13 @@ class Renderer(component_m.Component):
     def init(self, app, rely_object):
         super().init(app, rely_object)
         # Scene
-        self.scene = self.rely_object.level  # type: scene_m.Level
+        self.level = self.rely_object.level  # type: level_m.Level
 
         self.ctx = app.ctx  # type: mgl.Context
 
         # Camera
-        self.camera_transform = self.scene.camera.transformation
-        self.camera_component = self.scene.camera.get_component_by_name('Camera')
+        self.camera_transform = self.level.camera.transformation
+        self.camera_component = self.level.camera.get_component_by_name('Camera')
 
         self.picking_material.camera_component = self.camera_component
         self.picking_material.camera_transformation = self.camera_component.transformation
@@ -79,19 +79,19 @@ class Renderer(component_m.Component):
 
     def update_render_mode(self):
         if self.material.render_mode == material_m.RenderMode.Opaque:
-            if self in self.scene.transparency_renderer:
-                self.scene.transparency_renderer.remove(self)
-            if self not in self.scene.opaque_renderer:
-                self.scene.opaque_renderer.append(self)
+            if self in self.level.transparency_renderer:
+                self.level.transparency_renderer.remove(self)
+            if self not in self.level.opaque_renderer:
+                self.level.opaque_renderer.append(self)
         else:
-            if self in self.scene.opaque_renderer:
-                self.scene.opaque_renderer.remove(self)
-            if self not in self.scene.transparency_renderer:
-                self.scene.transparency_renderer.append(self)
+            if self in self.level.opaque_renderer:
+                self.level.opaque_renderer.remove(self)
+            if self not in self.level.transparency_renderer:
+                self.level.transparency_renderer.append(self)
 
     @property
     def light_component(self):
-        return self.scene.light
+        return self.level.light
 
     def update_projection_matrix(self, m_proj):
         self.material.update_projection_matrix(m_proj)
@@ -115,13 +115,13 @@ class Renderer(component_m.Component):
         self.hidden_line_shader['m_proj'].write(self.camera_component.m_proj)
 
         if self.material.render_mode == material_m.RenderMode.Opaque:
-            if self.scene.render_hidden_lines != HiddenLineState.Off and self.vao_hidden_line:
+            if self.level.render_hidden_lines != HiddenLineState.Off and self.vao_hidden_line:
                 self.hidden_line_shader[
-                    'dashed'] = True if self.scene.render_hidden_lines == HiddenLineState.Dash else False
+                    'dashed'] = True if self.level.render_hidden_lines == HiddenLineState.Dash else False
                 self.ctx.screen.color_mask = False, False, False, False
                 self.vao.render()
                 self.ctx.line_width = 3.0
-                if self.scene.render_hidden_lines == HiddenLineState.Both:
+                if self.level.render_hidden_lines == HiddenLineState.Both:
                     self.ctx.depth_func = '1'
                 else:
                     self.ctx.depth_func = '>'
@@ -156,7 +156,7 @@ class Renderer(component_m.Component):
         self.transformation = None
         self.camera_component = None
         self.camera_transform = None
-        self.scene = None
+        self.level = None
         self.ctx = None
         self.vao = None
         if self.vao_hidden_line:

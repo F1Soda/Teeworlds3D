@@ -91,6 +91,9 @@ class TeeworldsEngine:
     def before_exit(self):
         self.gsm.state.before_exit()
 
+    def get_fps(self):
+        return round(self.clock.get_fps())
+
     @staticmethod
     def set_mouse_grab(value):
         pg.event.set_grab(value)

@@ -32,7 +32,8 @@ class Player(component_m.Component):
     def delete(self):
         self._transformation = None
         self.rely_object = None
-        self.weapon.delete()
+        if self.weapon is not None:
+            self.weapon.delete()
 
     def serialize(self) -> {}:
         # Тоже не сериализуемый класс

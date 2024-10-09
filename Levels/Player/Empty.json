@@ -1,6 +1,6 @@
 {
     "index_manager_data": {
-        "global_index": 13,
+        "global_index": 15,
         "unused_indices": []
     },
     "objects": {
@@ -94,7 +94,7 @@
                     "pos": [
                         "vec",
                         [
-                            22.885726928710938,
+                            13.994762420654297,
                             5.246236324310303,
                             1.5694587230682373
                         ]
@@ -289,9 +289,9 @@
                     "pos": [
                         "vec",
                         [
-                            -8.043396949768066,
-                            0.4806642532348633,
-                            -3.967310667037964
+                            0,
+                            5,
+                            0
                         ]
                     ],
                     "rot": [
@@ -306,7 +306,7 @@
                         "vec",
                         [
                             1.0,
-                            5.0,
+                            1.0,
                             1.0
                         ]
                     ],
@@ -315,7 +315,7 @@
                 },
                 "Renderer": {
                     "mesh": "cube",
-                    "material": "gray_lit",
+                    "material": "green_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 }
@@ -328,9 +328,9 @@
                     "pos": [
                         "vec",
                         [
-                            3.2786977291107178,
-                            0.4806642532348633,
-                            -3.967310667037964
+                            4,
+                            0,
+                            0
                         ]
                     ],
                     "rot": [
@@ -354,7 +354,7 @@
                 },
                 "Renderer": {
                     "mesh": "cube",
-                    "material": "gray_lit",
+                    "material": "red_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 }
@@ -367,9 +367,9 @@
                     "pos": [
                         "vec",
                         [
-                            3.2786977291107178,
-                            0.4806642532348633,
-                            -3.967310667037964
+                            0,
+                            0,
+                            4
                         ]
                     ],
                     "rot": [
@@ -393,7 +393,7 @@
                 },
                 "Renderer": {
                     "mesh": "cube",
-                    "material": "gray_lit",
+                    "material": "blue_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 }

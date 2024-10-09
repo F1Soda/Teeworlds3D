@@ -1,7 +1,9 @@
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.General.GSM.game_state as state_m
 import Scripts.GUI.Game.game_gui as game_gui_m
+import Scripts.GUI.Editor.editor_gui as editor_gui_m
 import Scripts.Source.General.Game.level as level_m
+import Scripts.Source.Render.gizmos as gizmos_m
 import moderngl as mgl
 import pygame as pg
 
@@ -12,6 +14,7 @@ class Game(state_m.GameState):
     def __init__(self, app, gsm):
         super().__init__(gsm, app)
         self.level = None
+        self.gizmos = None
         self.game_gui = None
         self.gui = app.gui
         self.ctx = self.app.ctx
@@ -25,13 +28,20 @@ class Game(state_m.GameState):
     def delta_time(self):
         return self.app.delta_time
 
+    def get_fps(self):
+        return self.app.get_fps()
+
     def _load_level(self, file_path=None):
         if self.level:
             self.level.delete()
-
+        if self.gizmos:
+            self.gizmos.delete()
+        self.gizmos = []
         self.level = level_m.Level(self, self.gui)
         object_creator_m.ObjectCreator.rely_level = self.level
         self.level.load(file_path,  is_game=True)
+
+        #self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
 
     def enter(self, params=None):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
@@ -44,6 +54,7 @@ class Game(state_m.GameState):
 
     def exit(self):
         self.level.delete()
+        #self.gizmos.delete()
         self.game_gui.delete()
 
     def _render(self):
@@ -52,6 +63,8 @@ class Game(state_m.GameState):
         self.ctx.enable(mgl.BLEND)
         self.level.render_opaque_objects()
 
+        for gizmo in self.gizmos:
+            gizmo.apply()
         self.level.render_transparent_objects()
         self.ctx.enable(mgl.BLEND)
         self.ctx.disable(mgl.DEPTH_TEST)
@@ -72,3 +85,5 @@ class Game(state_m.GameState):
 
     def process_window_resize(self, new_size):
         self.win_size = new_size
+        self.game_gui.process_window_resize(new_size)
+        self.gizmos.process_window_resize(new_size)

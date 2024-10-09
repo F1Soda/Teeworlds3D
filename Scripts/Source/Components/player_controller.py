@@ -9,7 +9,7 @@ import pygame as pg
 NAME = "Player Controller"
 DESCRIPTION = "Компонент для перемещения игрока"
 
-SPEED = 0.1
+SPEED = 0.05
 
 VEC_UP = glm.vec3(0, 1, 0)
 
@@ -21,7 +21,7 @@ class PlayerController(component_m.Component):
     def __init__(self, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
         input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
-
+        self.camera_transformation = None
         self._transformation = None
 
     def init(self, app, rely_object):
@@ -31,9 +31,9 @@ class PlayerController(component_m.Component):
     def _move(self, keys):
         velocity = SPEED
         if keys[pg.K_w]:
-            self.transformation.pos = self.transformation.pos - self.transformation.forward * velocity
-        if keys[pg.K_s]:
             self.transformation.pos = self.transformation.pos + self.transformation.forward * velocity
+        if keys[pg.K_s]:
+            self.transformation.pos = self.transformation.pos - self.transformation.forward * velocity
         if keys[pg.K_a]:
             self.transformation.pos = self.transformation.pos - self.transformation.right * velocity
         if keys[pg.K_d]:

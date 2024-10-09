@@ -8,9 +8,9 @@ import Scripts.Source.Components.components as components
 
 
 class Level:
-    def __init__(self, editor, gui):
-        self.editor = editor
-        self.ctx = self.editor.ctx
+    def __init__(self, app, gui):
+        self.app = app
+        self.ctx = self.app.ctx
         self.objects = {}
         self.transform_axis_gizmo = {}
 
@@ -266,14 +266,28 @@ class Level:
     def load(self, file_path=None, is_game=False):
         if is_game:
             self.player = object_creator_m.ObjectCreator.create_player()
+            self.add_object(self.player)
+
             self.camera = object_creator_m.ObjectCreator.create_camera_in_game(self.player)
             self.camera_component = self.camera.get_component_by_name("Camera")
 
+            self.player.get_component_by_name("Player Controller").camera_transformation = self.camera.transformation
             self.player.add_children(self.camera)
-            self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0,1,0)
-            weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
-            self.player.add_children(weapon)
-            weapon.transformation.pos = -self.player.transformation.forward + self.player.transformation.up * 0.5
+            self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
+            # self.camera.transformation.rot = (-90, 0, 0)
+
+            x_axis_center = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0.5, 2), (0, 0.5, 0), glm.vec3(0.8, 0.2, 1),
+                                                          self.camera_component, axis_id=-1, gizmos=self.app.gizmos)
+            self.app.gizmos.append(x_axis_center)
+
+            self.player.add_component(x_axis_center)
+            self.weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
+            #body = object_creator_m.ObjectCreator.create_cube("red_lit", "body")
+            #self.player.add_children(body)
+            self.player.add_children(self.weapon)
+            self.weapon.transformation.pos = self.weapon.transformation.pos + self.player.transformation.right * (0.1 + 1 / 2)
+            self.player.transformation.pos = self.player.transformation.up * 0.75
+
         else:
             self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
             self.camera_component = self.camera.get_component_by_name("Camera")
@@ -290,7 +304,8 @@ class Level:
 
     def add_object(self, obj):
         self.objects[obj.id] = obj
-        self.editor.editor_gui.update_data_in_hierarchy()
+        if self.app.NAME == "Editor":
+            self.app.editor_gui.update_data_in_hierarchy()
         return obj
 
     def init_gizmo(self):
@@ -314,6 +329,10 @@ class Level:
             obj.process_window_resize(new_size)
 
     def apply_components(self):
+        if self.app.NAME == "Game":
+            self.app.game_gui.debug_LOCAL_text.text = f"({self.weapon.transformation.pos.x:.2f}, {self.weapon.transformation.pos.y:.2f}, {self.weapon.transformation.pos.z:.2f})"
+            self.app.game_gui.debug_global_text.text = f"({self.weapon.transformation.global_pos.x:.2f}, {self.weapon.transformation.global_pos.y:.2f}, {self.weapon.transformation.global_pos.z:.2f})"
+            self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         self.camera.apply_components()
         for obj in self.objects.values():
             obj.apply_components()

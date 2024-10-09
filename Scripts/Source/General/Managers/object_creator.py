@@ -18,7 +18,7 @@ class ObjectCreator:
     @staticmethod
     def create_camera_in_editor() -> object_m.Object:
         cam = object_m.Object(ObjectCreator.rely_level, "Camera")
-        ObjectCreator.camera_component = components.Camera()
+        ObjectCreator.camera_component = components.Camera(fov=70)
         cam.add_component(ObjectCreator.camera_component)
         cam.add_component(components.FreeFlyMove())
         temp = cam.components[1]
@@ -38,6 +38,9 @@ class ObjectCreator:
         temp = cam.components[1]
         cam.components[1] = cam.components[2]
         cam.components[2] = temp
+        cam.transformation.pos = (0, 0, 0)
+        # cam.transformation.rot = ()
+
         return cam
 
     @staticmethod
@@ -49,10 +52,11 @@ class ObjectCreator:
 
     @staticmethod
     def create_dumpy_weapon():
-        gun = ObjectCreator.create_cube("green_lit", "GUUUN")
+        gun = ObjectCreator.create_cube("blue_lit", "GUUUN")
         gun_scale = gun.transformation.scale * 0.2
-        gun_scale.x *= 2
+        gun_scale.z *= 8
         gun.transformation.scale = gun_scale
+        #gun.transformation.rot = (90,0,0)
         return gun
 
     @staticmethod

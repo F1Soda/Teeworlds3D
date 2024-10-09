@@ -141,7 +141,7 @@ class Hierarchy(element_m.Element):
         self._create_button_in_sub_menu(self.sub_menu, create_plane_button_action, "Create Plane", 2)
 
         def create_point_button(button, gui, pos):
-            self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_point(glm.vec4(0, 0.7, 0.1, 1)))
+            self.editor_gui.app.level.add_object(object_creator_m.ObjectCreator.create_point(glm.vec4(0, 0.7, 0.1, 1)))
 
         self._create_button_in_sub_menu(self.sub_menu, create_point_button, "Create Point", 2)
 
@@ -219,7 +219,7 @@ class Hierarchy(element_m.Element):
                     return
                 p1 = point_component_1.rely_object
                 p2 = point_component_2.rely_object
-                self.editor_gui.editor.level.add_object(
+                self.editor_gui.app.level.add_object(
                     object_creator_m.ObjectCreator.create_segment(glm.vec4(0.7, 0.5, 0.7, 1), p1, p2))
                 window.close()
 
@@ -250,7 +250,7 @@ class Hierarchy(element_m.Element):
             def handle_select_element(obj_id):
                 nonlocal point_component_2
                 nonlocal point_component_1
-                obj = self.editor_gui.editor.level.objects[obj_id]
+                obj = self.editor_gui.app.level.objects[obj_id]
                 point = obj.get_component_by_name("Point")
                 if point:
                     if point_component_1 is None:
@@ -302,7 +302,7 @@ class Hierarchy(element_m.Element):
         self.sub_menu_plane.active = False
 
         def create_plane(button, gui, pos):
-            self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_plane('gray_lit'))
+            self.editor_gui.app.level.add_object(object_creator_m.ObjectCreator.create_plane('gray_lit'))
 
         self._create_button_in_sub_menu(self.sub_menu_plane, create_plane, "Plane", 1, 0.2)
 
@@ -402,7 +402,7 @@ class Hierarchy(element_m.Element):
                 nonlocal p3
                 if p1 is None or p2 is None or p3 is None:
                     return
-                self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_plane_by_3_points(p1, p2, p3))
+                self.editor_gui.app.level.add_object(object_creator_m.ObjectCreator.create_plane_by_3_points(p1, p2, p3))
                 window.close()
 
             button_apply = elements.Button("Apply", window.inner_data_block, self.win_size, self.gui, 'Create', 1.5,
@@ -433,7 +433,7 @@ class Hierarchy(element_m.Element):
                 nonlocal p1
                 nonlocal p2
                 nonlocal p3
-                obj = self.editor_gui.editor.level.objects[obj_id]
+                obj = self.editor_gui.app.level.objects[obj_id]
                 point = obj.get_component_by_name("Point")
                 if point:
                     i = len(self.selected_elements)
@@ -451,7 +451,7 @@ class Hierarchy(element_m.Element):
                 nonlocal p1
                 nonlocal p2
                 nonlocal p3
-                obj = self.editor_gui.editor.level.objects[obj_id]
+                obj = self.editor_gui.app.level.objects[obj_id]
                 point = obj.get_component_by_name("Point")
                 if point:
                     i = len(self.selected_elements)
@@ -546,7 +546,7 @@ class Hierarchy(element_m.Element):
                 p2 = segment_component.gizmos_segment.p1
                 p3 = segment_component.gizmos_segment.p2
                 plane = object_creator_m.ObjectCreator.create_plane_by_3_points(p1, p2, p3)
-                self.editor_gui.editor.level.objects[plane.id] = plane
+                self.editor_gui.app.level.objects[plane.id] = plane
                 self.update_content()
                 window.close()
 
@@ -575,7 +575,7 @@ class Hierarchy(element_m.Element):
             def handle_select_element(obj_id):
                 nonlocal segment_component
                 nonlocal point_component
-                obj = self.editor_gui.editor.level.objects[obj_id]
+                obj = self.editor_gui.app.level.objects[obj_id]
                 point = obj.get_component_by_name("Point")
                 if point:
                     input_field_point.text.text = obj.name
@@ -689,15 +689,15 @@ class Hierarchy(element_m.Element):
 
                 point2 = object_creator_m.ObjectCreator.create_point(glm.vec4(1))
                 point2.transformation.pos = p2
-                self.editor_gui.editor.level.objects[point2.id] = point2
+                self.editor_gui.app.level.objects[point2.id] = point2
 
                 point3 = object_creator_m.ObjectCreator.create_point(glm.vec4(1))
                 point3.transformation.pos = p3
-                self.editor_gui.editor.level.objects[point3.id] = point3
+                self.editor_gui.app.level.objects[point3.id] = point3
 
                 plane = object_creator_m.ObjectCreator.create_plane_by_3_points(point_component.rely_object, point2,
                                                                                 point3)
-                self.editor_gui.editor.level.objects[plane.id] = plane
+                self.editor_gui.app.level.objects[plane.id] = plane
                 self.update_content()
                 window.close()
 
@@ -728,7 +728,7 @@ class Hierarchy(element_m.Element):
             def handle_select_element(obj_id):
                 nonlocal plane_component
                 nonlocal point_component
-                obj = self.editor_gui.editor.level.objects[obj_id]
+                obj = self.editor_gui.app.level.objects[obj_id]
                 point = obj.get_component_by_name("Point")
                 if point:
                     input_field_point.text.text = obj.name
@@ -771,13 +771,13 @@ class Hierarchy(element_m.Element):
         self.sub_menu_polyhedrons.active = False
 
         def create_tetrahedron(button, gui, pos):
-            self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_tetrahedron('gray_lit'))
+            self.editor_gui.app.level.add_object(object_creator_m.ObjectCreator.create_tetrahedron('gray_lit'))
 
         def create_octahedron(button, gui, pos):
-            self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_octahedron('gray_lit'))
+            self.editor_gui.app.level.add_object(object_creator_m.ObjectCreator.create_octahedron('gray_lit'))
 
         def create_cube(button, gui, pos):
-            self.editor_gui.editor.level.add_object(object_creator_m.ObjectCreator.create_cube('gray_lit'))
+            self.editor_gui.app.level.add_object(object_creator_m.ObjectCreator.create_cube('gray_lit'))
 
         self._create_button_in_sub_menu(self.sub_menu_polyhedrons, create_tetrahedron, "Tetrahedron", 1, 0.2)
         self._create_button_in_sub_menu(self.sub_menu_polyhedrons, create_octahedron, "Octahedron", 2,
@@ -792,7 +792,7 @@ class Hierarchy(element_m.Element):
         self.sub_menu_other.active = False
 
         def create_light(button, gui, pos):
-            self.editor_gui.editor.level.light = self.editor_gui.editor.level.add_object(
+            self.editor_gui.app.level.light = self.editor_gui.app.level.add_object(
                 object_creator_m.ObjectCreator.create_light()).get_component_by_name("Light")
 
         self._create_button_in_sub_menu(self.sub_menu_other, create_light, "Create Light", 1, 0.2)
@@ -843,7 +843,7 @@ class Hierarchy(element_m.Element):
             self.selected_elements.append((button, obj_id))
             object_picker_m.ObjectPicker.select_object(obj_id)
 
-        for obj in self.editor_gui.editor.level.objects.values():
+        for obj in self.editor_gui.app.level.objects.values():
             self._create_element_in_content(self.content, click_button_action, obj.name, obj.id)
 
     def select_element_in_hierarchy(self, object_id):

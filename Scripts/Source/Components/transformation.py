@@ -4,7 +4,8 @@ import glm
 NAME = "Transformation"
 DESCRIPTION = "Описывает положение, вращение и масштобирование объекта"
 
-VEC_UP = glm.vec3(0,1,0)
+VEC_UP = glm.vec3(0, 1, 0)
+
 
 class Transformation(component_m.Component):
     def __init__(self, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1), moveable=True,
@@ -14,38 +15,46 @@ class Transformation(component_m.Component):
         self._rot = glm.vec3(rot)
         self._scale = glm.vec3(scale)
 
+        self._global_pos = glm.vec3(pos)
+        # self._rot = glm.vec3(rot)
+        # self._scale = glm.vec3(scale)
+
         self.m_model = glm.mat4()
         self.moveable = moveable
 
-        self._forward = glm.vec3(1, 0, 0)
+        self._forward = glm.vec3(0, 0, 1)
         self._up = glm.vec3(0, 1, 0)
-        self._right = glm.vec3(0, 0, 1)
+        self._right = glm.vec3(1, 0, 0)
 
         self.children = []
+
+        self.parent = None
 
         self.m_t = None
         self.m_tr = None
         self.m_r = None
 
+    def recalculate_local_pos(self, parent_global_pos):
+        self._pos -= parent_global_pos
+
+
     def add_child(self, child):
         self.children.append(child)
+        child.parent = self
         self.update_model_matrix()
+        child.recalculate_local_pos(self._global_pos)
 
     @property
     def right(self):
         return self._right
 
-
-
     @property
     def forward(self):
         return self._forward
 
-
     @property
     def up(self):
         return self._up
-
 
     @property
     def pos(self):
@@ -56,10 +65,23 @@ class Transformation(component_m.Component):
         if isinstance(value, tuple):
             value = glm.vec3(*value)
         diff = value - self._pos
+        self._global_pos += diff
         self._pos = value
         self.update_model_matrix()
         for child in self.children:
-            child.pos += diff
+            child.global_pos = child.global_pos + diff
+
+    @property
+    def global_pos(self):
+        return self._global_pos
+
+    @global_pos.setter
+    def global_pos(self, value):
+        if isinstance(value, tuple):
+            value = glm.vec3(*value)
+        #self._pos = value - self._global_pos
+        self._global_pos = value
+        self.update_model_matrix()
 
     @property
     def rot(self):
@@ -74,15 +96,17 @@ class Transformation(component_m.Component):
 
         self.update_model_matrix()
 
-        x, y = glm.radians(self.rot.y), glm.radians(self.rot.x)
+        self._forward.x = -self.m_r[0][2]
+        self._forward.y = self.m_r[1][2]
+        self._forward.z = self.m_r[2][2]
 
-        self._forward.x = glm.cos(x) * glm.cos(y)
-        self._forward.y = glm.sin(y)
-        self._forward.z = glm.sin(x) * glm.cos(y)
+        self._right.x = -self.m_r[0][0]
+        self._right.y = self.m_r[1][0]
+        self._right.z = self.m_r[2][0]
 
-        self._forward = glm.normalize(-self.forward)
-        self._right = glm.normalize(glm.cross(VEC_UP, self.forward))
-        self._up = glm.cross(self.forward, self.right)
+        self._up.x = -self.m_r[0][1]
+        self._up.y = self.m_r[1][1]
+        self._up.z = self.m_r[2][1]
 
         rot = glm.vec3([glm.radians(x) for x in diff])
 
@@ -92,9 +116,11 @@ class Transformation(component_m.Component):
 
         for child in self.children:
             child.pos = m_r * child.pos
-            if child.rely_object.name != "Game Camera":
-                child.rot = (self._rot.x, self._rot.y, self._rot.z)
-
+            child.rot = self._rot
+        # child.pos = child.pos
+        # child.pos.x = child.pos.x * glm.cos(rot.y)
+        # child.pos.y = child.pos.y * glm.sin(rot.x)
+        # if child.rely_object.name != "Game Camera":
 
     @property
     def scale(self):
@@ -112,7 +138,7 @@ class Transformation(component_m.Component):
         rot = glm.vec3([glm.radians(x) for x in self.rot])
 
         # position
-        self.m_model = self.m_t = glm.translate(glm.mat4(), self.pos)
+        self.m_model = self.m_t = glm.translate(glm.mat4(), self.global_pos)
 
         # rotation
         self.m_r = glm.rotate(glm.mat4(), rot.x, glm.vec3(1, 0, 0))

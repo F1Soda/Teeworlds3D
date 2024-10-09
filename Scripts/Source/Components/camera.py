@@ -41,28 +41,32 @@ class Camera(component_m.Component):
         self.top_bound = self.near * glm.tan(glm.radians(self.fov / 2))
         self.right_bound = self.aspect_ratio * self.top_bound
 
-        self.get_view_matrix(self.m_view)
+        #self.get_view_matrix(self.m_view)
+        self.m_view =  self.get_view_matrix()
         self.m_proj = self.get_projection_matrix()
         self.m_ortho = self.get_orthographic_matrix()
 
     def apply(self):
-        self.get_view_matrix(self.m_view)
+        self.m_view = self.get_view_matrix()
 
-    def get_view_matrix(self, out_mat):
-        out_mat[0][0] = self.transformation.right.x
-        out_mat[1][0] = self.transformation.right.y
-        out_mat[2][0] = self.transformation.right.z
-        out_mat[3][0] = -glm.dot(self.transformation.pos, self.transformation.right)
+    def get_view_matrix(self) -> glm.mat4x4:
+        return glm.lookAt(self.transformation.global_pos, self.transformation.global_pos + self.transformation.forward, self.transformation.up)
 
-        out_mat[0][1] = self.transformation.up.x
-        out_mat[1][1] = self.transformation.up.y
-        out_mat[2][1] = self.transformation.up.z
-        out_mat[3][1] = -glm.dot(self.transformation.pos, self.transformation.up)
-
-        out_mat[0][2] = self.transformation.forward.x
-        out_mat[1][2] = self.transformation.forward.y
-        out_mat[2][2] = self.transformation.forward.z
-        out_mat[3][2] = -glm.dot(self.transformation.pos, self.transformation.forward)
+    # def get_view_matrix(self, out_mat):
+    #     out_mat[0][0] = self.transformation.right.x
+    #     out_mat[1][0] = self.transformation.right.y
+    #     out_mat[2][0] = self.transformation.right.z
+    #     out_mat[3][0] = -glm.dot(self.transformation.pos, self.transformation.right)
+    #
+    #     out_mat[0][1] = self.transformation.up.x
+    #     out_mat[1][1] = self.transformation.up.y
+    #     out_mat[2][1] = self.transformation.up.z
+    #     out_mat[3][1] = -glm.dot(self.transformation.pos, self.transformation.up)
+    #
+    #     out_mat[0][2] = self.transformation.forward.x
+    #     out_mat[1][2] = self.transformation.forward.y
+    #     out_mat[2][2] = self.transformation.forward.z
+    #     out_mat[3][2] = -glm.dot(self.transformation.pos, self.transformation.forward)
 
     def get_projection_matrix(self) -> glm.mat4x4:
         return glm.perspective(glm.radians(self.fov), self.aspect_ratio, self.near, self.far)
