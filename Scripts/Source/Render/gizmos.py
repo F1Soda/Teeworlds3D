@@ -120,6 +120,9 @@ class Gizmos:
         def apply(self):
             self.draw(self.rely_object_transform.m_model)
 
+        def fixed_apply(self):
+            ...
+
         @property
         def size(self):
             return self._size

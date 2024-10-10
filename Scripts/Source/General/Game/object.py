@@ -65,6 +65,13 @@ class Object:
         for child in self.child_objects:
             child.apply_components()
 
+    def fixed_apply_components(self):
+        for component in self.components:
+            if component.enable:
+                component.fixed_apply()
+        for child in self.child_objects:
+            child.fixed_apply_components()
+
     def serialize(self):
         return {
             'name': self.name,

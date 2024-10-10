@@ -21,7 +21,6 @@ class PlayerController(component_m.Component):
     def __init__(self, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
         input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
-        self.camera_transformation = None
         self._transformation = None
 
     def init(self, app, rely_object):

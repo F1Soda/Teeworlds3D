@@ -16,7 +16,7 @@ import Scripts.Source.General.GSM.gsm as gsm_m
 import Scripts.GUI.gui as canvas_m
 
 WIN_SIZE = (1600, 900)
-
+FIXED_UPDATE_RATE = 50
 
 class TeeworldsEngine:
     win_size = glm.vec2()
@@ -76,6 +76,8 @@ class TeeworldsEngine:
         # Game State Machine
         self.gsm = gsm_m.GSM(self)
 
+        # Other
+        self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
 
 
     def process_window_resize(self, event):
@@ -109,9 +111,16 @@ class TeeworldsEngine:
         sys.exit()
 
     def run(self):
+        accumulated_time = 0
         while True:
-            self.delta_time = self.clock.tick(120)
+            self.delta_time = self.clock.tick(120) / 1000
             self.update_time()
+            accumulated_time += self.delta_time
+
+            while accumulated_time >= self.fixed_delta_time:
+                self.gsm.state.fixed_update()
+                accumulated_time -= self.fixed_delta_time
+
             self.gsm.state.update()
             input_manager_m.InputManager.process()
 

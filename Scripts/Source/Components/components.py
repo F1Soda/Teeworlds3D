@@ -13,6 +13,8 @@ import Scripts.Source.Components.rotator as rotator_m
 import Scripts.Source.Components.fps_camera_movement as fps_camera_movement_m
 import Scripts.Source.Components.player as player_m
 import Scripts.Source.Components.player_controller as player_controller_m
+import Scripts.Source.Components.rigidbody as rigidbody_m
+import Scripts.Source.Components.collider as collider_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -29,6 +31,8 @@ Rotator = rotator_m.Rotator
 FPSCameraMovement = fps_camera_movement_m.FPSCameraMovement
 Player = player_m.Player
 PlayerController = player_controller_m.PlayerController
+RigidBody = rigidbody_m.RigidBody
+Collider = collider_m.Collider
 
 components = {
     "Transformation": Transformation,
@@ -45,5 +49,7 @@ components = {
     "Rotator": Rotator,
     "FPSCameraMovement": FPSCameraMovement,
     "Player": Player,
-    "PlayerController": PlayerController
+    "PlayerController": PlayerController,
+    "RigidBody": RigidBody,
+    "Collider": Collider
 }

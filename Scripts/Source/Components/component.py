@@ -19,6 +19,9 @@ class Component:
 
     def apply(self): ...
 
+    def fixed_apply(self):
+        ...
+
     def delete(self):
         self.rely_object = None
         self.app = None

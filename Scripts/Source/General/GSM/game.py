@@ -83,6 +83,11 @@ class Game(state_m.GameState):
         self.level.apply_components()
         self._render()
 
+    def fixed_update(self):
+        self.level.fixed_apply_components()
+
+
+
     def process_window_resize(self, new_size):
         self.win_size = new_size
         self.game_gui.process_window_resize(new_size)

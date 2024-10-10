@@ -5,7 +5,9 @@ import Scripts.Source.Render.gizmos as gizmos_m
 import Scripts.Source.General.Managers.data_manager as data_manager_m
 import Scripts.Source.General.Managers.index_manager as index_manager_m
 import Scripts.Source.Components.components as components
+import Scripts.Source.General.Game.object as object_m
 
+DEBUG = True
 
 class Level:
     def __init__(self, app, gui):
@@ -25,6 +27,7 @@ class Level:
         self.transparency_renderer = []
         self.test_saving_object = None
         self.render_hidden_lines = components.renderer_m.HiddenLineState.Off
+
 
         self.gui = gui
 
@@ -264,14 +267,13 @@ class Level:
         self.objects[light.id] = light
 
     def load(self, file_path=None, is_game=False):
-        if is_game:
+        if is_game and not DEBUG:
             self.player = object_creator_m.ObjectCreator.create_player()
             self.add_object(self.player)
 
             self.camera = object_creator_m.ObjectCreator.create_camera_in_game(self.player)
             self.camera_component = self.camera.get_component_by_name("Camera")
 
-            self.player.get_component_by_name("Player Controller").camera_transformation = self.camera.transformation
             self.player.add_children(self.camera)
             self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
             # self.camera.transformation.rot = (-90, 0, 0)
@@ -282,12 +284,29 @@ class Level:
 
             self.player.add_component(x_axis_center)
             self.weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
-            #body = object_creator_m.ObjectCreator.create_cube("red_lit", "body")
-            #self.player.add_children(body)
             self.player.add_children(self.weapon)
             self.weapon.transformation.pos = self.weapon.transformation.pos + self.player.transformation.right * (0.1 + 1 / 2)
             self.player.transformation.pos = self.player.transformation.up * 0.75
+        elif DEBUG:
+            self.player = object_m.Object(self, "Rigidbody")
+            self.player.add_component(components.RigidBody(1))
+            self.add_object(self.player)
 
+            self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
+            self.camera_component = self.camera.get_component_by_name("Camera")
+
+            x_axis_center = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0.5, 2), (0, 0.5, 0), glm.vec3(0.8, 0.2, 1),
+                                                          self.camera_component, axis_id=-1, gizmos=self.app.gizmos)
+            self.app.gizmos.append(x_axis_center)
+
+            body = object_creator_m.ObjectCreator.create_cube("red_lit", "body")
+            self.player.add_children(body)
+
+            self.player.add_component(x_axis_center)
+
+
+
+            self.player.transformation.pos = self.player.transformation.up * 0.75
         else:
             self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
             self.camera_component = self.camera.get_component_by_name("Camera")
@@ -330,12 +349,20 @@ class Level:
 
     def apply_components(self):
         if self.app.NAME == "Game":
-            self.app.game_gui.debug_LOCAL_text.text = f"({self.weapon.transformation.pos.x:.2f}, {self.weapon.transformation.pos.y:.2f}, {self.weapon.transformation.pos.z:.2f})"
-            self.app.game_gui.debug_global_text.text = f"({self.weapon.transformation.global_pos.x:.2f}, {self.weapon.transformation.global_pos.y:.2f}, {self.weapon.transformation.global_pos.z:.2f})"
+            #self.app.game_gui.debug_LOCAL_text.text = f"({self.weapon.transformation.pos.x:.2f}, {self.weapon.transformation.pos.y:.2f}, {self.weapon.transformation.pos.z:.2f})"
+            #self.app.game_gui.debug_global_text.text = f"({self.weapon.transformation.global_pos.x:.2f}, {self.weapon.transformation.global_pos.y:.2f}, {self.weapon.transformation.global_pos.z:.2f})"
             self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         self.camera.apply_components()
         for obj in self.objects.values():
             obj.apply_components()
+
+    def fixed_apply_components(self):
+        if self.app.NAME == "Game":
+            self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
+        for obj in self.objects.values():
+            obj.fixed_apply_components()
+
+
 
     def render_opaque_objects(self):
         for renderer in self.opaque_renderer:
