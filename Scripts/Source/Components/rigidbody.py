@@ -35,6 +35,7 @@ class RigidBody(component_m.Component):
 
     def add_force(self, add_force):
         self.force = self.force + add_force
+        return
 
     def fixed_apply(self):
         dt = self.app.delta_time

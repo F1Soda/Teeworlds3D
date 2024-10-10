@@ -14,7 +14,8 @@ import Scripts.Source.Components.fps_camera_movement as fps_camera_movement_m
 import Scripts.Source.Components.player as player_m
 import Scripts.Source.Components.player_controller as player_controller_m
 import Scripts.Source.Components.rigidbody as rigidbody_m
-import Scripts.Source.Components.collider as collider_m
+import Scripts.Source.Components.Colliders.collider as collider_m
+import Scripts.Source.Components.debug as debug_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -33,6 +34,8 @@ Player = player_m.Player
 PlayerController = player_controller_m.PlayerController
 RigidBody = rigidbody_m.RigidBody
 Collider = collider_m.Collider
+
+Debug = debug_m.Debug
 
 components = {
     "Transformation": Transformation,

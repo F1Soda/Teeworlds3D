@@ -8,16 +8,10 @@ DESCRIPTION = 'Collider'
 
 
 class Collider(component_m.Component):
-    def __init__(self, mass, enable=True):
+    def __init__(self, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
-        self.mass = mass
-        self.force = glm.vec3()
-        self.velocity = glm.vec3()
-
-        # params
-        self.use_gravity = True
-
         self._transformation = None
+        self._mesh = None
 
     @property
     def transformation(self):
@@ -33,25 +27,11 @@ class Collider(component_m.Component):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)
 
-    def add_force(self, add_force):
-        self.force = self.force + add_force
-
-    def apply(self):
-        dt = self.app.delta_time
-        if self.use_gravity:
-            self.force = self.force + self.mass * physic_manager_m.PhysicManager.GRAVITY
-            self.velocity = self.velocity + self.force / self.mass * dt
-            self.transformation.pos = self.velocity * dt
-            # Очень плохо
-            self.force = glm.vec3(0)
-
-
     def delete(self):
         self._transformation = None
         self.rely_object = None
 
     def serialize(self) -> {}:
         return {
-            "mass": self.mass,
             'enable': self.enable
         }

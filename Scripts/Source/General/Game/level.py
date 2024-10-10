@@ -290,6 +290,7 @@ class Level:
         elif is_game and DEBUG:
             self.player = object_m.Object(self, "Rigidbody")
             self.player.add_component(components.RigidBody(1))
+            self.player.add_component(components.Debug())
             self.add_object(self.player)
 
             self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()

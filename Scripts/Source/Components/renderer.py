@@ -20,7 +20,7 @@ class HiddenLineState(enum.Enum):
 
 class Renderer(component_m.Component):
 
-    def __init__(self, mesh: mesh_m.Mesh, material: material_m.Material, enable_hidden_line=False, enable=True):
+    def __init__(self, material: material_m.Material, enable_hidden_line=False, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
 
         # Settings
@@ -30,18 +30,29 @@ class Renderer(component_m.Component):
         self.hidden_line_shader = library_m.shader_programs['hidden_line']
 
         # Other
-        self.mesh = mesh
+
         self._material = material
         self.picking_material = library_m.materials['object_picking']
 
+        self._mesh = None
         self.level = None
         self.camera_transform = None
         self.camera_component = None
         self.transformation = None
         self.ctx = None
-        self.vao = None
+        self._vao = None
         self.vao_picking = None
         self.vao_hidden_line = None
+
+    @property
+    def mesh(self):
+        if self._mesh is None:
+            self._mesh = self.rely_object.get_component_by_name("MeshFilter")
+        return self._mesh
+
+    @mesh.setter
+    def mesh(self, value):
+        self._mesh = value
 
     def _enable_hidden_line(self):
         self.hidden_line_shader['resolution'].write(glm.vec2(self.app.win_size))
@@ -71,7 +82,7 @@ class Renderer(component_m.Component):
         self.material.light_component = self.light_component
         self.material.initialize()
 
-        self.vao = self.get_vao(self._material.shader_program, self.mesh)
+        self._vao =
         self.vao_picking = self.get_vao(self.picking_material.shader_program, self.mesh)
 
         if self._init_hidden_line_vao:
@@ -90,15 +101,24 @@ class Renderer(component_m.Component):
                 self.level.transparency_renderer.append(self)
 
     @property
+    def vao(self):
+        if self._vao is None:
+            if self.mesh is None:
+                return None
+            self._vao = self.get_vao(self._material.shader_program, self.mesh)
+        return self._vao
+
+    @vao.setter
+    def vao(self, value):
+        self._vao = value
+
+    @property
     def light_component(self):
         return self.level.light
 
     def update_projection_matrix(self, m_proj):
         self.material.update_projection_matrix(m_proj)
         self.picking_material.update_projection_matrix(m_proj)
-
-    def get_model_matrix(self) -> glm.mat4x4:
-        return glm.mat4() if self.transformation is None else self.transformation.m_model
 
     def get_vao(self, shader_program, mesh) -> mgl.VertexArray:
         vao = self.ctx.vertex_array(shader_program.bin_program, [(mesh.vbo, mesh.data_format, *mesh.attributes)])
@@ -109,6 +129,8 @@ class Renderer(component_m.Component):
         self.hidden_line_shader['resolution'].write(glm.vec2(self.app.win_size))
 
     def apply(self):
+        if self.vao is None:
+            return
         self.material.update(self.transformation, self.light_component)
         self.hidden_line_shader['m_model'].write(self.transformation.m_model)
         self.hidden_line_shader['m_view'].write(self.camera_component.m_view)
