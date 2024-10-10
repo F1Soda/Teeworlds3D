@@ -117,12 +117,27 @@ class TeeworldsEngine:
             self.update_time()
             accumulated_time += self.delta_time
 
+            # Fixed Update
             while accumulated_time >= self.fixed_delta_time:
                 self.gsm.state.fixed_update()
                 accumulated_time -= self.fixed_delta_time
 
-            self.gsm.state.update()
+            # Input Events
             input_manager_m.InputManager.process()
+
+            # Game Logic
+            self.gsm.state.update()
+
+            # Scene Rendering
+            self.gsm.state.render_level()
+
+            # Gizmo Rendering
+            self.gsm.state.render_gizmo()
+
+            # GUI Rendering
+            self.gsm.state.render_gui()
+
+            pg.display.flip()
 
 
 if __name__ == '__main__':

@@ -56,31 +56,33 @@ class Editor(state_m.GameState):
         self.gizmos.process_window_resize(new_size)
         object_picker_m.ObjectPicker.process_window_resize(new_size)
 
-    def _render(self):
-        self.ctx.screen.use()
+    def update(self):
+        self.level.apply_components()
+        object_picker_m.ObjectPicker.picking_pass()
+
+    def fixed_update(self):
+        self.level.fixed_apply_components()
+
+    def render_level(self):
+        self.app.ctx.screen.use()
         self.ctx.clear(color=(0.08, 0.16, 0.18, 1))
         self.ctx.enable(mgl.BLEND)
         self.level.render_opaque_objects()
 
-        # Gizmos
-        self.gizmos.render()
         self.level.render_transparent_objects()
-        self.ctx.enable(mgl.BLEND)
-        self.ctx.disable(mgl.DEPTH_TEST)
 
-        # GUI
-        if self.draw_gui:
-            self.gui.render()
-        self.ctx.disable(mgl.BLEND)
-        self.ctx.enable(mgl.DEPTH_TEST)
-        pg.display.flip()
-
-    def update(self):
+    def render_gizmo(self):
         self.app.ctx.screen.use()
-        self.level.apply_components()
-        self._render()
+        self.gizmos.render()
 
-        object_picker_m.ObjectPicker.picking_pass()
+    def render_gui(self):
+        if self.draw_gui:
+            self.app.ctx.screen.use()
+            self.ctx.disable(mgl.DEPTH_TEST)
+            self.ctx.enable(mgl.BLEND)
+            self.gui.render()
+            self.ctx.disable(mgl.BLEND)
+            self.ctx.enable(mgl.DEPTH_TEST)
 
     def before_exit(self):
         self.editor_gui.ask_save_file_before_exit()

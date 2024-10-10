@@ -10,8 +10,8 @@ import pygame as pg
 NAME = "Free Fly Move"
 DESCRIPTION = "Компонент для свободного передвижения камеры"
 
-SPEED = 0.005
-SHIFT_SPEED = 0.03
+SPEED = 3
+SHIFT_SPEED = 5
 SENSITIVITY = 0.2
 
 VEC_UP = glm.vec3(0, 1, 0)
@@ -38,17 +38,17 @@ class FreeFlyMove(component_m.Component):
         velocity = (SHIFT_SPEED if keys[pg.K_LSHIFT] else SPEED) * self.app.delta_time
 
         if keys[pg.K_w]:
-            self.transformation.pos += self.transformation.forward * velocity
+            self.transformation.pos = self.transformation.pos + self.transformation.forward * velocity
         if keys[pg.K_s]:
-            self.transformation.pos -= self.transformation.forward * velocity
+            self.transformation.pos = self.transformation.pos - self.transformation.forward * velocity
         if keys[pg.K_a]:
-            self.transformation.pos += self.transformation.right * velocity
+            self.transformation.pos = self.transformation.pos - self.transformation.right * velocity
         if keys[pg.K_d]:
-            self.transformation.pos -= self.transformation.right * velocity
+            self.transformation.pos = self.transformation.pos + self.transformation.right * velocity
         if keys[pg.K_q]:
-            self.transformation.pos += self.transformation.up * velocity
+            self.transformation.pos = self.transformation.pos + self.transformation.up * velocity
         if keys[pg.K_e]:
-            self.transformation.pos -= self.transformation.up * velocity
+            self.transformation.pos = self.transformation.pos - self.transformation.up * velocity
 
     def _rotate(self, mouse_pos):
         if not self.RIGHT_MOUSE_BUTTON_RELEASED:
@@ -57,8 +57,8 @@ class FreeFlyMove(component_m.Component):
         rel_x = mouse_pos.x - self._rel_pos.x
         rel_y = self._rel_pos.y - mouse_pos.y
         new_rot = self.transformation.rot
-        new_rot.y += rel_x * SENSITIVITY
-        new_rot.x += rel_y * SENSITIVITY
+        new_rot.y -= rel_x * SENSITIVITY
+        new_rot.x -= rel_y * SENSITIVITY
         new_rot.x = max(-89, min(89, self.transformation.rot.x))
         self.transformation.rot = new_rot
         self._rel_pos = copy.copy(mouse_pos)

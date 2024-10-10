@@ -102,7 +102,7 @@ class EditorGUI:
                 if file_path.endswith(".json"):
                     data_manager_m.DataManager.save_scene(gui.app.level, file_path)
                     # what to do?
-                    self.editor.close_app()
+                    self.app.close_app()
                 else:
                     window = elements.Window(f"Error_saving_file_window{len(gui.windows)}", self.gui.canvas,
                                              gui.win_size,
@@ -131,7 +131,7 @@ class EditorGUI:
         button_apply.update_position()
 
         def no_save_action(button, gui, pos):
-            self.editor.close_app()
+            self.app.close_app()
 
         button_clear = elements.Button("Exit", window.inner_data_block, self.win_size, self, 'Exit', 1.5,
                                        no_save_action,
@@ -156,7 +156,7 @@ class EditorGUI:
         self.win_size = new_size
 
     def delete(self):
-        self.editor = None
+        self.app = None
         self.gui = None
         self.header = None
         # self.inspector = None

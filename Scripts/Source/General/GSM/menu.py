@@ -19,18 +19,15 @@ class Menu(state_m.GameState):
     def exit(self):
         self.menu_sm.release()
 
-    def update(self):
+    def render_level(self):
         self.app.ctx.screen.use()
         self.app.ctx.clear(color=(0.357, 0.502, 0.11, 1))
 
+    def render_gui(self):
+        self.app.ctx.screen.use()
         self.app.ctx.disable(mgl.DEPTH_TEST)
         self.app.ctx.enable(mgl.BLEND)
-        # GUI
         self.gui.render()
-        self.app.ctx.disable(mgl.BLEND)
-        self.app.ctx.enable(mgl.DEPTH_TEST)
-        pg.display.flip()
-
 
     def before_exit(self):
         self.app.exit()

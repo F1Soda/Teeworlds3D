@@ -287,7 +287,7 @@ class Level:
             self.player.add_children(self.weapon)
             self.weapon.transformation.pos = self.weapon.transformation.pos + self.player.transformation.right * (0.1 + 1 / 2)
             self.player.transformation.pos = self.player.transformation.up * 0.75
-        elif DEBUG:
+        elif is_game and DEBUG:
             self.player = object_m.Object(self, "Rigidbody")
             self.player.add_component(components.RigidBody(1))
             self.add_object(self.player)

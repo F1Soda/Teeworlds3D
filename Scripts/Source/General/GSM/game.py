@@ -39,9 +39,9 @@ class Game(state_m.GameState):
         self.gizmos = []
         self.level = level_m.Level(self, self.gui)
         object_creator_m.ObjectCreator.rely_level = self.level
-        self.level.load(file_path,  is_game=True)
+        self.level.load(file_path, is_game=True)
 
-        #self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
+        # self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
 
     def enter(self, params=None):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
@@ -54,39 +54,36 @@ class Game(state_m.GameState):
 
     def exit(self):
         self.level.delete()
-        #self.gizmos.delete()
+        # self.gizmos.delete()
         self.game_gui.delete()
-
-    def _render(self):
-        self.ctx.screen.use()
-        self.ctx.clear(color=(0.08, 0.16, 0.18, 1))
-        self.ctx.enable(mgl.BLEND)
-        self.level.render_opaque_objects()
-
-        for gizmo in self.gizmos:
-            gizmo.apply()
-        self.level.render_transparent_objects()
-        self.ctx.enable(mgl.BLEND)
-        self.ctx.disable(mgl.DEPTH_TEST)
-
-        # GUI
-        self.gui.render()
-        self.ctx.disable(mgl.BLEND)
-        self.ctx.enable(mgl.DEPTH_TEST)
-        pg.display.flip()
 
     def before_exit(self):
         self.app.exit()
 
     def update(self):
-        self.app.ctx.screen.use()
         self.level.apply_components()
-        self._render()
 
     def fixed_update(self):
         self.level.fixed_apply_components()
 
+    def render_level(self):
+        self.app.ctx.screen.use()
+        self.ctx.clear(color=(0.08, 0.16, 0.18, 1))
+        self.ctx.enable(mgl.BLEND)
+        self.level.render_opaque_objects()
 
+        self.level.render_transparent_objects()
+
+    def render_gizmo(self):
+        for gizmo in self.gizmos:
+            gizmo.apply()
+
+    def render_gui(self):
+        self.app.ctx.screen.use()
+        self.ctx.disable(mgl.DEPTH_TEST)
+        self.gui.render()
+        self.ctx.disable(mgl.BLEND)
+        self.ctx.enable(mgl.DEPTH_TEST)
 
     def process_window_resize(self, new_size):
         self.win_size = new_size
