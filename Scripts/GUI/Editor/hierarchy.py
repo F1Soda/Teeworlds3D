@@ -98,7 +98,7 @@ class Hierarchy(element_m.Element):
         button.position.evaluate_values_by_relative()
         button.update_position()
 
-        content.add(content_element)
+        content.add_object(content_element)
         content.update_position()
 
     def process_window_resize(self, new_size: glm.vec2):
@@ -815,7 +815,7 @@ class Hierarchy(element_m.Element):
         button.position.evaluate_values_by_relative()
         button.update_position()
 
-        sub_menu.add(content_element)
+        sub_menu.add_object(content_element)
 
     def update_content(self):
         self.content.clear()

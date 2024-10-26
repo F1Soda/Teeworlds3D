@@ -15,7 +15,9 @@ import Scripts.Source.Components.player as player_m
 import Scripts.Source.Components.player_controller as player_controller_m
 import Scripts.Source.Components.rigidbody as rigidbody_m
 import Scripts.Source.Components.Colliders.collider as collider_m
+import Scripts.Source.Components.Colliders.mesh_collider as mesh_collider_m
 import Scripts.Source.Components.debug as debug_m
+import Scripts.Source.Components.mesh_filter as mesh_filter_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -34,6 +36,8 @@ Player = player_m.Player
 PlayerController = player_controller_m.PlayerController
 RigidBody = rigidbody_m.RigidBody
 Collider = collider_m.Collider
+MeshCollider = mesh_collider_m.MeshCollider
+MeshFilter = mesh_filter_m.MeshFilter
 
 Debug = debug_m.Debug
 
@@ -54,5 +58,7 @@ components = {
     "Player": Player,
     "PlayerController": PlayerController,
     "RigidBody": RigidBody,
-    "Collider": Collider
+    "Collider": Collider,
+    "Mesh Collider": MeshCollider,
+    "Mesh Filter": MeshFilter
 }

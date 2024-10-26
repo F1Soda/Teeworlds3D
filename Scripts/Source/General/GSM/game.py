@@ -3,7 +3,7 @@ import Scripts.Source.General.GSM.game_state as state_m
 import Scripts.GUI.Game.game_gui as game_gui_m
 import Scripts.GUI.Editor.editor_gui as editor_gui_m
 import Scripts.Source.General.Game.level as level_m
-import Scripts.Source.Render.gizmos as gizmos_m
+import Scripts.Source.Physic.physics_world as physics_world_m
 import moderngl as mgl
 import pygame as pg
 
@@ -14,6 +14,7 @@ class Game(state_m.GameState):
     def __init__(self, app, gsm):
         super().__init__(gsm, app)
         self.level = None
+        self.physic_world = physics_world_m.PhysicWorld()
         self.gizmos = None
         self.game_gui = None
         self.gui = app.gui
@@ -48,9 +49,13 @@ class Game(state_m.GameState):
         if params is None:
             params = "Levels/Base/Empty.json"
         self._load_level(params)
-        self.app.grab_mouse_inside_bounded_window = True
-        self.app.set_mouse_visible(False)
-        self.app.set_mouse_grab(True)
+
+        self.physic_world.init_physic_object_by_level(self.level)
+        self.physic_world.add_default_solvers()
+
+        #self.app.grab_mouse_inside_bounded_window = True
+        #self.app.set_mouse_visible(False)
+        #self.app.set_mouse_grab(True)
 
     def exit(self):
         self.level.delete()
@@ -64,6 +69,7 @@ class Game(state_m.GameState):
         self.level.apply_components()
 
     def fixed_update(self):
+        self.physic_world.step(self.app.delta_time)
         self.level.fixed_apply_components()
 
     def render_level(self):
@@ -77,6 +83,8 @@ class Game(state_m.GameState):
     def render_gizmo(self):
         for gizmo in self.gizmos:
             gizmo.apply()
+
+        self.level.on_draw_gizmos()
 
     def render_gui(self):
         self.app.ctx.screen.use()

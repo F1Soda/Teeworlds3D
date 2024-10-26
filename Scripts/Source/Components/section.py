@@ -30,7 +30,7 @@ class Section(component_m.Component):
         if self.plane:
             self._vao = self.plane.get_vao(self._material.shader_program)
             if self.plane in self.app.level.transparency_renderer:
-                self.app.level.transparency_renderer.remove(self.plane)
+                self.app.level.transparency_renderer.remove_object(self.plane)
                 self.app.level.opaque_renderer.append(self.plane)
             self._subtract_vao = self.plane.get_vao(self._subtract_shader)
 

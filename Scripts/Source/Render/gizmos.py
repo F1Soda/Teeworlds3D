@@ -293,7 +293,8 @@ class Gizmos:
         scene.index_manager.global_index = current_index
 
         plane = object_m.Object(scene, "Plane", [], obj_id=-1)
-        renderer = components.Renderer(library_m.meshes['plane'], library_m.materials['grid'])
+        plane.add_component(components.MeshFilter(library_m.meshes['plane']))
+        renderer = components.Renderer(library_m.materials['grid'])
         plane.add_component(renderer)
         plane.transformation.scale = glm.vec3(1000, 1, 1000)
         renderer.material['tilling'] = glm.vec2(1000)
@@ -318,8 +319,8 @@ class Gizmos:
         # self.draw_word_axis_in_right_corner()
         transform = object_picker_m.ObjectPicker.last_picked_obj_transformation
         if self.draw_grid_and_center_system:
-            #self.draw_center_coordinate()
-            #self.draw_center_axis_arrows()
+            self.draw_center_coordinate()
+            self.draw_center_axis_arrows()
             self.draw_plane_grid()
 
         if transform and transform.moveable:

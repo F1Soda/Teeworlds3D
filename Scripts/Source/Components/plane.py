@@ -49,12 +49,12 @@ class Plane(component_m.Component):
     def update_render_mode(self):
         if self.render_mode == material_m.RenderMode.Opaque:
             if self in self.app.level.transparency_renderer:
-                self.app.level.transparency_renderer.remove(self)
+                self.app.level.transparency_renderer.remove_object(self)
             if self not in self.app.level.opaque_renderer:
                 self.app.level.opaque_renderer.append(self)
         else:
             if self in self.app.level.opaque_renderer:
-                self.app.level.opaque_renderer.remove(self)
+                self.app.level.opaque_renderer.remove_object(self)
             if self not in self.app.level.transparency_renderer:
                 self.app.level.transparency_renderer.append(self)
 

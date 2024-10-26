@@ -123,8 +123,10 @@ class DataManager:
 
             # Special Cases
             if component_name == "Renderer":
-                component_data['mesh'] = library_m.meshes[component_data['mesh']]
+                # component_data['mesh'] = library_m.meshes[component_data['mesh']]
                 component_data['material'] = library_m.materials[component_data['material']]
+            if component_name == "Mesh Filter":
+                component_data['mesh'] = library_m.meshes[component_data['mesh']]
             elif component_name == "Transformation":
                 obj.transformation.pos = component_data['pos']
                 obj.transformation.rot = component_data['rot']

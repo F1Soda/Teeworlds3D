@@ -53,7 +53,7 @@ class Window(element_m.Element):
 
         def handle_left_click_header(pos):
             utils_m.copy_vec(pos, self._last_clicked_header_pos)
-            gui.windows.remove(self)
+            gui.windows.remove_object(self)
             self.gui.windows.append(self)
 
         def handle_left_hold_header(pos):
@@ -98,11 +98,11 @@ class Window(element_m.Element):
     def close(self):
         self.active = False
         self.gui.last_clicked_element = None
-        self.gui.windows.remove(self)
+        self.gui.windows.remove_object(self)
         self.delete()
 
     def delete(self):
-        self.gui.canvas.elements.remove(self)
+        self.gui.canvas.elements.remove_object(self)
         self.gui = None
         self.background = None
         super().delete()

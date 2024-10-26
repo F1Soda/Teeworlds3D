@@ -1,0 +1,265 @@
+{
+  "index_manager_data": {
+    "global_index": 12,
+    "unused_indices": []
+  },
+  "objects": {
+    "5": {
+      "name": "Light",
+      "components": {
+        "Transformation": {
+          "pos": [
+            "vec",
+            [
+              0.0,
+              3.0,
+              0.0
+            ]
+          ],
+          "rot": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "scale": [
+            "vec",
+            [
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "moveable": true,
+          "enable": true
+        },
+        "Light": {
+          "color": [
+            "vec",
+            [
+              1.0,
+              1.0,
+              1.0
+            ]
+          ],
+          "enable": true
+        }
+      }
+    },
+    "6": {
+      "name": "cube_6",
+      "components": {
+        "Transformation": {
+          "pos": [
+            "vec",
+            [
+              4.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "rot": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "scale": [
+            "vec",
+            [
+              0.5,
+              0.5,
+              0.5
+            ]
+          ],
+          "moveable": true,
+          "enable": true
+        },
+        "Mesh Filter": {
+          "mesh": "cube",
+          "enable": true
+        },
+        "Renderer": {
+          "material": "red_lit",
+          "enable": true,
+          "enable_hidden_line": true
+        }
+      }
+    },
+    "8": {
+      "name": "cube_8",
+      "components": {
+        "Transformation": {
+          "pos": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              4.0
+            ]
+          ],
+          "rot": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "scale": [
+            "vec",
+            [
+              0.5,
+              0.5,
+              0.5
+            ]
+          ],
+          "moveable": true,
+          "enable": true
+        },
+        "Mesh Filter": {
+          "mesh": "cube",
+          "enable": true
+        },
+        "Renderer": {
+          "material": "blue_lit",
+          "enable": true,
+          "enable_hidden_line": true
+        }
+      }
+    },
+    "9": {
+      "name": "cube_9",
+      "components": {
+        "Transformation": {
+          "pos": [
+            "vec",
+            [
+              0.0,
+              4.471752643585205,
+              0.0
+            ]
+          ],
+          "rot": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "scale": [
+            "vec",
+            [
+              0.5,
+              0.5,
+              0.5
+            ]
+          ],
+          "moveable": true,
+          "enable": true
+        },
+        "Mesh Filter": {
+          "mesh": "cube",
+          "enable": true
+        },
+        "Renderer": {
+          "material": "green_lit",
+          "enable": true,
+          "enable_hidden_line": true
+        }
+      }
+    },
+    "10": {
+      "name": "octahedron_10",
+      "components": {
+        "Transformation": {
+          "pos": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "rot": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "scale": [
+            "vec",
+            [
+              0.5,
+              0.5,
+              0.5
+            ]
+          ],
+          "moveable": true,
+          "enable": true
+        },
+        "Mesh Filter": {
+          "mesh": "octahedron",
+          "enable": true
+        },
+        "Renderer": {
+          "material": "gray_lit",
+          "enable": true,
+          "enable_hidden_line": true
+        }
+      }
+    },
+    "11": {
+      "name": "plane_11",
+      "components": {
+        "Transformation": {
+          "pos": [
+            "vec",
+            [
+              0.0,
+              0.04234863072633743,
+              0.0
+            ]
+          ],
+          "rot": [
+            "vec",
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "scale": [
+            "vec",
+            [
+              50.0,
+              50.0,
+              50.0
+            ]
+          ],
+          "moveable": true,
+          "enable": true
+        },
+        "Mesh Filter": {
+          "mesh": "plane",
+          "enable": true
+        },
+        "Renderer": {
+          "material": "gray_unlit",
+          "enable": true,
+          "enable_hidden_line": false
+        },
+        "Mesh Collider": {
+          "enable": true
+        }
+      }
+    }
+  }
+}

@@ -10,10 +10,17 @@ class MeshFilter(component_m.Component):
         super().__init__(NAME, DESCRIPTION, enable)
         self.mesh = mesh
         self._transformation = None
+        self._vertices = None
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)
+
+    @property
+    def vertices(self):
+        if self.mesh is None:
+            raise Exception("ERROR: mesh in mesh filter is None!")
+        return self.mesh.vertices
 
     @property
     def transformation(self):

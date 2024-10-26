@@ -11,6 +11,7 @@ class Mesh:
         self.data_format = data_format
         self.attributes = attributes
 
+        self.triangle_vertices = None
         self.vertices = None
         # self.indices = None
         self.normals = None
@@ -37,7 +38,7 @@ class Mesh:
         return self._vbo
 
     def create_vertex_data(self) -> np.ndarray:
-        vertex_data = self.vertices
+        vertex_data = self.triangle_vertices
         if self.tex_coord is not None:
             vertex_data = np.hstack([vertex_data, self.tex_coord])
         if self.normals is not None:

@@ -1,6 +1,5 @@
 import Scripts.Source.Components.component as component_m
 import Scripts.Source.General.Game.level as level_m
-import Scripts.Source.Render.mesh as mesh_m
 import Scripts.Source.Render.material as material_m
 import Scripts.Source.Render.library as library_m
 import glm
@@ -34,32 +33,37 @@ class Renderer(component_m.Component):
         self._material = material
         self.picking_material = library_m.materials['object_picking']
 
-        self._mesh = None
+        self._mesh_filter = None
         self.level = None
         self.camera_transform = None
         self.camera_component = None
         self.transformation = None
         self.ctx = None
         self._vao = None
-        self.vao_picking = None
+        self._vao_picking = None
         self.vao_hidden_line = None
 
     @property
-    def mesh(self):
-        if self._mesh is None:
-            self._mesh = self.rely_object.get_component_by_name("MeshFilter")
-        return self._mesh
+    def mesh_filter(self):
+        if self._mesh_filter is None:
+            self._mesh_filter = self.rely_object.get_component_by_name("Mesh Filter")
+        return self._mesh_filter
 
-    @mesh.setter
-    def mesh(self, value):
-        self._mesh = value
+    @mesh_filter.setter
+    def mesh_filter(self, value):
+        self._mesh_filter = value
+        self._vao = self.get_vao(self.material.shader_program, self.mesh_filter)
+        self._vao_picking = self.get_vao(self.picking_material.shader_program, self.mesh_filter.mesh)
+
 
     def _enable_hidden_line(self):
+        if self.mesh_filter is None:
+            return
         self.hidden_line_shader['resolution'].write(glm.vec2(self.app.win_size))
         self.hidden_line_shader['dashSize'] = 10
         self.hidden_line_shader['gapSize'] = 10
         self.vao_hidden_line = self.ctx.vertex_array(self.hidden_line_shader.bin_program,
-                                                     [(self.mesh.hidden_vbo, '3f', 'in_position')])
+                                                     [(self.mesh_filter.mesh.hidden_vbo, '3f', 'in_position')])
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
@@ -82,8 +86,8 @@ class Renderer(component_m.Component):
         self.material.light_component = self.light_component
         self.material.initialize()
 
-        self._vao =
-        self.vao_picking = self.get_vao(self.picking_material.shader_program, self.mesh)
+        self._vao = self.get_vao(self.material.shader_program, self.mesh_filter)
+        self._vao_picking = self.get_vao(self.picking_material.shader_program, self.mesh_filter)
 
         if self._init_hidden_line_vao:
             self._enable_hidden_line()
@@ -91,26 +95,34 @@ class Renderer(component_m.Component):
     def update_render_mode(self):
         if self.material.render_mode == material_m.RenderMode.Opaque:
             if self in self.level.transparency_renderer:
-                self.level.transparency_renderer.remove(self)
+                self.level.transparency_renderer.remove_object(self)
             if self not in self.level.opaque_renderer:
                 self.level.opaque_renderer.append(self)
         else:
             if self in self.level.opaque_renderer:
-                self.level.opaque_renderer.remove(self)
+                self.level.opaque_renderer.remove_object(self)
             if self not in self.level.transparency_renderer:
                 self.level.transparency_renderer.append(self)
 
     @property
     def vao(self):
         if self._vao is None:
-            if self.mesh is None:
-                return None
-            self._vao = self.get_vao(self._material.shader_program, self.mesh)
+            self._vao = self.get_vao(self._material.shader_program, self.mesh_filter)
         return self._vao
 
     @vao.setter
     def vao(self, value):
         self._vao = value
+
+    @property
+    def vao_picking(self):
+        if self._vao_picking is None:
+            self._vao_picking = self.get_vao(self.picking_material.shader_program, self.mesh_filter)
+        return self._vao_picking
+
+    @vao_picking.setter
+    def vao_picking(self, value):
+        self._vao_picking = value
 
     @property
     def light_component(self):
@@ -120,8 +132,10 @@ class Renderer(component_m.Component):
         self.material.update_projection_matrix(m_proj)
         self.picking_material.update_projection_matrix(m_proj)
 
-    def get_vao(self, shader_program, mesh) -> mgl.VertexArray:
-        vao = self.ctx.vertex_array(shader_program.bin_program, [(mesh.vbo, mesh.data_format, *mesh.attributes)])
+    def get_vao(self, shader_program, mesh_filter) -> mgl.VertexArray | None:
+        if shader_program is None or mesh_filter is None:
+            return None
+        vao = self.ctx.vertex_array(shader_program.bin_program, [(mesh_filter.mesh.vbo, mesh_filter.mesh.data_format, *mesh_filter.mesh.attributes)])
         return vao
 
     def process_window_resize(self, new_size):
@@ -132,12 +146,15 @@ class Renderer(component_m.Component):
         if self.vao is None:
             return
         self.material.update(self.transformation, self.light_component)
-        self.hidden_line_shader['m_model'].write(self.transformation.m_model)
-        self.hidden_line_shader['m_view'].write(self.camera_component.m_view)
-        self.hidden_line_shader['m_proj'].write(self.camera_component.m_proj)
+
 
         if self.material.render_mode == material_m.RenderMode.Opaque:
             if self.level.render_hidden_lines != HiddenLineState.Off and self.vao_hidden_line:
+
+                self.hidden_line_shader['m_model'].write(self.transformation.m_model)
+                self.hidden_line_shader['m_view'].write(self.camera_component.m_view)
+                self.hidden_line_shader['m_proj'].write(self.camera_component.m_proj)
+
                 self.hidden_line_shader[
                     'dashed'] = True if self.level.render_hidden_lines == HiddenLineState.Dash else False
                 self.ctx.screen.color_mask = False, False, False, False
@@ -153,7 +170,8 @@ class Renderer(component_m.Component):
 
                 self.ctx.screen.depth_mask = True
                 self.ctx.depth_func = '<'
-            self.vao.render()
+            else:
+                self.vao.render()
         elif self.material.render_mode == material_m.RenderMode.Transparency:
             self.ctx.enable(mgl.BLEND)
             self.vao.render()
@@ -171,7 +189,7 @@ class Renderer(component_m.Component):
     def material(self, value):
         self._material = value
         self.vao.release()
-        self.vao = self.get_vao(self._material.shader_program, self.mesh)
+        self.vao = self.get_vao(self._material.shader_program, self.mesh_filter)
 
     def delete(self):
         self.rely_object = None
@@ -185,11 +203,11 @@ class Renderer(component_m.Component):
             self.vao_hidden_line.release()
         self.vao_hidden_line = None
         self._material = None
-        self.mesh = None
+        self.mesh_filter.delete()
+        self._mesh_filter = None
 
     def serialize(self) -> {}:
         return {
-            'mesh': self.mesh.name,
             'material': self.material.name,
             'enable': self.enable,
             'enable_hidden_line': self._init_hidden_line_vao

@@ -24,6 +24,9 @@ class Object:
 
         self.add_component(self.transformation)
 
+        self.components_to_apply_fixed_update = []
+        self.components_to_call_on_gizmos = []
+
         self._renderer: renderer_m.Renderer = None
         self.enable = True
 
@@ -36,6 +39,13 @@ class Object:
         component.init(self.level.app, self)
         self.components.append(component)
         component.apply()
+
+        if component.use_fixed_update:
+            self.components_to_apply_fixed_update.append(component)
+
+        if component.use_on_draw_gizmos:
+            self.components_to_call_on_gizmos.append(component)
+
         return component
 
     def process_window_resize(self, new_size):
@@ -57,6 +67,8 @@ class Object:
     def delete(self):
         for component in self.components:
             component.delete()
+        self.components_to_call_on_gizmos = None
+        self.components_to_apply_fixed_update = None
 
     def apply_components(self):
         for component in self.components:
@@ -66,11 +78,18 @@ class Object:
             child.apply_components()
 
     def fixed_apply_components(self):
-        for component in self.components:
+        for component in self.components_to_apply_fixed_update:
             if component.enable:
                 component.fixed_apply()
         for child in self.child_objects:
             child.fixed_apply_components()
+
+    def on_gizmos(self, camera_component):
+        for component in self.components_to_call_on_gizmos:
+            if component.enable:
+                component.on_gizmos(camera_component)
+        for child in self.child_objects:
+            child.on_gizmos(camera_component)
 
     def serialize(self):
         return {

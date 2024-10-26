@@ -14,12 +14,18 @@ class Component:
         self.enable = enable
         self.app = None
 
+        self.use_fixed_update = False
+        self.use_on_draw_gizmos = False
+
     def set_active(self, enable: bool):
         self.enable = enable
 
     def apply(self): ...
 
     def fixed_apply(self):
+        ...
+
+    def on_gizmos(self, camera_component):
         ...
 
     def delete(self):

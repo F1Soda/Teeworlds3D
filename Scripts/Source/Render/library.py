@@ -46,7 +46,8 @@ def _init_cube(ctx):
                (0, -1, 0) * 6, ]
 
     mesh = render.Mesh(ctx, "cube", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
-    mesh.vertices = utils_m.get_data_elements_by_indices(vertices, indices)
+    mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, tex_coord_indices)
     mesh.normals = np.array(normals, dtype='f4').reshape(36, 3)
     mesh.hidden_vertices = utils_m.get_data_elements_by_indices(vertices, outline_indices)
@@ -98,7 +99,8 @@ def _init_tetrahedron(ctx):
         (-vertices[0].x, -vertices[0].y, -vertices[0].z) * 3
     ]
     mesh = render.Mesh(ctx, "tetrahedron", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
-    mesh.vertices = utils_m.get_data_elements_by_indices(vertices, indices)
+    mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, tex_coord_indices)
     mesh.normals = np.array(normals, dtype='f4').reshape(12, 3)
     mesh.hidden_vertices = utils_m.get_data_elements_by_indices(vertices, outline_indices)
@@ -161,7 +163,8 @@ def _init_octahedron(ctx):
     ]
 
     mesh = render.Mesh(ctx, "octahedron", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
-    mesh.vertices = utils_m.get_data_elements_by_indices(vertices, indices)
+    mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, tex_coord_indices)
     mesh.normals = np.array(normals, dtype='f4').reshape(24, 3)
     mesh.hidden_vertices = utils_m.get_data_elements_by_indices(vertices, outline_indices)
@@ -178,7 +181,8 @@ def _init_plane(ctx):
     normals = [(0, -1, 0)] * 6 + [(0, 1, 0)] * 6
 
     mesh = render.Mesh(ctx, "plane", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
-    mesh.vertices = utils_m.get_data_elements_by_indices(vertices, indices)
+    mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, indices)
     mesh.normals = np.array(normals, dtype='f4')
     return mesh

@@ -176,7 +176,7 @@ class ObjectPicker:
                                                            ObjectPicker._last_picked_obj_m_model)
         difference = dot - ObjectPicker._last_mouse_dot
         ObjectPicker._last_mouse_dot = dot
-        ObjectPicker.last_picked_obj_transformation.pos += (axis.end - axis.start) * difference / 100
+        ObjectPicker.last_picked_obj_transformation.pos = ObjectPicker.last_picked_obj_transformation.pos + (axis.end - axis.start) * difference / 100
         return True
 
     @staticmethod
