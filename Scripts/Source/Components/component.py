@@ -10,6 +10,7 @@ class Component:
     def __init__(self, name: str, description: str, enable=True):
         self.name = name
         self.description = description
+        self.base_name = "Component"
         self.rely_object = None  # type: Object | None
         self.enable = enable
         self.app = None

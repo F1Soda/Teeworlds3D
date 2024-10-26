@@ -91,13 +91,13 @@ def _case_tetrahedron(simplex, direction):
 
     if same_direction_vec(abc, ao):
         simplex.points = [a, b, c]
-        return _case_triangle(simplex, direction)
+        return False, _case_triangle(simplex, direction)
     if same_direction_vec(acd, ao):
         simplex.points = [a, c, d]
-        return _case_triangle(simplex, direction)
+        return False, _case_triangle(simplex, direction)
     if same_direction_vec(adb, ao):
         simplex.points = [a, d, b]
-        return _case_triangle(simplex, direction)
+        return False, _case_triangle(simplex, direction)
 
     return True, direction
 

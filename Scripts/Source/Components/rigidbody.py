@@ -22,8 +22,8 @@ class RigidBody(component_m.Component):
         self.restitution = 0.2  # Elasticity of collisions
         self.inv_mass = 1 / self.mass if mass != 0 else 1  # 1 / Mass of rigidbody
 
-        self.static_friction = 0.5  # Static friction coefficient
-        self.dynamic_friction = 0.5  # Dynamic friction coefficient
+        self.static_friction = 0.6  # Static friction coefficient
+        self.dynamic_friction = 0.4  # Dynamic friction coefficient
 
         self._transformation = None
 

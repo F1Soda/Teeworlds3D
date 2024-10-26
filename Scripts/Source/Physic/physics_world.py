@@ -82,7 +82,7 @@ class PhysicWorld:
 
         for game_object in level.objects.values():
             rigidbody_component = game_object.get_component_by_name("RigidBody")
-            collider_component = game_object.get_component_by_name("Mesh Collider")
+            collider_component = game_object.get_component_by_name("Collider")
             if collider_component is not None:
                 physic_object = PhysicObject(rigidbody_component, collider_component)
                 self.collide_objects.append(physic_object)

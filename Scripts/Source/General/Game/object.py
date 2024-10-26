@@ -54,7 +54,7 @@ class Object:
 
     def get_component_by_name(self, name: str) -> component_m.Component | None:
         for component in self.components:
-            if component.name == name:
+            if component.name == name or component.base_name == name:
                 return component
         return None
 

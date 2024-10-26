@@ -7,7 +7,7 @@ import Scripts.Source.General.Managers.index_manager as index_manager_m
 import Scripts.Source.Components.components as components
 import Scripts.Source.General.Game.object as object_m
 
-DEBUG = True
+DEBUG = False
 
 
 class Level:
@@ -269,25 +269,29 @@ class Level:
     def load(self, file_path=None, is_game=False):
         if is_game and not DEBUG:
             self.player = object_creator_m.ObjectCreator.create_player()
+            self.player.add_component(components.RigidBody(1))
+            self.player.add_component(components.BoxCollider())
+
             self.add_object(self.player)
 
             self.camera = object_creator_m.ObjectCreator.create_camera_in_game(self.player)
             self.camera_component = self.camera.get_component_by_name("Camera")
 
             self.player.add_children(self.camera)
+
             self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
             # self.camera.transformation.rot = (-90, 0, 0)
 
-            x_axis_center = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0.5, 2), (0, 0.5, 0), glm.vec3(0.8, 0.2, 1),
-                                                          self.camera_component, axis_id=-1, gizmos=self.app.gizmos)
-            self.app.gizmos.append(x_axis_center)
-
-            self.player.add_component(x_axis_center)
+            # x_axis_center = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0.5, 2), (0, 0.5, 0), glm.vec3(0.8, 0.2, 1),
+            #                                               self.camera_component, axis_id=-1, gizmos=self.app.gizmos)
+            # self.app.gizmos.append(x_axis_center)
+            #
+            # self.player.add_component(x_axis_center)
             self.weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
             self.player.add_children(self.weapon)
             self.weapon.transformation.pos = self.weapon.transformation.pos + self.player.transformation.right * (
                     0.1 + 1 / 2)
-            self.player.transformation.pos = self.player.transformation.up * 2.75
+            self.player.transformation.pos = self.player.transformation.up
         elif is_game and DEBUG:
             self.player = object_m.Object(self, "Rigidbody")
             self.player.add_component(components.RigidBody(1))
@@ -300,24 +304,22 @@ class Level:
             self.camera_component = self.camera.get_component_by_name("Camera")
             self.camera.transformation.pos = glm.vec3(-2, 1, 0)
 
-            #x_axis_center = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0.5, 2), (0, 0.5, 0), glm.vec3(0.8, 0.2, 1),
+            # x_axis_center = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0.5, 2), (0, 0.5, 0), glm.vec3(0.8, 0.2, 1),
             #                                              self.camera_component, axis_id=-1, gizmos=self.app.gizmos)
-            #self.app.gizmos.append(x_axis_center)
+            # self.app.gizmos.append(x_axis_center)
 
             body = object_creator_m.ObjectCreator.create_cube("red_lit", "body")
             self.player.add_children(body)
             player_mesh_collider.mesh_filter = body.get_component_by_name("Mesh Filter")
 
-            #self.player.add_component(x_axis_center)
+            # self.player.add_component(x_axis_center)
 
             self.player.transformation.pos = self.player.transformation.up * 2.75
 
-            # test collisions:
-
-            #cube = object_creator_m.ObjectCreator.create_cube("red_lit", "ground")
-            #ground_collider = cube.add_component(components.MeshCollider())
-            #ground_collider.draw_collider = True
-            #self.add_object(cube)
+            # cube = object_creator_m.ObjectCreator.create_cube("red_lit", "ground")
+            # ground_collider = cube.add_component(components.MeshCollider())
+            # ground_collider.draw_collider = True
+            # self.add_object(cube)
 
         else:
             self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
@@ -366,7 +368,7 @@ class Level:
     def apply_components(self):
         if self.app.NAME == "Game":
             self.app.game_gui.debug_LOCAL_text.text = f"({self.player.transformation.pos.x:.2f}, {self.player.transformation.pos.y:.2f}, {self.player.transformation.pos.z:.2f})"
-            # self.app.game_gui.debug_global_text.text = f"({self.weapon.transformation.global_pos.x:.2f}, {self.weapon.transformation.global_pos.y:.2f}, {self.weapon.transformation.global_pos.z:.2f})"
+            self.app.game_gui.debug_global_text.text = f"KUDA GONISH BRAT!!!"
             self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         self.camera.apply_components()
         for obj in self.objects.values():

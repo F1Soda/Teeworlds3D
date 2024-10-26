@@ -1,13 +1,11 @@
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.General.GSM.game_state as state_m
 import Scripts.GUI.Game.game_gui as game_gui_m
-import Scripts.GUI.Editor.editor_gui as editor_gui_m
 import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Physic.physics_world as physics_world_m
 import moderngl as mgl
-import pygame as pg
 
-DT = 0.008
+DT = 0.02
 class Game(state_m.GameState):
     NAME = "Game"
 
@@ -53,9 +51,9 @@ class Game(state_m.GameState):
         self.physic_world.init_physic_object_by_level(self.level)
         self.physic_world.add_default_solvers()
 
-        #self.app.grab_mouse_inside_bounded_window = True
-        #self.app.set_mouse_visible(False)
-        #self.app.set_mouse_grab(True)
+        self.app.grab_mouse_inside_bounded_window = True
+        self.app.set_mouse_visible(False)
+        self.app.set_mouse_grab(True)
 
     def exit(self):
         self.level.delete()

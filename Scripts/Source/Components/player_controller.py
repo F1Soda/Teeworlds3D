@@ -13,6 +13,7 @@ SPEED = 0.05
 
 VEC_UP = glm.vec3(0, 1, 0)
 
+
 # forward = glm.vec3(-1, 0, 0)
 # right = glm.vec3(0, 0, 1)
 
@@ -22,21 +23,32 @@ class PlayerController(component_m.Component):
         super().__init__(NAME, DESCRIPTION, enable)
         input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
         self._transformation = None
+        self._rigidbody = None
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.transformation
+        self._rigidbody = self.rely_object.get_component_by_name("Rigidbody")
+
+    @property
+    def rigidbody(self):
+        if self._rigidbody is None:
+            self._rigidbody = self.rely_object.get_component_by_name("RigidBody")
+        return self._rigidbody
 
     def _move(self, keys):
         velocity = SPEED
         if keys[pg.K_w]:
-            self.transformation.pos = self.transformation.pos + self.transformation.forward * velocity
+            self.rigidbody.add_force(self.transformation.forward * 10)
         if keys[pg.K_s]:
-            self.transformation.pos = self.transformation.pos - self.transformation.forward * velocity
+            self.rigidbody.add_force(-self.transformation.forward * 10)
         if keys[pg.K_a]:
-            self.transformation.pos = self.transformation.pos - self.transformation.right * velocity
+            self.rigidbody.add_force(-self.transformation.right * 10)
         if keys[pg.K_d]:
-            self.transformation.pos = self.transformation.pos + self.transformation.right * velocity
+            self.rigidbody.add_force(self.transformation.right * 10)
+
+        if keys[pg.K_SPACE]:
+            self.rigidbody.add_force(self.transformation.up * 25)
 
     def apply(self):
         pass
