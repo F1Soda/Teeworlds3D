@@ -91,4 +91,4 @@ class PhysicWorld:
 
     def add_default_solvers(self):
         self.solvers.append(impulse_solver_m.ImpulseSolver())
-        self.solvers.append(smooth_position_solver_m.SmoothPositionSolver())
+        self.solvers.append(position_solver_m.PositionSolver())

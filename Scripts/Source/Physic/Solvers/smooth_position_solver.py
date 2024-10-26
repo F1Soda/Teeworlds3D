@@ -17,10 +17,10 @@ class SmoothPositionSolver(solver_m.Solver):
             slop = 0.01
 
             correction = collision.collide_point.normal * percent * max(
-                collision.collide_point.penetration_depth - slop, 0.0) / (a_inv_mass + b_inv_mass)
+                collision.collide_point.depth - slop, 0.0) / (a_inv_mass + b_inv_mass)
 
-            delta_a = a_inv_mass * correction if a_body and a_body.is_simulated else glm.vec3(0.0)
-            delta_b = b_inv_mass * correction if b_body and a_body.is_simulated else glm.vec3(0.0)
+            delta_a = a_inv_mass * correction if a_body and (not a_body.is_kinematic) else glm.vec3(0.0)
+            delta_b = b_inv_mass * correction if b_body and (not a_body.is_kinematic) else glm.vec3(0.0)
 
             deltas.append((delta_a, delta_b))
 
@@ -28,8 +28,8 @@ class SmoothPositionSolver(solver_m.Solver):
             a_body = collisions[i].physic_object_a.rigidbody
             b_body = collisions[i].physic_object_b.rigidbody
 
-            if a_body and a_body.is_simulated:
+            if a_body and (not a_body.is_kinematic):
                 a_body.transformation.pos -= deltas[i][0]
 
-            if b_body and b_body.is_simulated:
+            if b_body and (not b_body.is_kinematic):
                 b_body.transformation.pos += deltas[i][1]

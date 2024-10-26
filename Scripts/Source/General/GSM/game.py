@@ -7,7 +7,7 @@ import Scripts.Source.Physic.physics_world as physics_world_m
 import moderngl as mgl
 import pygame as pg
 
-
+DT = 0.008
 class Game(state_m.GameState):
     NAME = "Game"
 
@@ -69,7 +69,7 @@ class Game(state_m.GameState):
         self.level.apply_components()
 
     def fixed_update(self):
-        self.physic_world.step(self.app.delta_time)
+        self.physic_world.step(DT)
         self.level.fixed_apply_components()
 
     def render_level(self):

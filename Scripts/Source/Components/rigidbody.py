@@ -8,9 +8,8 @@ DESCRIPTION = 'Physics'
 
 gravity = glm.vec3(0, -1, 0) * 9.8
 
-
 class RigidBody(component_m.Component):
-    def __init__(self, mass, is_kinematic=True, enable=True):
+    def __init__(self, mass, is_kinematic=False, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
         self.mass = mass
 
@@ -19,8 +18,8 @@ class RigidBody(component_m.Component):
 
         # params
         self.use_gravity = True
-        self.is_simulated = is_kinematic  # is_kinematic = True <=> object pos controlled by script
-        self.restitution = 0.5  # Elasticity of collisions
+        self.is_kinematic = is_kinematic  # is_kinematic = True <=> object pos controlled by script
+        self.restitution = 0.2  # Elasticity of collisions
         self.inv_mass = 1 / self.mass if mass != 0 else 1  # 1 / Mass of rigidbody
 
         self.static_friction = 0.5  # Static friction coefficient
@@ -42,17 +41,21 @@ class RigidBody(component_m.Component):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)
 
+    def apply_impulse(self, impulse):
+        self.velocity += impulse / self.mass
+
     def add_force(self, add_force):
         self.force = self.force + add_force
         # ApplyTorque(glm::cross(position, force));
 
     def apply_gravity(self):
-        if self.use_gravity and self.mass > 0:
+        if self.use_gravity and self.mass > 0 and not self.is_kinematic:
             self.add_force(gravity * self.mass)
 
     def apply_forces_and_clear(self, dt):
-        self.velocity = self.velocity + self.force / self.mass * dt
-        self.transformation.pos = self.transformation.pos + self.velocity * dt
+        if glm.length(self.velocity) > 10*-5:
+            self.velocity = self.velocity + self.force / self.mass * dt
+            self.transformation.pos = self.transformation.pos + self.velocity * dt
         # Очень плохо
         self.force = glm.vec3(0)
 

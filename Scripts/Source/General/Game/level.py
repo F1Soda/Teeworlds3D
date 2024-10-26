@@ -292,7 +292,7 @@ class Level:
             self.player = object_m.Object(self, "Rigidbody")
             self.player.add_component(components.RigidBody(1))
             player_mesh_collider = self.player.add_component(components.MeshCollider())
-            player_mesh_collider.draw_collider = True
+            player_mesh_collider.draw_collider = False
             self.player.add_component(components.Debug())
             self.add_object(self.player)
 

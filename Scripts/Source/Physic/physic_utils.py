@@ -27,7 +27,7 @@ class Simplex:
 class CollisionPoint:
     def __init__(self, normal, penetration_depth):
         self.normal = normal
-        self.penetration_depth = penetration_depth
+        self.depth = penetration_depth
 
 
 def _case_line(simplex, direction):
