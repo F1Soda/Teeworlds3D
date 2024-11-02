@@ -75,6 +75,7 @@ class ObjectCreator:
         cube.add_component(components.MeshFilter(library_m.meshes['cube']))
         cube_renderer = components.Renderer(library_m.materials[color], True)
         cube.add_component(cube_renderer)
+        cube.add_component(components.BoxCollider())
         if library_m.materials[color].render_mode == render.RenderMode.Opaque:
             ObjectCreator.rely_level.opaque_renderer.append(cube_renderer)
         else:
@@ -89,6 +90,7 @@ class ObjectCreator:
         tetrahedron.add_component(components.MeshFilter(library_m.meshes['tetrahedron']))
         tetrahedron_renderer = components.Renderer(library_m.materials[color], True)
         tetrahedron.add_component(tetrahedron_renderer)
+        tetrahedron.add_component(components.MeshCollider())
         if add_to_sequence_render:
             if library_m.materials[color].render_mode == render.RenderMode.Opaque:
                 ObjectCreator.rely_level.opaque_renderer.append(tetrahedron_renderer)
@@ -104,6 +106,7 @@ class ObjectCreator:
         octahedron.add_component(components.MeshFilter(library_m.meshes['octahedron']))
         octahedron_renderer = components.Renderer(library_m.materials[color], True)
         octahedron.add_component(octahedron_renderer)
+        octahedron.add_component(components.MeshCollider())
         if library_m.materials[color].render_mode == render.RenderMode.Opaque:
             ObjectCreator.rely_level.opaque_renderer.append(octahedron_renderer)
         else:
@@ -140,6 +143,7 @@ class ObjectCreator:
         plane.add_component(components.MeshFilter(library_m.meshes['plane']))
         renderer = components.Renderer(library_m.materials[color])
         plane.add_component(renderer)
+        plane.add_component(components.MeshCollider())
         ObjectCreator.rely_level.opaque_renderer.append(renderer)
         return plane
 

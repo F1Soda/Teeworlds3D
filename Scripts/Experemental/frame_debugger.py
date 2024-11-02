@@ -1,4 +1,4 @@
-import Scripts.GUI.Elements.elements as elements
+import Scripts.Source.GUI.Elements.elements as elements
 import glm
 
 

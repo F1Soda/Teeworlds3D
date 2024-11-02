@@ -1,6 +1,6 @@
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.General.GSM.game_state as state_m
-import Scripts.GUI.Game.game_gui as game_gui_m
+import Scripts.Source.GUI.Game.game_gui as game_gui_m
 import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Physic.physics_world as physics_world_m
 import moderngl as mgl
@@ -45,7 +45,7 @@ class Game(state_m.GameState):
     def enter(self, params=None):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
         if params is None:
-            params = "Levels/Base/Empty.json"
+            params = "Levels/Base/Test.json"
         self._load_level(params)
 
         self.physic_world.init_physic_object_by_level(self.level)

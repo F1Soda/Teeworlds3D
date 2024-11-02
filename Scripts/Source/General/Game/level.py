@@ -23,6 +23,7 @@ class Level:
         self.camera = None
         self.camera_component = None
         self.player = None
+        self.player_rb = None
 
         self.opaque_renderer = []
         self.transparency_renderer = []
@@ -269,8 +270,24 @@ class Level:
     def load(self, file_path=None, is_game=False):
         if is_game and not DEBUG:
             self.player = object_creator_m.ObjectCreator.create_player()
-            self.player.add_component(components.RigidBody(1))
+            self.player_rb = self.player.add_component(components.RigidBody(1))
+            self.player_rb.restitution = 0
+            self.player_rb.static_friction = 0
+            self.player_rb.dynamic_friction = 1
             self.player.add_component(components.BoxCollider())
+
+            ground_checker = object_m.Object(self, "Ground Checker", self.player)
+
+            self.player.add_children(ground_checker)
+
+            ground_checker.transformation.pos = ground_checker.transformation.pos - glm.vec3(0, 0.5, 0)
+            gc_collider = ground_checker.add_component(components.BoxCollider())
+            gc_collider.is_trigger = True
+            gc_collider.draw_collider = True
+            gc_collider.size = glm.vec3(0.5, 0.2, 0.5)
+            gc_collider.use_transform_model_matrix = False
+
+            ground_checker.add_component(components.GroundChecker())
 
             self.add_object(self.player)
 
@@ -294,7 +311,7 @@ class Level:
             self.player.transformation.pos = self.player.transformation.up
         elif is_game and DEBUG:
             self.player = object_m.Object(self, "Rigidbody")
-            self.player.add_component(components.RigidBody(1))
+            self.player_rb = self.player.add_component(components.RigidBody(1))
             player_mesh_collider = self.player.add_component(components.MeshCollider())
             player_mesh_collider.draw_collider = False
             self.player.add_component(components.Debug())
@@ -368,7 +385,7 @@ class Level:
     def apply_components(self):
         if self.app.NAME == "Game":
             self.app.game_gui.debug_LOCAL_text.text = f"({self.player.transformation.pos.x:.2f}, {self.player.transformation.pos.y:.2f}, {self.player.transformation.pos.z:.2f})"
-            self.app.game_gui.debug_global_text.text = f"KUDA GONISH BRAT!!!"
+            self.app.game_gui.debug_global_text.text = f"({self.player_rb.force.x:.2f}, {self.player_rb.force.x:.2f}, {self.player_rb.force.x:.2f})"
             self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         self.camera.apply_components()
         for obj in self.objects.values():

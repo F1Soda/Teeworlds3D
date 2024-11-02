@@ -7,13 +7,13 @@ import glm
 import pygame as pg
 import moderngl as mgl
 
-import Scripts.GUI.library as library_gui_m
+import Scripts.Source.GUI.library as library_gui_m
 import Scripts.Source.Render.library as library_object_m
 import Scripts.Source.General.Managers.data_manager as data_manager_m
 import Scripts.Source.General.Managers.input_manager as input_manager_m
 import Scripts.Source.General.GSM.gsm as gsm_m
 
-import Scripts.GUI.gui as canvas_m
+import Scripts.Source.GUI.gui as canvas_m
 
 WIN_SIZE = (1600, 900)
 FIXED_UPDATE_RATE = 50

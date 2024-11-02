@@ -3,13 +3,13 @@ import numpy as np
 import Scripts.Source.Render.library as library
 import moderngl as mgl
 import glm
-import Scripts.GUI.Editor.editor_gui as gui_m
+import Scripts.Source.GUI.Editor.editor_gui as gui_m
 import Scripts.Source.General.Game.object as object_m
 import Scripts.Source.Components.components as components
 import Scripts.Source.Render.library as library_m
 import Scripts.Source.General.Managers.object_picker as object_picker_m
 import Scripts.Source.General.Managers.object_creator as object_creator_m
-import Scripts.Source.Components.light as light_m
+import Scripts.Source.Components.Default.light as light_m
 
 EYE = glm.mat4()
 

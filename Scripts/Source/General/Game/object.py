@@ -1,7 +1,7 @@
 import typing
-import Scripts.Source.Components.component as component_m
-import Scripts.Source.Components.transformation as transformation_m
-import Scripts.Source.Components.renderer as renderer_m
+import Scripts.Source.Components.Default.component as component_m
+import Scripts.Source.Components.Default.transformation as transformation_m
+import Scripts.Source.Components.Default.renderer as renderer_m
 
 GLOBAL_INDEX = 0
 

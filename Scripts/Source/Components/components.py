@@ -1,24 +1,25 @@
-import Scripts.Source.Components.transformation as transformation_m
-import Scripts.Source.Components.renderer as renderer_m
-import Scripts.Source.Components.camera as camera_m
-import Scripts.Source.Components.light as light_m
-import Scripts.Source.Components.free_fly_move as free_fly_move_m
-import Scripts.Source.Components.point as point_m
-import Scripts.Source.Components.segment as segment_m
-import Scripts.Source.Components.plane as plane_m
-import Scripts.Source.Components.secateur as secateur_m
-import Scripts.Source.Components.section as section_m
-import Scripts.Source.Components.translator as translator_m
-import Scripts.Source.Components.rotator as rotator_m
-import Scripts.Source.Components.fps_camera_movement as fps_camera_movement_m
-import Scripts.Source.Components.player as player_m
-import Scripts.Source.Components.player_controller as player_controller_m
-import Scripts.Source.Components.rigidbody as rigidbody_m
-import Scripts.Source.Components.Colliders.collider as collider_m
-import Scripts.Source.Components.Colliders.mesh_collider as mesh_collider_m
-import Scripts.Source.Components.debug as debug_m
-import Scripts.Source.Components.mesh_filter as mesh_filter_m
-import Scripts.Source.Components.Colliders.box_collider as box_collider_m
+import Scripts.Source.Components.Default.transformation as transformation_m
+import Scripts.Source.Components.Default.renderer as renderer_m
+import Scripts.Source.Components.Default.camera as camera_m
+import Scripts.Source.Components.Default.light as light_m
+import Scripts.Source.Components.Default.free_fly_move as free_fly_move_m
+import Scripts.Source.Components.Default.point as point_m
+import Scripts.Source.Components.Default.segment as segment_m
+import Scripts.Source.Components.Default.plane as plane_m
+import Scripts.Source.Components.Default.secateur as secateur_m
+import Scripts.Source.Components.Default.section as section_m
+import Scripts.Source.Components.Custom.translator as translator_m
+import Scripts.Source.Components.Custom.rotator as rotator_m
+import Scripts.Source.Components.Custom.Player.fps_camera_movement as fps_camera_movement_m
+import Scripts.Source.Components.Custom.Player.player as player_m
+import Scripts.Source.Components.Custom.Player.player_controller as player_controller_m
+import Scripts.Source.Components.Default.rigidbody as rigidbody_m
+import Scripts.Source.Components.Default.Colliders.collider as collider_m
+import Scripts.Source.Components.Default.Colliders.mesh_collider as mesh_collider_m
+import Scripts.Source.Components.Custom.debug as debug_m
+import Scripts.Source.Components.Default.mesh_filter as mesh_filter_m
+import Scripts.Source.Components.Default.Colliders.box_collider as box_collider_m
+import Scripts.Source.Components.Custom.Player.ground_checker as ground_checker_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -40,6 +41,7 @@ Collider = collider_m.Collider
 MeshCollider = mesh_collider_m.MeshCollider
 BoxCollider = box_collider_m.BoxCollider
 MeshFilter = mesh_filter_m.MeshFilter
+GroundChecker = ground_checker_m.GroundChecker
 
 Debug = debug_m.Debug
 
@@ -63,5 +65,6 @@ components = {
     "Collider": Collider,
     "Mesh Collider": MeshCollider,
     "Box Collider": BoxCollider,
-    "Mesh Filter": MeshFilter
+    "Mesh Filter": MeshFilter,
+    "Ground Checker": GroundChecker
 }

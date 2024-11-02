@@ -1,8 +1,6 @@
 import Scripts.Source.General.GSM.game_state as state_m
-import Scripts.GUI.Menu.MenuSM.menu_sm as menu_sm_m
+import Scripts.Source.GUI.Menu.MenuSM.menu_sm as menu_sm_m
 import moderngl as mgl
-
-import pygame as pg
 
 
 class Menu(state_m.GameState):

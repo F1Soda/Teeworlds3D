@@ -218,12 +218,12 @@ def _init_shaders(ctx):
 
 def _init_textures(ctx):
     # Default White Color
-    texture = pg.image.load('textures/white.png').convert_alpha()
+    texture = pg.image.load('Textures/white.png').convert_alpha()
     texture = ctx.texture(size=texture.get_size(), components=4, data=pg.image.tostring(texture, 'RGBA'))
     textures['white'] = texture
 
     # Grid
-    texture = pg.image.load('textures/grid.png').convert_alpha()
+    texture = pg.image.load('Textures/grid.png').convert_alpha()
     texture = ctx.texture(size=texture.get_size(), components=4, data=pg.image.tostring(texture, 'RGBA'))
     texture.filter = (mgl.LINEAR_MIPMAP_LINEAR, mgl.LINEAR_MIPMAP_LINEAR)
     texture.build_mipmaps()

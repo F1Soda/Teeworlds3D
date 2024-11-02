@@ -1,6 +1,6 @@
 import Scripts.Source.General.GSM.game_state as state_m
 import Scripts.Source.General.Game.level as level_m
-import Scripts.GUI.Editor.editor_gui as editorGUI_m
+import Scripts.Source.GUI.Editor.editor_gui as editorGUI_m
 import Scripts.Source.Render.gizmos as gizmos_m
 import Scripts.Source.General.Managers.object_picker as object_picker_m
 import Scripts.Source.General.Managers.object_creator as object_creator_m
@@ -8,7 +8,6 @@ import Scripts.Source.General.Managers.object_creator as object_creator_m
 import moderngl as mgl
 
 # possible not working
-import pygame as pg
 
 
 class Editor(state_m.GameState):
