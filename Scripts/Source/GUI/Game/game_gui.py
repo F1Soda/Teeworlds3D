@@ -1,12 +1,13 @@
 import Scripts.Source.GUI.Elements.element as element_m
+import Scripts.Source.GUI.library as library_m
 import glm
-
 
 # Settings
 DEV_MODE = True
 
 Pivot = element_m.Pivot
 import Scripts.Source.GUI.Elements.elements as elements
+
 
 class GameGUI:
 
@@ -26,7 +27,7 @@ class GameGUI:
         self.debug_window.init()
         self.debug_window.update_position()
         self.debug_global_text = elements.Text(f"DEBUG", self.debug_window.inner_data_block, self.win_size,
-                                  f"(0,0,1)",
+                                               f"(0,0,1)",
                                                font_size=1)
         self.debug_global_text.color = glm.vec4(0.1, 0.1, 0.1, 1)
         self.debug_global_text.pivot = Pivot.Center
@@ -57,7 +58,7 @@ class GameGUI:
         self.gui.windows.append(window)
 
         self.fps_text = elements.Text("Header Text", gui.canvas, self.win_size,
-                                         "FPS: ",
+                                      "FPS: ",
                                       font_size=1,
                                       space_between=0.1,
                                       pivot=element_m.Pivot.LeftBottom
@@ -65,9 +66,17 @@ class GameGUI:
         self.fps_text.position.relative.left_bottom = glm.vec2(0)
         self.fps_text.update_position()
 
+        self.crosshair_texture = elements.Texture("Crosshair", gui.canvas, gui.win_size,
+                                                  library_m.textures["crosshair"], False)
+        self.crosshair_texture.pivot = Pivot.Center
+        self.crosshair_size = 0.025
+        self.crosshair_texture.position.relative.left_bottom = glm.vec2(0.5 - self.crosshair_size/2, 0.5- self.aspect_ratio *self.crosshair_size/2)
 
 
+        self.crosshair_texture.position.relative.size = glm.vec2(self.crosshair_size, self.aspect_ratio * self.crosshair_size)
 
+
+        self.crosshair_texture.update_position()
 
     @property
     def windows(self):

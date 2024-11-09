@@ -20,6 +20,7 @@ import Scripts.Source.Components.Custom.debug as debug_m
 import Scripts.Source.Components.Default.mesh_filter as mesh_filter_m
 import Scripts.Source.Components.Default.Colliders.box_collider as box_collider_m
 import Scripts.Source.Components.Custom.Player.ground_checker as ground_checker_m
+import Scripts.Source.Components.Custom.Weapons.weapon as weapon_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -42,6 +43,7 @@ MeshCollider = mesh_collider_m.MeshCollider
 BoxCollider = box_collider_m.BoxCollider
 MeshFilter = mesh_filter_m.MeshFilter
 GroundChecker = ground_checker_m.GroundChecker
+Weapon = weapon_m.Weapon
 
 Debug = debug_m.Debug
 
@@ -66,5 +68,6 @@ components = {
     "Mesh Collider": MeshCollider,
     "Box Collider": BoxCollider,
     "Mesh Filter": MeshFilter,
-    "Ground Checker": GroundChecker
+    "Ground Checker": GroundChecker,
+    "Weapon": Weapon
 }

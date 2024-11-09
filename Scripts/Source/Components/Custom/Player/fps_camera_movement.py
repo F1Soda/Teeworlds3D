@@ -32,6 +32,7 @@ class FPSCameraMovement(component_m.Component):
         self.player_transformation.rot = (self.player_transformation.rot.x, new_rot_y, self.transformation.rot.z)
         self.transformation.rot = (new_rot_x, self.transformation.rot.y, self.transformation.rot.z)
         pass
+
     def apply(self):
         self._rotate()
 

@@ -51,6 +51,12 @@ def _init_textures(ctx):
     texture.filter = (mgl.NEAREST, mgl.NEAREST)
     textures['font_boundaries'] = texture
 
+    # Crosshair
+    texture = pg.image.load('Textures/aim.png').convert_alpha()
+    texture = ctx.texture(size=texture.get_size(), components=4, data=pg.image.tostring(texture, 'RGBA'))
+
+    textures['crosshair'] = texture
+
 
 def init(ctx):
     _inti_shader_programs(ctx)

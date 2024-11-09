@@ -1,6 +1,7 @@
 import Scripts.Source.Physic.Solvers.impulse_solver as impulse_solver_m
 import Scripts.Source.Physic.Solvers.position_solver as position_solver_m
-import Scripts.Source.Physic.Solvers.smooth_position_solver as smooth_position_solver_m
+import Scripts.Source.General.Managers.input_manager as input_manager_m
+import glm
 
 
 class PhysicObject:
@@ -17,7 +18,7 @@ class Collision:
 
 
 class PhysicWorld:
-    def __init__(self):
+    def __init__(self, game):
         self.level = None
         self.paused = False
         self.physic_objects, self.collide_objects, self.triggers = [], [], []
@@ -26,6 +27,7 @@ class PhysicWorld:
         self.triggered_colliders_enter = {}
         self.triggered_colliders_exit = {}
         self.triggered_colliders_current_triggering = {}
+        self.game = game
 
     def add_solver(self, solver):
         self.solvers.append(solver)
@@ -134,3 +136,67 @@ class PhysicWorld:
         self.solvers.append(impulse_solver_m.ImpulseSolver())
         self.solvers.append(position_solver_m.PositionSolver())
 
+    def _ray_cast_hit_cube(self, start, direction, mesh_filter) -> glm.vec3:
+        direction = direction / glm.length(direction)
+
+        global_vertices = []
+        for vertex in mesh_filter.mesh.vertices:
+            global_vertex = mesh_filter.transformation.m_model * glm.vec4(vertex, 1)
+            global_vertices.append(global_vertex.xyz)
+
+        intersection_points = []
+
+        for i in range(6):
+            a, b, c = [global_vertices[index] for index in mesh_filter.mesh.indices[i * 2]]
+
+            n = glm.cross(b - a, c - a)
+            if abs(n_dot_d := glm.dot(n, direction)) < 10 ** -5:
+                continue
+
+            t = glm.dot(n, a - start) / n_dot_d
+
+            if t < 0:
+                continue
+
+            point_on_plane = start + t * direction
+
+            if self._point_in_triangle(point_on_plane, a, b, c):
+                intersection_points.append(point_on_plane)
+            else:
+                a, b, c = [global_vertices[index] for index in mesh_filter.mesh.indices[i * 2 + 1]]
+                if self._point_in_triangle(point_on_plane, a, b, c):
+                    intersection_points.append(point_on_plane)
+
+        min_point = intersection_points[0]
+        for point in intersection_points:
+            if glm.length(min_point-start) > glm.length(point-start):
+                min_point = point
+
+        return min_point
+
+    @staticmethod
+    def _point_in_triangle(p, a, b, c) -> bool:
+        # Compute vectors
+        ac = a - c
+        ab = a - b
+        area_abc = glm.length(glm.cross(ab, ac)) / 2
+
+        pa = p - a
+        pb = p - b
+        pc = p - c
+
+        alpha = glm.length(glm.cross(pb, pc)) / (2 * area_abc)
+        betta = glm.length(glm.cross(pc, pa)) / (2 * area_abc)
+        gamma = 1 - alpha - betta
+
+        return 0 <= alpha <= 1 and 0 <= betta <= 1 and abs(alpha + betta + gamma - 1) <= 10**-3
+
+    def ray_cast_hit(self, start, direction) -> glm.vec3 | None:
+        obj_id = self.game.object_picker.get_object_id_at_pos(self.game.win_size/2)
+
+        if obj_id != 0:
+            obj = self.level.objects[obj_id]
+            if mesh_filter := obj.get_component_by_name("Mesh Filter"):
+                if mesh_filter.mesh.name == "cube":
+                    return self._ray_cast_hit_cube(start, direction, mesh_filter)
+        return None

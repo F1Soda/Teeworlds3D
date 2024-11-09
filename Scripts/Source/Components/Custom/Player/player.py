@@ -11,7 +11,9 @@ class Player(component_m.Component):
 
         self.health = health
         self.speed = speed
+        self.max_length_hook = 10
         self.weapon = None
+        self.in_hook_move = False
 
         self._transformation = None
 

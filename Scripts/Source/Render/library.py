@@ -47,6 +47,7 @@ def _init_cube(ctx):
 
     mesh = render.Mesh(ctx, "cube", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
     mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.indices = indices
     mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, tex_coord_indices)
     mesh.normals = np.array(normals, dtype='f4').reshape(36, 3)
@@ -99,6 +100,7 @@ def _init_tetrahedron(ctx):
         (-vertices[0].x, -vertices[0].y, -vertices[0].z) * 3
     ]
     mesh = render.Mesh(ctx, "tetrahedron", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
+    mesh.indices = indices
     mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
     mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, tex_coord_indices)
@@ -164,6 +166,7 @@ def _init_octahedron(ctx):
 
     mesh = render.Mesh(ctx, "octahedron", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
     mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.indices = indices
     mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, tex_coord_indices)
     mesh.normals = np.array(normals, dtype='f4').reshape(24, 3)
@@ -182,6 +185,7 @@ def _init_plane(ctx):
 
     mesh = render.Mesh(ctx, "plane", '3f 2f 3f', ['in_position', 'in_texCoord', 'in_normal'])
     mesh.vertices = [glm.vec3(vertice) for vertice in vertices]
+    mesh.indices = indices
     mesh.triangle_vertices = utils_m.get_data_elements_by_indices(vertices, indices)
     mesh.tex_coord = utils_m.get_data_elements_by_indices(tex_coord, indices)
     mesh.normals = np.array(normals, dtype='f4')
@@ -230,6 +234,8 @@ def _init_textures(ctx):
     texture.anisotropy = 32.0
 
     textures['grid'] = texture
+
+
 
 
 def get_segment_vao(ctx, start, end):

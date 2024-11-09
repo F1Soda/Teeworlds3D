@@ -6,13 +6,15 @@ DESCRIPTION = 'Abstract Weapon'
 
 
 class Weapon(component_m.Component):
-    def __init__(self, damage, magazine_size, reload_time, fire_speed, enable=True):
-        super().__init__(NAME, DESCRIPTION, enable)
+    def __init__(self, damage, magazine_size, reload_time, fire_speed, name=NAME, description=DESCRIPTION, enable=True):
+        super().__init__(name, description, enable)
 
         self.damage = damage
         self.magazine_size = magazine_size
         self.reload_time = reload_time
         self.fire_speed = fire_speed
+
+        self.camera_transformation = None
 
         self._transformation = None
 
@@ -35,6 +37,10 @@ class Weapon(component_m.Component):
     @transformation.setter
     def transformation(self, value):
         self._transformation = value
+
+    def apply(self):
+        if self.camera_transformation:
+            self.transformation.forward = self.camera_transformation.forward
 
     def delete(self):
         self._transformation = None

@@ -16,17 +16,20 @@ class ObjectPicker:
     _last_picked_obj_material = None
     _last_mouse_dot = 0
 
+
+
     @staticmethod
-    def init(editor):
+    def init(editor, subscribe_to_events=True):
         ObjectPicker._editor = editor
         ObjectPicker._pick_fbo = editor.ctx.framebuffer(
             color_attachments=[editor.ctx.texture((int(editor.win_size.x), int(editor.win_size.y)), 4, dtype='f4')],
             depth_attachment=editor.ctx.depth_renderbuffer((int(editor.win_size.x), int(editor.win_size.y)))
         )
 
-        input_manager_m.InputManager.handle_left_click_event += ObjectPicker.process_left_click
-        input_manager_m.InputManager.handle_left_hold_event += ObjectPicker.process_hold_left_mouse_button
-        input_manager_m.InputManager.handle_left_release_event += ObjectPicker.process_release_left_mouse_button
+        if subscribe_to_events:
+            input_manager_m.InputManager.handle_left_click_event += ObjectPicker.process_left_click
+            input_manager_m.InputManager.handle_left_hold_event += ObjectPicker.process_hold_left_mouse_button
+            input_manager_m.InputManager.handle_left_release_event += ObjectPicker.process_release_left_mouse_button
 
     @staticmethod
     def process_window_resize(new_size):

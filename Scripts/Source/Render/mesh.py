@@ -1,7 +1,6 @@
 import typing
 import moderngl
 import numpy as np
-import Scripts.Source.General.utils as utils
 
 
 class Mesh:
@@ -13,6 +12,7 @@ class Mesh:
 
         self.triangle_vertices = None
         self.vertices = None
+        self.indices = None
         # self.indices = None
         self.normals = None
         self.tex_coord = None

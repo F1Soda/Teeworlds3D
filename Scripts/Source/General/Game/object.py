@@ -48,6 +48,18 @@ class Object:
 
         return component
 
+    def remove_component(self, component):
+        self.components.remove(component)
+        component.delete()
+
+    def remove_component_by_name(self, name):
+        for component in self.components:
+            if component.name == name:
+                self.components.remove(component)
+                component.delete()
+                return
+        raise Exception(f"Could not remove not existing component: {name}")
+
     def process_window_resize(self, new_size):
         for component in self.components:
             component.process_window_resize(new_size)

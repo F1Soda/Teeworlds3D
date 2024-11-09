@@ -1,4 +1,5 @@
 import Scripts.Source.General.Managers.object_creator as object_creator_m
+import Scripts.Source.General.Managers.object_picker as object_picker_m
 import Scripts.Source.General.GSM.game_state as state_m
 import Scripts.Source.GUI.Game.game_gui as game_gui_m
 import Scripts.Source.General.Game.level as level_m
@@ -12,11 +13,12 @@ class Game(state_m.GameState):
     def __init__(self, app, gsm):
         super().__init__(gsm, app)
         self.level = None
-        self.physic_world = physics_world_m.PhysicWorld()
+        self.physic_world = physics_world_m.PhysicWorld(self)
         self.gizmos = None
         self.game_gui = None
         self.gui = app.gui
         self.ctx = self.app.ctx
+        self.object_picker = None
         self.win_size = self.app.win_size
 
     @property
@@ -38,6 +40,8 @@ class Game(state_m.GameState):
         self.gizmos = []
         self.level = level_m.Level(self, self.gui)
         object_creator_m.ObjectCreator.rely_level = self.level
+        object_picker_m.ObjectPicker.init(self, False)
+        self.object_picker = object_picker_m.ObjectPicker
         self.level.load(file_path, is_game=True)
 
         # self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
@@ -59,12 +63,15 @@ class Game(state_m.GameState):
         self.level.delete()
         # self.gizmos.delete()
         self.game_gui.delete()
+        object_picker_m.ObjectPicker.release()
+        object_creator_m.ObjectCreator.release()
 
     def before_exit(self):
         self.app.exit()
 
     def update(self):
         self.level.apply_components()
+        object_picker_m.ObjectPicker.picking_pass()
 
     def fixed_update(self):
         self.physic_world.step(DT)
@@ -95,3 +102,4 @@ class Game(state_m.GameState):
         self.win_size = new_size
         self.game_gui.process_window_resize(new_size)
         self.gizmos.process_window_resize(new_size)
+        object_picker_m.ObjectPicker.process_window_resize(new_size)

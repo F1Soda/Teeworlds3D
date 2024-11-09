@@ -1,5 +1,6 @@
 import Scripts.Source.Components.Default.component as component_m
 import glm
+import math
 
 NAME = "Transformation"
 DESCRIPTION = "Описывает положение, вращение и масштобирование объекта"
@@ -37,7 +38,6 @@ class Transformation(component_m.Component):
     def recalculate_local_pos(self, parent_global_pos):
         self._pos -= parent_global_pos
 
-
     def add_child(self, child):
         self.children.append(child)
         child.parent = self
@@ -51,6 +51,27 @@ class Transformation(component_m.Component):
     @property
     def forward(self):
         return self._forward
+
+    @forward.setter
+    def forward(self, value):
+        # Convert input to glm.vec3 if it’s a tuple
+        if isinstance(value, tuple):
+            value = glm.vec3(*value)
+
+        # Update the forward vector
+        self._forward = glm.normalize(value)  # Normalize to avoid scaling issues
+
+        # Calculate the new rotation matrix using glm.lookAt
+        self.m_r = glm.lookAt(self.pos, self.pos + self._forward, VEC_UP)
+
+        # Extract Euler angles from the rotation matrix
+        self._rot = -glm.degrees(glm.eulerAngles(glm.quat_cast(self.m_r)))
+
+
+        # Call update_model_matrix to update the model matrix with the new rotation
+        self.update_model_matrix()
+
+
 
     @property
     def up(self):
@@ -79,7 +100,7 @@ class Transformation(component_m.Component):
     def global_pos(self, value):
         if isinstance(value, tuple):
             value = glm.vec3(*value)
-        #self._pos = value - self._global_pos
+        diff = value - self._pos
         self._global_pos = value
         self.update_model_matrix()
 
