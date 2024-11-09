@@ -281,6 +281,8 @@ class Level:
 
             self.player.add_children(ground_checker)
 
+
+
             ground_checker.transformation.pos = ground_checker.transformation.pos - glm.vec3(0, 0.5, 0)
             gc_collider = ground_checker.add_component(components.BoxCollider())
             gc_collider.is_trigger = True
@@ -294,6 +296,13 @@ class Level:
 
             self.camera = object_creator_m.ObjectCreator.create_camera_in_game(self.player)
             self.camera_component = self.camera.get_component_by_name("Camera")
+
+            hookshot_root = object_m.Object(self, "hookshot_root", self.player)
+
+            hookshot_model = object_creator_m.ObjectCreator.create_cube("orange_unlit", "hookshot_model")
+            hookshot_model.remove_component_by_name("Box Collider")
+            hookshot_model.transformation.scale = glm.vec3(0.2, 0.2, 1)
+            hookshot_root.add_children(hookshot_model)
 
             self.player.add_children(self.camera)
 

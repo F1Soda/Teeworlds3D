@@ -104,6 +104,7 @@ class Transformation(component_m.Component):
         self._global_pos = value
         self.update_model_matrix()
 
+
     @property
     def rot(self):
         return self._rot

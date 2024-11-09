@@ -168,7 +168,7 @@ class PhysicWorld:
 
         min_point = intersection_points[0]
         for point in intersection_points:
-            if glm.length(min_point-start) > glm.length(point-start):
+            if glm.length(min_point - start) > glm.length(point - start):
                 min_point = point
 
         return min_point
@@ -198,9 +198,8 @@ class PhysicWorld:
         # Точка находится внутри треугольника, если u, v >= 0 и u + v <= 1
         return (u >= 0) and (v >= 0) and (u + v <= 1)
 
-
     def ray_cast_hit(self, start, direction) -> glm.vec3 | None:
-        obj_id = self.game.object_picker.get_object_id_at_pos(self.game.win_size/2)
+        obj_id = self.game.object_picker.get_object_id_at_pos(self.game.win_size / 2)
 
         if obj_id != 0:
             obj = self.level.objects[obj_id]
