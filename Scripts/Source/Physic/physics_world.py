@@ -1,6 +1,5 @@
 import Scripts.Source.Physic.Solvers.impulse_solver as impulse_solver_m
 import Scripts.Source.Physic.Solvers.position_solver as position_solver_m
-import Scripts.Source.General.Managers.input_manager as input_manager_m
 import glm
 
 
@@ -176,20 +175,29 @@ class PhysicWorld:
 
     @staticmethod
     def _point_in_triangle(p, a, b, c) -> bool:
-        # Compute vectors
-        ac = a - c
-        ab = a - b
-        area_abc = glm.length(glm.cross(ab, ac)) / 2
+        # Векторы для сторон треугольника
+        v0 = c - a
+        v1 = b - a
+        v2 = p - a
 
-        pa = p - a
-        pb = p - b
-        pc = p - c
+        # Вычисление скалярных произведений
+        dot00 = glm.dot(v0, v0)
+        dot01 = glm.dot(v0, v1)
+        dot02 = glm.dot(v0, v2)
+        dot11 = glm.dot(v1, v1)
+        dot12 = glm.dot(v1, v2)
 
-        alpha = glm.length(glm.cross(pb, pc)) / (2 * area_abc)
-        betta = glm.length(glm.cross(pc, pa)) / (2 * area_abc)
-        gamma = 1 - alpha - betta
+        # Вычисление барицентрических координат
+        denom = dot00 * dot11 - dot01 * dot01
+        if denom == 0:
+            return False  # точки a, b, c коллинеарны и не задают треугольник
 
-        return 0 <= alpha <= 1 and 0 <= betta <= 1 and abs(alpha + betta + gamma - 1) <= 10**-3
+        u = (dot11 * dot02 - dot01 * dot12) / denom
+        v = (dot00 * dot12 - dot01 * dot02) / denom
+
+        # Точка находится внутри треугольника, если u, v >= 0 и u + v <= 1
+        return (u >= 0) and (v >= 0) and (u + v <= 1)
+
 
     def ray_cast_hit(self, start, direction) -> glm.vec3 | None:
         obj_id = self.game.object_picker.get_object_id_at_pos(self.game.win_size/2)
