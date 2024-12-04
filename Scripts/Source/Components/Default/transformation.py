@@ -1,11 +1,11 @@
 import Scripts.Source.Components.Default.component as component_m
 import glm
-import math
 
 NAME = "Transformation"
 DESCRIPTION = "Описывает положение, вращение и масштобирование объекта"
 
 VEC_UP = glm.vec3(0, 1, 0)
+VEC_ONE = glm.vec3(1, 1, 1)
 
 
 class Transformation(component_m.Component):
@@ -17,8 +17,8 @@ class Transformation(component_m.Component):
         self._scale = glm.vec3(scale)
 
         self._global_pos = glm.vec3(pos)
-        # self._rot = glm.vec3(rot)
-        # self._scale = glm.vec3(scale)
+
+        self._local_scale = glm.vec3(scale)
 
         self.m_model = glm.mat4()
         self.moveable = moveable
@@ -57,21 +57,29 @@ class Transformation(component_m.Component):
         # Convert input to glm.vec3 if it’s a tuple
         if isinstance(value, tuple):
             value = glm.vec3(*value)
+        print("Change forward for ", self.rely_object.name, f"from {self._forward} to {value}")
+        value = value / glm.length(value)
 
-        # Update the forward vector
-        self._forward = glm.normalize(value)  # Normalize to avoid scaling issues
 
         # Calculate the new rotation matrix using glm.lookAt
-        self.m_r = glm.lookAt(self.pos, self.pos + self._forward, VEC_UP)
+        self.m_r = glm.lookAt(self.pos, self.pos + value, VEC_UP)
 
         # Extract Euler angles from the rotation matrix
-        self._rot = -glm.degrees(glm.eulerAngles(glm.quat_cast(self.m_r)))
+        self.rot = -glm.degrees(glm.eulerAngles(glm.quat_cast(self.m_r)))
 
+    @property
+    def parent_scale(self):
+        if self.parent:
+            return self.parent.scale
+        return VEC_ONE
 
-        # Call update_model_matrix to update the model matrix with the new rotation
-        self.update_model_matrix()
+    @property
+    def local_scale(self):
+        return self._local_scale
 
-
+    @local_scale.setter
+    def local_scale(self, value):
+        pass
 
     @property
     def up(self):
@@ -87,7 +95,7 @@ class Transformation(component_m.Component):
             value = glm.vec3(*value)
         diff = value - self._pos
         self._global_pos += diff
-        self._pos = value
+        self._pos += diff
         self.update_model_matrix()
         for child in self.children:
             child.global_pos = child.global_pos + diff
@@ -100,10 +108,11 @@ class Transformation(component_m.Component):
     def global_pos(self, value):
         if isinstance(value, tuple):
             value = glm.vec3(*value)
-        diff = value - self._pos
-        self._global_pos = value
+        diff = value - self._global_pos
+        self._global_pos += diff
         self.update_model_matrix()
-
+        for child in self.children:
+            child.global_pos = child.global_pos + diff
 
     @property
     def rot(self):
@@ -111,10 +120,12 @@ class Transformation(component_m.Component):
 
     @rot.setter
     def rot(self, value):
+        print("Change rot for ", self.rely_object.name, f" from {self._rot} to {value}")
+
         if isinstance(value, tuple):
             value = glm.vec3(*value)
         diff = value - self._rot
-        self._rot = value
+        self._rot += diff
 
         self.update_model_matrix()
 
@@ -130,6 +141,8 @@ class Transformation(component_m.Component):
         self._up.y = self.m_r[1][1]
         self._up.z = self.m_r[2][1]
 
+        # self._up = glm.cross(self.right, self.forward)
+
         rot = glm.vec3([glm.radians(x) for x in diff])
 
         m_r = glm.rotate(glm.mat4(), rot.x, glm.vec3(1, 0, 0))
@@ -138,11 +151,9 @@ class Transformation(component_m.Component):
 
         for child in self.children:
             child.pos = m_r * child.pos
-            child.rot = self._rot
-        # child.pos = child.pos
-        # child.pos.x = child.pos.x * glm.cos(rot.y)
-        # child.pos.y = child.pos.y * glm.sin(rot.x)
-        # if child.rely_object.name != "Game Camera":
+
+            child.rot = child.rot + diff
+
 
     @property
     def scale(self):
@@ -150,10 +161,15 @@ class Transformation(component_m.Component):
 
     @scale.setter
     def scale(self, value):
+        diff = (self._scale - value)/2
         if isinstance(value, glm.vec3):
             self._scale = value
         elif isinstance(value, tuple):
             self._scale = glm.vec3(*value)
+
+        for child in self.children:
+            child.pos = child.pos + self.forward * diff.z + self.up * diff.y + self.right * diff.x
+
         self.update_model_matrix()
 
     def update_model_matrix(self):
@@ -169,7 +185,7 @@ class Transformation(component_m.Component):
         self.m_model = self.m_tr = self.m_t * self.m_r
 
         # scale
-        self.m_model = glm.scale(self.m_model, self._scale)
+        self.m_model = glm.scale(self.m_model, self.local_scale * self.scale * self.parent_scale)
 
     def init(self, app, rely_object):
         super().init(app, rely_object)

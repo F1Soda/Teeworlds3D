@@ -41,6 +41,8 @@ class Weapon(component_m.Component):
     def apply(self):
         if self.camera_transformation:
             self.transformation.forward = self.camera_transformation.forward
+        pass
+
 
     def delete(self):
         self._transformation = None

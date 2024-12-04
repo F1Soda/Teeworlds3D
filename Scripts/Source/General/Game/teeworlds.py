@@ -18,6 +18,7 @@ import Scripts.Source.GUI.gui as canvas_m
 WIN_SIZE = (1600, 900)
 FIXED_UPDATE_RATE = 50
 
+
 class TeeworldsEngine:
     win_size = glm.vec2()
 
@@ -78,7 +79,6 @@ class TeeworldsEngine:
 
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
-
 
     def process_window_resize(self, event):
         self.win_size = glm.vec2(event.size)

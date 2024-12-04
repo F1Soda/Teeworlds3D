@@ -281,8 +281,6 @@ class Level:
 
             self.player.add_children(ground_checker)
 
-
-
             ground_checker.transformation.pos = ground_checker.transformation.pos - glm.vec3(0, 0.5, 0)
             gc_collider = ground_checker.add_component(components.BoxCollider())
             gc_collider.is_trigger = True
@@ -297,27 +295,41 @@ class Level:
             self.camera = object_creator_m.ObjectCreator.create_camera_in_game(self.player)
             self.camera_component = self.camera.get_component_by_name("Camera")
 
-            hookshot_root = object_m.Object(self, "hookshot_root", self.player)
+            player_controller_component = self.player.get_component_by_name("Player Controller")
 
-            hookshot_model = object_creator_m.ObjectCreator.create_cube("orange_unlit", "hookshot_model")
+            self.hookshot_root = object_m.Object(self, "hookshot_root", self.player)
+            self.player.add_children(self.hookshot_root)
+            self.hookshot_model = hookshot_model = object_creator_m.ObjectCreator.create_cube("orange_unlit",
+                                                                                              "hookshot_model")
             hookshot_model.remove_component_by_name("Box Collider")
             hookshot_model.transformation.scale = glm.vec3(0.2, 0.2, 1)
-            hookshot_root.add_children(hookshot_model)
+            hookshot_model.transformation.pos = glm.vec3(0, 0, 0.5)
+            self.hookshot_root.add_children(hookshot_model)
+
+            player_controller_component.hookshot_transformation = self.hookshot_root.transformation
+            player_controller_component.hookshot_model_transformation = self.hookshot_model.transformation
+            player_controller_component.camera_component = self.camera_component
 
             self.player.add_children(self.camera)
 
+            self.player.add_component(components.MeshFilter(object_creator_m.library_m.meshes['cube']))
+            cube_renderer = components.Renderer(object_creator_m.library_m.materials["cyan_unlit"], True)
+            self.player.add_component(cube_renderer)
+
+            self.opaque_renderer.append(cube_renderer)
+
             self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
 
-            weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
-            weapon.remove_component_by_name("Box Collider")
-            weapon_component = weapon.add_component(components.Weapon(1, 1, 1, 1, "Weapon", "WEP"))
+
+            self.weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
+            self.weapon.remove_component_by_name("Box Collider")
+            weapon_component = self.weapon.add_component(components.Weapon(1, 1, 1, 1, "Weapon", "WEP"))
             weapon_component.camera_transformation = self.camera.transformation
-            self.player.add_children(weapon)
-            weapon.transformation.pos = weapon.transformation.pos + self.player.transformation.right * (
-                        0.1 + 1 / 2) + self.player.transformation.forward * (0.2)
+            self.player.add_children(self.weapon)
+            self.weapon.transformation.pos = self.weapon.transformation.pos + self.player.transformation.right * (
+                    0.1 + 1 / 2) + self.player.transformation.forward * (0.2)
             self.player.transformation.pos = self.player.transformation.up
 
-            player_controller_component = self.player.get_component_by_name("Player Controller")
             player_controller_component.debug_box = object_creator_m.ObjectCreator.create_cube("red_unlit", "debug_box")
             player_controller_component.debug_box.transformation.scale = glm.vec3(0.1)
             player_controller_component.camera_component = self.camera_component
@@ -366,11 +378,12 @@ class Level:
             obj.on_gizmos(self.camera_component)
 
     def apply_components(self):
+        print("next frame")
         if self.app.NAME == "Game":
-            self.app.game_gui.debug_LOCAL_text.text = f"({self.camera.transformation.forward.x:.2f}, {self.camera.transformation.forward.y:.2f}, {self.camera.transformation.forward.z:.2f})"
-            # self.app.game_gui.debug_global_text.text = f"({self.player_rb.force.x:.2f}, {self.player_rb.force.x:.2f}, {self.player_rb.force.x:.2f})"
+            self.app.game_gui.debug_global_text.text = f"({self.hookshot_root.transformation.rot.x:.2f}, {self.hookshot_root.transformation.rot.y:.2f}, {self.hookshot_root.transformation.rot.z:.2f})"
+            self.app.game_gui.debug_LOCAL_text.text = f"({self.hookshot_model.transformation.pos.x:.2f}, {self.hookshot_model.transformation.pos.y:.2f}, {self.hookshot_model.transformation.pos.z:.2f})"
+
             self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
-        self.camera.apply_components()
         for obj in self.objects.values():
             obj.apply_components()
 
@@ -381,6 +394,7 @@ class Level:
             obj.fixed_apply_components()
 
     def render_opaque_objects(self):
+        print("render opaque")
         for renderer in self.opaque_renderer:
             if renderer.rely_object.enable and renderer.enable:
                 renderer.apply()
