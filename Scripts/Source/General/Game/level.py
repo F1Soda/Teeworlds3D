@@ -306,6 +306,8 @@ class Level:
             hookshot_model.transformation.pos = glm.vec3(0, 0, 0.5)
             self.hookshot_root.add_children(hookshot_model)
 
+            self.hookshot_model.enable = False
+
             player_controller_component.hookshot_transformation = self.hookshot_root.transformation
             player_controller_component.hookshot_model_transformation = self.hookshot_model.transformation
             player_controller_component.camera_component = self.camera_component

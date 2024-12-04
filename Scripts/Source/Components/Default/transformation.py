@@ -167,8 +167,8 @@ class Transformation(component_m.Component):
         elif isinstance(value, tuple):
             self._scale = glm.vec3(*value)
 
-        for child in self.children:
-            child.pos = child.pos + self.forward * diff.z + self.up * diff.y + self.right * diff.x
+        # for child in self.children:
+        #     child.pos = child.pos + self.forward * diff.z + self.up * diff.y + self.right * diff.x
 
         self.update_model_matrix()
 

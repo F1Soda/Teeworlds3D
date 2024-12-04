@@ -91,7 +91,7 @@ class PlayerController(component_m.Component):
         print("PLAYER_CONTROLLER_END")
 
     def hookshot_start(self):
-        hookshot_throw_speed = 5
+        hookshot_throw_speed = 40
         self._hookshot_size += hookshot_throw_speed * self.app.delta_time
 
         if self._hookshot_size >= glm.length(self._hookshot_position - self.transformation.pos):
@@ -99,13 +99,13 @@ class PlayerController(component_m.Component):
 
         self.hookshot_transformation.forward = self.hookshot_dir
         self.hookshot_transformation.scale = glm.vec3(1, 1, self._hookshot_size)
-        # self.hookshot_transformation.update_model_matrix()
 
     def hookshot_stop(self):
         self.hookshot_transformation.scale = glm.vec3(1)
         self.hookshot_transformation.rot = glm.vec3(0)
         self.hookshot_model_transformation.pos = glm.vec3(0, 0, 0.5)
         self.hookshot_model_transformation.rot = glm.vec3(0)
+        self.hookshot_model_transformation.rely_object.enable = False
 
 
     def _handle_keyboard_press(self, keys, pressed_char):
@@ -114,6 +114,7 @@ class PlayerController(component_m.Component):
             self._jump(100)
             self.can_move = False
             self.rigidbody.use_gravity = True
+            self.hookshot_stop()
             self.rigidbody.velocity = self.hookshot_dir * self.hookshot_speed
         self._move(keys)
         return True
@@ -128,6 +129,7 @@ class PlayerController(component_m.Component):
             self._hookshot_size = 0
             self.debug_box.transformation.pos = hit_point
             print("START FLY")
+            self.hookshot_model_transformation.rely_object.enable = True
             return True
         return False
 
