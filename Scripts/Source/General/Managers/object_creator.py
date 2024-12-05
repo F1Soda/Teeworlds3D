@@ -51,12 +51,20 @@ class ObjectCreator:
         return player
 
     @staticmethod
+    def create_client_wrapper(client_id="") -> object_m.Object:
+        client_wrapper = object_m.Object(ObjectCreator.rely_level, "Client_Wrapper_" + client_id)
+        client_wrapper.add_component(components.ClientWrapper())
+        body = ObjectCreator.create_cube("red_lit", "body")
+        client_wrapper.add_children(body)
+        return client_wrapper
+
+    @staticmethod
     def create_dumpy_weapon():
         gun = ObjectCreator.create_cube("blue_lit", "GUUUN")
         gun_scale = gun.transformation.scale * 0.2
         gun_scale.z *= 8
         gun.transformation.scale = gun_scale
-        #gun.transformation.rot = (90,0,0)
+        # gun.transformation.rot = (90,0,0)
         return gun
 
     @staticmethod

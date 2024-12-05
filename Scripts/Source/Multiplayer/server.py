@@ -1,68 +1,98 @@
-import socket
-from threading import Thread
-import json
-
-HOST, PORT = '192.168.0.103', 8080  # Адрес сервера
-MAX_PLAYERS = 8  # Максимальное кол-во подключений
+import Scripts.Source.Multiplayer.observer_controller as observer_controller_m
+import asyncio, ast, networking
+import uuid
 
 
 class Server:
+    def __init__(self, level_path):
+        self.next_client_port = 9001
+        self.config = {"level": level_path}
+        self.observer_controller = observer_controller_m.ObserverController()
+        self.shutdown_event = asyncio.Event()
 
-    def __init__(self, addr, max_conn):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.bind(addr)  # запускаем сервер от заданного адреса
+        try:
+            asyncio.run(self.run_server(), debug=True)
+        except KeyboardInterrupt:
+            print("Shutting down server...")
+            asyncio.run(self.notify_shutdown(), debug=True)
 
-        self.max_players = max_conn
-        self.players = []  # создаем массив из игроков на сервере
+    async def run_server(self):
+        HOST, PORT = "localhost", 9000
+        game_server = await asyncio.start_server(self.handle_client, HOST, PORT)
+        print("Server running...")
+        async with game_server:
+            await game_server.serve_forever()
 
-        self.sock.listen(self.max_players)  # устанавливаем максимальное кол-во прослушиваний на сервере
-        self.listen()  # вызываем цикл, который отслеживает подключения к серверу
+    async def handle_client(self, reader, writer):
+        """Handle an incoming client connection."""
+        try:
+            data = (await reader.read(255)).decode()
+            print(f"Attempting to decode data: {data}")
+            data = ast.literal_eval(data)
+            action = data["action"]
+            print(f"Action received: {action}")
+            source = data["source"]
+            print(f"Source: {source}")
 
-    def listen(self):
-        while True:
-            if not len(self.players) >= self.max_players:  # проверяем не превышен ли лимит
-                # одобряем подключение, получаем взамен адрес и другую информацию о клиенте
-                conn, addr = self.sock.accept()
+            response = {"status": "good"}
+            match action:
+                case "handshake":
+                    address = "localhost"
+                    print(f"Address for client: {address}")
+                    response = self.get_handshake_config()
+                    self.add_client(response["observer_id"], address)
+                case "spawn":
+                    response = self.get_spawn_pos_response()
+                    await self.observer_controller.notify_observers(response, data["source"])
+                case "move":
+                    response = self.get_move_response(data)
+                    await self.observer_controller.notify_observers(response, data["source"])
+                case "echo":
+                    response["data"] = data
+            print(f"Sending back response: {response}")
+            writer.write(str(response).encode())
+            await writer.drain()
+        except Exception as e:
+            print(f"Error handling client: {e}")
+        finally:
+            writer.close()
+            await writer.wait_closed()
+            print("Client connection closed.")
 
-                print("New connection", addr)
+    async def notify_shutdown(self):
+        """Notify all observers (clients) about the server shutdown."""
+        shutdown_message = {"action": "disconnect", "reason": "Server shutting down"}
+        await self.observer_controller.notify_observers(shutdown_message, source=None)
+        print("All clients notified about shutdown.")
 
-                Thread(target=self.handle_client,
-                       args=(conn,)).start()  # Запускаем в новом потоке проверку действий игрока
+    def add_client(self, observer_id, address):
+        observer = self.observer_controller.add_observer(
+            networking.Observer(port=self.get_next_client_port(), host=address)
+        )
+        observer.set_id(observer_id)
+        print(f"Client added: {observer_id}")
 
-    def handle_client(self, conn):
+    def get_next_client_port(self):
+        self.next_client_port += 1
+        return self.next_client_port
 
-        # Настраиваем стандартные данные для игрока
-        self.player = {
-            "id": len(self.players),
-            "x": 400,
-            "y": 300
-        }
-        self.players.append(self.player)  # добавляем его в массив игроков
+    def get_handshake_config(self):
+        config = {"action": "handshake",
+                  "port": self.next_client_port,
+                  "level": self.config["level"],
+                  "observer_id": self.get_new_id_for_observer()}
+        return config
 
-        while True:
-            try:
-                data = conn.recv(1024)  # ждем запросов от клиента
+    def get_spawn_pos_response(self):
+        return {"pos": (5, 1, 5)}
 
-                if not data:  # если запросы перестали поступать, то отключаем игрока от сервера
-                    print("Disconnect")
-                    break
+    def get_move_response(self, data):
+        return {"pos": data["pos"]}
 
-                # загружаем данные в json формате
-                # TODO: Pickle
-                data = json.loads(data.decode('utf-8'))
-
-                # запрос на получение игроков на сервере
-                if data["request"] == "get_players":
-                    conn.sendall(bytes(json.dumps({
-                        "response": self.players
-                    }), 'UTF-8'))
-
-            except Exception as e:
-                print(e)
-                break
-
-        self.players.remove(self.player)  # если вышел или выкинуло с сервера - удалить персонажа
+    @staticmethod
+    def get_new_id_for_observer():
+        return uuid.uuid1()
 
 
-if __name__ == "__main__":
-    server = Server((HOST, PORT), MAX_PLAYERS)
+if __name__ == '__main__':
+    server = Server("Levels/Player/TestCollision.json")

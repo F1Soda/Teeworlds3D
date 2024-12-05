@@ -172,5 +172,5 @@ class MenuEditor(menu_state_m.MenuState):
         button.position.evaluate_values_by_relative()
         button.update_position()
 
-        content.add_object(content_element)
+        content.add(content_element)
         content.update_position()

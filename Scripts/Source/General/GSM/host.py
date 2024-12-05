@@ -1,19 +1,21 @@
 import Scripts.Source.General.GSM.game_state as state_m
-import Scripts.Source.GUI.Menu.MenuSM.menu_sm as menu_sm_m
 import moderngl as mgl
 
 
-class Menu(state_m.GameState):
-    NAME = "Menu"
+class Host(state_m.GameState):
+    NAME = "Host"
 
     def __init__(self, app, gsm):
         super().__init__(gsm, app)
         self.gui = app.gui
         self.menu_sm = None
+        self.socket = None
 
     def enter(self, params=None):
-        self.menu_sm = menu_sm_m.MenuSM(self.app, self.fsm)
-        print(params)
+        ip, port, level_path = params
+
+    def try_to_host(self, ip, port, level_path):
+        ...
 
     def exit(self):
         self.menu_sm.release()

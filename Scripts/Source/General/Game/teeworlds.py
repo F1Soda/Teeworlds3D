@@ -12,6 +12,7 @@ import Scripts.Source.Render.library as library_object_m
 import Scripts.Source.General.Managers.data_manager as data_manager_m
 import Scripts.Source.General.Managers.input_manager as input_manager_m
 import Scripts.Source.General.GSM.gsm as gsm_m
+import Scripts.Source.Multiplayer.client as client_m
 
 import Scripts.Source.GUI.gui as canvas_m
 
@@ -77,8 +78,14 @@ class TeeworldsEngine:
         # Game State Machine
         self.gsm = gsm_m.GSM(self)
 
+        # Client
+        self.client = client_m.Client(self.gsm)
+        self.gsm.client = self.client
+
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
+
+        self.gsm.set_state("Connection")
 
     def process_window_resize(self, event):
         self.win_size = glm.vec2(event.size)
@@ -96,9 +103,9 @@ class TeeworldsEngine:
     def get_fps(self):
         return round(self.clock.get_fps())
 
-    @staticmethod
-    def set_mouse_grab(value):
+    def set_mouse_grab(self, value):
         pg.event.set_grab(value)
+        self.grab_mouse_inside_bounded_window = False
 
     @staticmethod
     def set_mouse_visible(value):

@@ -21,6 +21,7 @@ import Scripts.Source.Components.Default.mesh_filter as mesh_filter_m
 import Scripts.Source.Components.Default.Colliders.box_collider as box_collider_m
 import Scripts.Source.Components.Custom.Player.ground_checker as ground_checker_m
 import Scripts.Source.Components.Custom.Weapons.weapon as weapon_m
+import Scripts.Source.Components.Custom.Multiplayer.client_wrapper as client_wrapper_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -36,6 +37,7 @@ Translator = translator_m.Translator
 Rotator = rotator_m.Rotator
 FPSCameraMovement = fps_camera_movement_m.FPSCameraMovement
 Player = player_m.Player
+ClientWrapper = client_wrapper_m.ClientWrapper
 PlayerController = player_controller_m.PlayerController
 RigidBody = rigidbody_m.RigidBody
 Collider = collider_m.Collider

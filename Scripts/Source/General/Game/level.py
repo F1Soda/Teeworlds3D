@@ -23,6 +23,7 @@ class Level:
         self.camera = None
         self.camera_component = None
         self.player = None
+        self.player_component = None
         self.player_rb = None
 
         self.opaque_renderer = []
@@ -31,6 +32,8 @@ class Level:
         self.render_hidden_lines = components.renderer_m.HiddenLineState.Off
 
         self.gui = gui
+
+        self.client_wrappers = {}
 
     def change_hidden_line_mode(self):
         if self.render_hidden_lines == components.renderer_m.HiddenLineState.Off:
@@ -322,7 +325,6 @@ class Level:
 
             self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
 
-
             self.weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
             self.weapon.remove_component_by_name("Box Collider")
             weapon_component = self.weapon.add_component(components.Weapon(1, 1, 1, 1, "Weapon", "WEP"))
@@ -335,6 +337,9 @@ class Level:
             player_controller_component.debug_box = object_creator_m.ObjectCreator.create_cube("red_unlit", "debug_box")
             player_controller_component.debug_box.transformation.scale = glm.vec3(0.1)
             player_controller_component.camera_component = self.camera_component
+
+            self.player_component = self.player.get_component_by_name("Player")
+
         else:
             self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
             self.camera_component = self.camera.get_component_by_name("Camera")
@@ -406,7 +411,6 @@ class Level:
             if renderer.rely_object.enable and renderer.enable:
                 renderer.apply()
 
-    # @profiler_m.profile
     def delete(self):
         for obj_id, obj in self.objects.items():
             obj.delete()
@@ -419,3 +423,19 @@ class Level:
         self.camera.delete()
         self.camera_component = None
         self.index_manager = None
+
+    # Server-client
+    def get_player_data(self):
+        return self.player_component.serialize()
+
+    def spawn_player(self, pos):
+        self.player.transformation.pos = pos
+
+    def spawn_client(self, pos, client_id):
+        wrapper = object_creator_m.ObjectCreator.create_client_wrapper(client_id)
+        wrapper.transformation.pos = pos
+        self.client_wrappers[client_id] = wrapper
+
+    def move_client(self, pos, client_id):
+        self.client_wrappers[client_id].transformation.pos = pos
+    ################

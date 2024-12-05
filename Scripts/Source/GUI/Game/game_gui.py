@@ -15,6 +15,7 @@ class GameGUI:
         self.game = game
         self.win_size = glm.vec2(win_size)
         self.aspect_ratio = win_size[0] / win_size[1]
+
         self.gui = gui
 
         self.debug_window = elements.Window(f"debug_window_{len(self.gui.windows)}", gui.canvas,
@@ -70,11 +71,11 @@ class GameGUI:
                                                   library_m.textures["crosshair"], False)
         self.crosshair_texture.pivot = Pivot.Center
         self.crosshair_size = 0.025
-        self.crosshair_texture.position.relative.left_bottom = glm.vec2(0.5 - self.crosshair_size/2, 0.5- self.aspect_ratio *self.crosshair_size/2)
+        self.crosshair_texture.position.relative.left_bottom = glm.vec2(0.5 - self.crosshair_size / 2,
+                                                                        0.5 - self.aspect_ratio * self.crosshair_size / 2)
 
-
-        self.crosshair_texture.position.relative.size = glm.vec2(self.crosshair_size, self.aspect_ratio * self.crosshair_size)
-
+        self.crosshair_texture.position.relative.size = glm.vec2(self.crosshair_size,
+                                                                 self.aspect_ratio * self.crosshair_size)
 
         self.crosshair_texture.update_position()
 

@@ -166,6 +166,9 @@ class PhysicWorld:
                 if self._point_in_triangle(point_on_plane, a, b, c):
                     intersection_points.append(point_on_plane)
 
+        if len(intersection_points) == 0:
+            return None
+
         min_point = intersection_points[0]
         for point in intersection_points:
             if glm.length(min_point - start) > glm.length(point - start):

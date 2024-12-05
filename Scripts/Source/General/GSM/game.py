@@ -7,6 +7,8 @@ import Scripts.Source.Physic.physics_world as physics_world_m
 import moderngl as mgl
 
 DT = 0.02
+
+
 class Game(state_m.GameState):
     NAME = "Game"
 
@@ -20,6 +22,7 @@ class Game(state_m.GameState):
         self.ctx = self.app.ctx
         self.object_picker = None
         self.win_size = self.app.win_size
+        self.client = gsm.client
 
     @property
     def time(self):
@@ -50,6 +53,7 @@ class Game(state_m.GameState):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
         if params is None:
             params = "Levels/Base/Test.json"
+
         self._load_level(params)
 
         self.physic_world.init_physic_object_by_level(self.level)
@@ -65,6 +69,24 @@ class Game(state_m.GameState):
         self.game_gui.delete()
         object_picker_m.ObjectPicker.release()
         object_creator_m.ObjectCreator.release()
+        self.app.set_mouse_grab(False)
+        self.app.set_mouse_visible(True)
+
+    # Client-Server
+    def get_player_client_data(self):
+        return self.level.get_player_data()
+
+    def spawn_player(self, pos):
+        self.level.spawn_player(pos)
+
+    def update_game_state(self, state):
+        ...
+
+    def send_game_state(self, state):
+        self.client.send_action(state)
+
+
+    ###############
 
     def before_exit(self):
         self.app.exit()

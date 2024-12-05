@@ -184,10 +184,11 @@ class ObjectPicker:
 
     @staticmethod
     def release():
-        ObjectPicker._pick_fbo.depth_attachment.release()
-        ObjectPicker._pick_fbo.color_attachments[0].release()
-        ObjectPicker._pick_fbo.release()
-        ObjectPicker._pick_fbo = None
+        if ObjectPicker._pick_fbo:
+            ObjectPicker._pick_fbo.depth_attachment.release()
+            ObjectPicker._pick_fbo.color_attachments[0].release()
+            ObjectPicker._pick_fbo.release()
+            ObjectPicker._pick_fbo = None
         ObjectPicker._editor = None
         input_manager_m.InputManager.handle_left_click_event -= ObjectPicker.process_left_click
         input_manager_m.InputManager.handle_left_hold_event -= ObjectPicker.process_hold_left_mouse_button
