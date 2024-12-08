@@ -13,7 +13,7 @@ class MenuSM(fsm_m.FSM):
         self.add_state(menu_welcome_m.MenuWelcome.NAME, menu_welcome_m.MenuWelcome(self))
         self.add_state(menu_play_m.MenuPlay.NAME, menu_play_m.MenuPlay(self, gsm))
         self.add_state(menu_editor_m.MenuEditor.NAME, menu_editor_m.MenuEditor(self, gsm))
-        self.set_state(menu_editor_m.MenuEditor.NAME)
+        self.set_state(menu_welcome_m.MenuWelcome.NAME)
 
     def release(self):
         super().release()

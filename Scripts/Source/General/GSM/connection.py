@@ -8,17 +8,15 @@ class Connection(state_m.GameState):
     def __init__(self, app, gsm):
         super().__init__(gsm, app)
         self.gui = app.gui
-        self.socket = None
 
     def enter(self, params=None):
+        if not self.fsm.client.connected:
+            self.fsm.set_state("Menu", f"Attempt to load level without connection")
         if params is None:
-            server_ip = "localhost"
-            port = 9000
-        else:
-            server_ip, port = params
-        connected = asyncio.run(self.fsm.client.connect())
-        if not connected:
-            self.fsm.set_state("Menu", f"Fail connect to {server_ip}:{port}")
+            self.fsm.set_state("Menu", f"Internal Error: no level filepath")
+
+        self.fsm.set_state("Game", (params, (0, 1, 0)))
+
 
     def render_level(self):
         self.app.ctx.screen.use()

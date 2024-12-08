@@ -14,6 +14,8 @@ class MenuPlay(menu_state_m.MenuState):
         self.gsm = gsm
         canvas = menu_sm.gui.canvas
 
+        self.selected_level_button = None
+
         def back_button_action(button, gui, pos):
             self.fsm.set_state("WELCOME")
 
@@ -39,7 +41,9 @@ class MenuPlay(menu_state_m.MenuState):
         rcp = glm.vec2(0.03, 0.74)
 
         def connect_button_action(button, gui, pos):
-            pass
+            if self.selected_level_button is not None:
+                self.gsm.set_state("Connection", self.selected_level_button.value)
+
 
         connect_button = elements.Button("Connect Button", canvas, win_size, self,
                                          "Connect",
@@ -86,11 +90,68 @@ class MenuPlay(menu_state_m.MenuState):
         host_button.position.relative.size = glm.vec2(0.15, 0.05)
         self.elements.append(host_button)
 
-        servers_block = elements.Block("Servers Block", canvas, win_size, glm.vec4(0.3, 0.3, 0.3, 0.3))
-        servers_block.position.relative.left_bottom = glm.vec2(rcp.x + host_button.position.relative.size.x + 0.01, rcp.y)
-        servers_block.position.relative.right_top = glm.vec2(0.7, connect_button.position.relative.right_top.y)
-        self.elements.append(servers_block)
+        self.servers_block = elements.Block("Servers Block", canvas, win_size, glm.vec4(0.3, 0.3, 0.3, 0.3))
+        self.servers_block.position.relative.left_bottom = glm.vec2(rcp.x + host_button.position.relative.size.x + 0.01,
+                                                                    rcp.y)
+        self.servers_block.position.relative.right_top = glm.vec2(0.7, connect_button.position.relative.right_top.y)
+
+        self.elements.append(self.servers_block)
+
+        canvas.update_position()
+
+        self.level_content = elements.Content("Server Content", self.servers_block, win_size)
+        self.level_content.position.relative.center = glm.vec2(0.5, 1)
+        # self.level_content.position.relative.right_top = glm.vec2(1)
+        self.level_content.pivot = element_m.Pivot.Top
+        self.level_content.position.evaluate_values_by_relative()
+
+        self.elements.append(self.level_content)
 
         self.exit()
 
         canvas.update_position()
+
+    def exit(self):
+        super().exit()
+        self.selected_level_button = None
+
+    def enter(self, params=None):
+        super().enter(params)
+        self.level_content.clear()
+
+        def select_action(button, gui, pos):
+            name = button.rely_element.name
+
+            button.color = glm.vec4(0.6, 0.6, 0.6, 1)
+
+            if self.selected_level_button is not None and self.selected_level_button is not button:
+                self.selected_level_button.color = glm.vec4(0.7, 0.7, 0.7, 1)
+            self.selected_level_button = button
+            # self.selected_elements.append((button, obj_id))
+
+        for session in self.fsm.app.client.sessions:
+            self._create_element_in_content(self.level_content,
+                                            glm.vec2(self.servers_block.position.relative_window.size.x, 0.03),
+                                            select_action, session, session)
+
+    def _create_element_in_content(self, content, size, action, text, value):
+        content_element = elements.Block(f"Element_in_content_{content.name}", None, self.fsm.app.win_size,
+                                         (1, 1, 1, 0.5))
+        content_element.position.relative_window.size = size
+        content_element.position.evaluate_values_by_relative_window()
+
+        button = elements.Button(f"{text}_Button", content_element, self.fsm.app.win_size, self,
+                                 text,
+                                 action=action,
+                                 color=glm.vec4(0.7, 0.7, 0.7, 1),
+                                 text_size=1,
+                                 value=value
+                                 )
+
+        button.position.relative.left_bottom = glm.vec2(0)
+        button.position.relative.right_top = glm.vec2(1)
+        button.position.evaluate_values_by_relative()
+        button.update_position()
+
+        content.add(content_element)
+        content.update_position()

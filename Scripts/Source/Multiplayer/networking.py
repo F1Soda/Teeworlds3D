@@ -1,5 +1,5 @@
 from uuid import UUID
-import asyncio
+import socket
 
 
 class Observer:
@@ -14,9 +14,9 @@ class Observer:
     def set_reader(self, reader):
         self._reader = reader
 
-    async def connect(self, ip="localhost", port=9000):
-        self._reader, self._writer = await asyncio.open_connection(ip, port)
-        return self._reader, self._writer
+    # def connect(self, ip="localhost", port=9000):
+    #     self._reader, self._writer = asyncio.open_connection(ip, port)
+    #     return self._reader, self._writer
 
     @property
     def is_connected(self):

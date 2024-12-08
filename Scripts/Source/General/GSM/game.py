@@ -52,9 +52,12 @@ class Game(state_m.GameState):
     def enter(self, params=None):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
         if params is None:
-            params = "Levels/Base/Test.json"
+            level_path = "Levels/Base/Test.json"
+            pos = (0, 1, 0)
+        else:
+            level_path, pos = params
 
-        self._load_level(params)
+        self._load_level(level_path)
 
         self.physic_world.init_physic_object_by_level(self.level)
         self.physic_world.add_default_solvers()
@@ -62,6 +65,8 @@ class Game(state_m.GameState):
         self.app.grab_mouse_inside_bounded_window = False
         self.app.set_mouse_visible(True)
         self.app.set_mouse_grab(False)
+
+        self.spawn_player(pos)
 
     def exit(self):
         self.level.delete()
