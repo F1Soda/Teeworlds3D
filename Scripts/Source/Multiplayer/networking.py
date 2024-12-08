@@ -1,13 +1,24 @@
-import asyncio
 from uuid import UUID
+import asyncio
 
 
 class Observer:
-    def __init__(self, sender=None, port=9000, host="localhost") -> None:
+    def __init__(self) -> None:
         self._id = -1
-        if sender is None:
-            sender = TCPSender(port, host)
-        self._sender = sender
+        self._writer = None
+        self._reader = None
+
+    async def connect(self, ip="localhost", port=9000):
+        self._reader, self._writer = await asyncio.open_connection(ip, port)
+        return self._reader, self._writer
+
+    @property
+    def is_connected(self):
+        return not (self._writer is None or self._reader is None)
+
+    async def get_response(self):
+        raw_response = (await self._reader.read(255)).decode()
+        return eval(raw_response.decode(), {"UUID": UUID})
 
     def get_id(self):
         return self._id
@@ -15,14 +26,16 @@ class Observer:
     def set_id(self, observer_id):
         self._id = observer_id
 
-    def set_sender(self, sender):
-        self._sender = sender
-
     async def send_to_server(self, state):
+        if not self.is_connected:
+            raise Exception("Trying to send message without connection to server!")
         state["source"] = self._id
-        return await self._sender.send_data(self.prepare_data(state))
+        self._writer.write(self.prepare_data(state))
+        await self._writer.drain()
 
     async def update(self, state, source=None):
+        if not self.is_connected:
+            raise Exception("Trying to send message without connection to server!")
         if source == str(self._id):
             return
         await self.send_to_server(state)
@@ -30,33 +43,3 @@ class Observer:
     def prepare_data(self, data):
         data["source"] = str(self._id)
         return data
-
-
-class TCPSender:
-    def __init__(self, port=9000, host="localhost"):
-        self.host = host
-        self.port = port
-        self.reader = None
-        self.writer = None
-
-    async def connect(self):
-        """Establish the connection if not already connected."""
-        if self.writer is None:
-            self.reader, self.writer = await asyncio.open_connection(self.host, self.port)
-
-    async def send_data(self, data: dict):
-        """Send data to the server."""
-        await self.connect()  # Ensure connection is established
-        self.writer.write(str(data).encode())
-        await self.writer.drain()
-
-        received = await self.reader.read(255)
-        return eval(received.decode(), {"UUID": UUID})
-
-    async def close_connection(self):
-        """Close the connection gracefully."""
-        if self.writer:
-            self.writer.close()
-            await self.writer.wait_closed()
-            self.reader = None
-            self.writer = None

@@ -13,7 +13,6 @@ class Server:
         self.next_client_port = 9000
         self.config = {"level": level_path}
         self.observer_controller = observer_controller_m.ObserverController()
-        self.shutdown_event = asyncio.Event()
 
         try:
             asyncio.run(self.run_server(), debug=True)
@@ -33,8 +32,6 @@ class Server:
         try:
             while not reader.at_eof():
                 data = (await reader.read(255)).decode()
-                if data == "":
-                    continue
                 data = ast.literal_eval(data)
                 action = data["action"]
                 source = data["source"]
