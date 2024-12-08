@@ -34,9 +34,9 @@ class FPSCameraMovement(component_m.Component):
         pass
 
     def apply(self):
-        print("FPS_CAMERA_MOVEMENT")
+        #print("FPS_CAMERA_MOVEMENT")
         self._rotate()
-        print("FPS_CAMERA_MOVEMENT_END")
+        #print("FPS_CAMERA_MOVEMENT_END")
 
     @property
     def transformation(self):

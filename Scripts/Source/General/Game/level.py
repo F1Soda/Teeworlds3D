@@ -385,7 +385,7 @@ class Level:
             obj.on_gizmos(self.camera_component)
 
     def apply_components(self):
-        print("next frame")
+        # print("next frame")
         if self.app.NAME == "Game":
             self.app.game_gui.debug_global_text.text = f"({self.hookshot_root.transformation.rot.x:.2f}, {self.hookshot_root.transformation.rot.y:.2f}, {self.hookshot_root.transformation.rot.z:.2f})"
             self.app.game_gui.debug_LOCAL_text.text = f"({self.hookshot_model.transformation.pos.x:.2f}, {self.hookshot_model.transformation.pos.y:.2f}, {self.hookshot_model.transformation.pos.z:.2f})"
@@ -401,7 +401,7 @@ class Level:
             obj.fixed_apply_components()
 
     def render_opaque_objects(self):
-        print("render opaque")
+        # print("render opaque")
         for renderer in self.opaque_renderer:
             if renderer.rely_object.enable and renderer.enable:
                 renderer.apply()

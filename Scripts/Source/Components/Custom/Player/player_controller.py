@@ -78,7 +78,7 @@ class PlayerController(component_m.Component):
         self.rigidbody.add_force(self.transformation.up * height_coefficient)
 
     def apply(self):
-        print("PLAYER_CONTROLLER")
+        #print("PLAYER_CONTROLLER")
         if self.state in [self.state.HookshotFlyingPlayer, PlayerState.HookShotThrown]:
             self.hookshot_dir = glm.normalize(self._hookshot_position - self.transformation.pos)
             if self.state == self.state.HookshotFlyingPlayer:
@@ -88,7 +88,7 @@ class PlayerController(component_m.Component):
         # else:
         #     if self.camera_component:
         #         self.hookshot_transformation.forward = self.camera_component.transformation.forward
-        print("PLAYER_CONTROLLER_END")
+        # print("PLAYER_CONTROLLER_END")
 
     def hookshot_start(self):
         hookshot_throw_speed = 40

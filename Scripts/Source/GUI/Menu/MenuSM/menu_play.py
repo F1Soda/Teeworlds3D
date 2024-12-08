@@ -81,6 +81,7 @@ class MenuPlay(menu_state_m.MenuState):
                                       text_color=glm.vec4(1, 1, 1, 1),
                                       text_size=2
                                       )
+
         host_button.position.relative.center = copy.copy(rcp)
         host_button.position.relative.size = glm.vec2(0.15, 0.05)
         self.elements.append(host_button)

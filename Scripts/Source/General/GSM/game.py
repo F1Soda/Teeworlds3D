@@ -59,9 +59,9 @@ class Game(state_m.GameState):
         self.physic_world.init_physic_object_by_level(self.level)
         self.physic_world.add_default_solvers()
 
-        self.app.grab_mouse_inside_bounded_window = True
-        self.app.set_mouse_visible(False)
-        self.app.set_mouse_grab(True)
+        self.app.grab_mouse_inside_bounded_window = False
+        self.app.set_mouse_visible(True)
+        self.app.set_mouse_grab(False)
 
     def exit(self):
         self.level.delete()
@@ -84,7 +84,6 @@ class Game(state_m.GameState):
 
     def send_game_state(self, state):
         self.client.send_action(state)
-
 
     ###############
 

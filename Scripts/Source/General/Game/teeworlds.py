@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../.
 import glm
 import pygame as pg
 import moderngl as mgl
+import asyncio
 
 import Scripts.Source.GUI.library as library_gui_m
 import Scripts.Source.Render.library as library_object_m
@@ -16,7 +17,7 @@ import Scripts.Source.Multiplayer.client as client_m
 
 import Scripts.Source.GUI.gui as canvas_m
 
-WIN_SIZE = (1600, 900)
+WIN_SIZE = (1280, 720)
 FIXED_UPDATE_RATE = 50
 
 
@@ -104,7 +105,8 @@ class TeeworldsEngine:
         return round(self.clock.get_fps())
 
     def set_mouse_grab(self, value):
-        pg.event.set_grab(value)
+        if pg:
+            pg.event.set_grab(value)
         self.grab_mouse_inside_bounded_window = False
 
     @staticmethod
@@ -112,39 +114,43 @@ class TeeworldsEngine:
         pg.mouse.set_visible(value)
 
     def exit(self):
-        pg.quit()
+        asyncio.run(self.client.disconnect(), debug=True)
         input_manager_m.InputManager.release()
         self.gsm.state.exit()
+        pg.quit()
         sys.exit()
 
     def run(self):
-        accumulated_time = 0
-        while True:
-            self.delta_time = self.clock.tick(120) / 1000
-            self.update_time()
-            accumulated_time += self.delta_time
+        try:
+            accumulated_time = 0
+            while True:
+                self.delta_time = self.clock.tick(120) / 1000
+                self.update_time()
+                accumulated_time += self.delta_time
 
-            # Fixed Update
-            while accumulated_time >= self.fixed_delta_time:
-                self.gsm.state.fixed_update()
-                accumulated_time -= self.fixed_delta_time
+                # Fixed Update
+                while accumulated_time >= self.fixed_delta_time:
+                    self.gsm.state.fixed_update()
+                    accumulated_time -= self.fixed_delta_time
 
-            # Input Events
-            input_manager_m.InputManager.process()
+                # Input Events
+                input_manager_m.InputManager.process()
 
-            # Game Logic
-            self.gsm.state.update()
+                # Game Logic
+                self.gsm.state.update()
 
-            # Scene Rendering
-            self.gsm.state.render_level()
+                # Scene Rendering
+                self.gsm.state.render_level()
 
-            # Gizmo Rendering
-            self.gsm.state.render_gizmo()
+                # Gizmo Rendering
+                self.gsm.state.render_gizmo()
 
-            # GUI Rendering
-            self.gsm.state.render_gui()
+                # GUI Rendering
+                self.gsm.state.render_gui()
 
-            pg.display.flip()
+                pg.display.flip()
+        except KeyboardInterrupt:
+            asyncio.run(self.client.disconnect(), debug=True)
 
 
 if __name__ == '__main__':

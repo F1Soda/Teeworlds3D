@@ -99,7 +99,7 @@ class Window(element_m.Element):
         self.delete()
 
     def delete(self):
-        self.gui.canvas.elements.remove_object(self)
+        self.gui.canvas.elements.remove(self)
         self.gui = None
         self.background = None
         super().delete()

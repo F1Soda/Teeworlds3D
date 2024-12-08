@@ -88,4 +88,7 @@ class GameGUI:
 
     def delete(self):
         self.game = None
-        self.gui = None
+        if self.gui:
+            self.gui.clear()
+            self.gui = None
+

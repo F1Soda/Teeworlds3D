@@ -17,6 +17,7 @@ class Menu(state_m.GameState):
 
     def exit(self):
         self.menu_sm.release()
+        self.menu_sm = None
 
     def render_level(self):
         self.app.ctx.screen.use()

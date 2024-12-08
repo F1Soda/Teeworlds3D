@@ -57,7 +57,7 @@ class Transformation(component_m.Component):
         # Convert input to glm.vec3 if it’s a tuple
         if isinstance(value, tuple):
             value = glm.vec3(*value)
-        print("Change forward for ", self.rely_object.name, f"from {self._forward} to {value}")
+        # print("Change forward for ", self.rely_object.name, f"from {self._forward} to {value}")
         value = value / glm.length(value)
 
 
@@ -120,7 +120,7 @@ class Transformation(component_m.Component):
 
     @rot.setter
     def rot(self, value):
-        print("Change rot for ", self.rely_object.name, f" from {self._rot} to {value}")
+        # print("Change rot for ", self.rely_object.name, f" from {self._rot} to {value}")
 
         if isinstance(value, tuple):
             value = glm.vec3(*value)
