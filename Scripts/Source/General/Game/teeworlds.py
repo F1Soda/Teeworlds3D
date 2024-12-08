@@ -114,7 +114,8 @@ class TeeworldsEngine:
         pg.mouse.set_visible(value)
 
     def exit(self):
-        asyncio.run(self.client.disconnect(), debug=True)
+        if self.client.observer.is_connected:
+            asyncio.run(self.client.disconnect(), debug=True)
         input_manager_m.InputManager.release()
         self.gsm.state.exit()
         pg.quit()

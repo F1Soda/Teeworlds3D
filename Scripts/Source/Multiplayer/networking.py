@@ -8,6 +8,12 @@ class Observer:
         self._writer = None
         self._reader = None
 
+    def set_writer(self, writer):
+        self._writer = writer
+
+    def set_reader(self, reader):
+        self._reader = reader
+
     async def connect(self, ip="localhost", port=9000):
         self._reader, self._writer = await asyncio.open_connection(ip, port)
         return self._reader, self._writer
@@ -17,7 +23,7 @@ class Observer:
         return not (self._writer is None or self._reader is None)
 
     async def get_response(self):
-        raw_response = (await self._reader.read(255)).decode()
+        raw_response = await self._reader.read(255)
         return eval(raw_response.decode(), {"UUID": UUID})
 
     def get_id(self):
@@ -42,4 +48,4 @@ class Observer:
 
     def prepare_data(self, data):
         data["source"] = str(self._id)
-        return data
+        return str(data).encode()

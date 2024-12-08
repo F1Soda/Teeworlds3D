@@ -14,7 +14,7 @@ class Client:
         try:
             # Establish connection
             print("Trying to connect to localhost:9000")
-            await asyncio.open_connection("localhost", 9000)
+            await self.observer.connect()
 
             # Send handshake message
             message = {"action": "handshake"}
@@ -28,8 +28,11 @@ class Client:
             self.gsm.set_state("Game", response["level"])
             self.observer.set_id(observer_id)
 
+            await self.set_spawn_position()
+
             # Start listening for server updates
             self.listen_task = asyncio.create_task(self.listen_for_updates())
+
             return True
         except Exception as e:
             print("Error while connecting!")
@@ -40,34 +43,34 @@ class Client:
 
     async def listen_for_updates(self):
         """Continuously listen for updates from the server."""
-        try:
-            print("Listening for updates...")
-            while True:
+
+        print("Listening for updates...")
+        while True:
+            try:
+                await self.observer.send_to_server({"action": "echo"})
                 message = await self.observer.get_response()
+                print(message)
                 if not message:
                     print("!Empty message from server!")
                     break
-                await self.handle_data_from_server(message)
-        except asyncio.CancelledError:
-            print("Listening task cancelled.")
-        except Exception as e:
-            print(f"Error in listen_for_updates: {e}")
-        finally:
-            await self.disconnect()
+                # await self.handle_data_from_server(message)
+            except asyncio.CancelledError:
+                print(f"Listening task cancelled. but FUCK IT")
+            except Exception as e:
+                print(f"Error in listen_for_updates: {e}")
+        await self.disconnect()
 
     async def handle_data_from_server(self, data):
         """Handle incoming data from the server."""
         try:
             print(f"Data received: {data}")
             # Example: Update game state based on server data
-            update = eval(data, {"UUID": UUID})
-            action = update["action"]
+            action = data["action"]
             match action:
                 case "spawn":
                     self.gsm.spawn_client(pos=data["pos"], id=data["source"])
                 case "move":
                     self.gsm.state.move_client(pos=data["pos"], id=data["source"])
-            # self.gsm.state.update_game_state(update)  # Apply the update to the game state
         except Exception as e:
             print("OOOps, occurred some error in handling server data:", e)
 
@@ -77,11 +80,11 @@ class Client:
         await self.observer.update(action_data)
 
     async def set_spawn_position(self):
-        message = self.observer.prepare_data({
+        message = {
             "action": "spawn",
-        })
-        response = await self.observer.send_to_server(message)
-        # print(f"Spawn player response: {response}")
+        }
+        await self.observer.send_to_server(message)
+        response = await self.observer.get_response()
         spawn_point = response["pos"]
 
         self.gsm.state.spawn_player(spawn_point)

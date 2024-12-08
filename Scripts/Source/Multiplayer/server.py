@@ -1,4 +1,5 @@
 import sys, os
+import time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
@@ -10,7 +11,6 @@ import datetime
 
 class Server:
     def __init__(self, level_path):
-        self.next_client_port = 9000
         self.config = {"level": level_path}
         self.observer_controller = observer_controller_m.ObserverController()
 
@@ -40,9 +40,8 @@ class Server:
                 response = {"status": "good"}
                 match action:
                     case "handshake":
-                        address = "localhost"
                         response = self.get_handshake_config()
-                        self.add_client(response["observer_id"], address)
+                        self.add_client(response["observer_id"], reader, writer)
                     case "spawn":
                         response = self.get_spawn_pos_response()
                         await self.observer_controller.notify_observers(response, data["source"])
@@ -50,7 +49,8 @@ class Server:
                         response = self.get_move_response(data)
                         await self.observer_controller.notify_observers(response, data["source"])
                     case "echo":
-                        response["data"] = data
+                        response["action"] = "echo"
+                        response["time"] = datetime.datetime.now()
                     case "disconnect":
                         observer_id = data["source"]
                         self.remove_client(observer_id)
@@ -77,20 +77,19 @@ class Server:
         self.observer_controller.remove_observer(observer_id)
         Server.log(f"Client {observer_id} removed.", level=1)
 
-    def add_client(self, observer_id, address):
-        observer = networking.Observer(port=self.get_next_client_port(), host=address)
+    def add_client(self, observer_id, reader, writer):
+        observer = networking.Observer()
+
+        observer.set_reader(reader)
+        observer.set_writer(writer)
         observer.set_id(observer_id)
+
         self.observer_controller.add_observer(observer_id, observer)
 
         Server.log(f"Client added: {observer_id}", level=1)
 
-    def get_next_client_port(self):
-        self.next_client_port += 1
-        return self.next_client_port
-
     def get_handshake_config(self):
         config = {"action": "handshake",
-                  "port": self.next_client_port,
                   "level": self.config["level"],
                   "observer_id": self.get_new_id_for_observer()}
         return config
