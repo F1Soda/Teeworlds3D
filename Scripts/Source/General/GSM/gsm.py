@@ -9,7 +9,7 @@ import Scripts.Source.General.GSM.connection as connection_m
 class GSM(fsm_m.FSM):
     def __init__(self, app):
         self.app = app
-        self.client = None
+        self.network = None
         super().__init__()
 
         self.state = None  # type: state_m.GameState
@@ -20,4 +20,4 @@ class GSM(fsm_m.FSM):
         self.add_state(connection_m.Connection.NAME, connection_m.Connection(app, self))
 
         # self.set_state("Game", "Levels/Player/TestCollision.json")
-        # self.set_state("Connection")
+        self.set_state("Connection", "Levels/Player/TestCollision.json")

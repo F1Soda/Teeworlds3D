@@ -10,13 +10,16 @@ class Connection(state_m.GameState):
         self.gui = app.gui
 
     def enter(self, params=None):
-        if not self.fsm.client.connected:
-            self.fsm.set_state("Menu", f"Attempt to load level without connection")
-        if params is None:
-            self.fsm.set_state("Menu", f"Internal Error: no level filepath")
+        # if not self.fsm.network.connected:
+        #     self.fsm.set_state("Menu", f"Attempt to load level without connection")
+        # if params is None:
+        #     self.fsm.set_state("Menu", f"Internal Error: no level filepath")
 
-        self.fsm.set_state("Game", (params, (0, 1, 0)))
+        request_to_spawn = {"action": "spawn"}
 
+        response = self.fsm.app.network.send(request_to_spawn)
+        print(response)
+        self.fsm.set_state("Game", ("Levels/Player/TestCollision.json", response["spawn_pos"], response["state"]))
 
     def render_level(self):
         self.app.ctx.screen.use()

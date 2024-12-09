@@ -129,7 +129,7 @@ class MenuPlay(menu_state_m.MenuState):
             self.selected_level_button = button
             # self.selected_elements.append((button, obj_id))
 
-        for session in self.fsm.app.client.sessions:
+        for session in self.fsm.app.network.sessions:
             self._create_element_in_content(self.level_content,
                                             glm.vec2(self.servers_block.position.relative_window.size.x, 0.03),
                                             select_action, session, session)

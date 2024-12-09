@@ -16,6 +16,7 @@ import Scripts.Source.General.GSM.gsm as gsm_m
 import Scripts.Source.Multiplayer.client as client_m
 import threading
 import Scripts.Source.GUI.gui as canvas_m
+import Scripts.Source.Multiplayer.network as network_m
 
 WIN_SIZE = (1280, 720)
 FIXED_UPDATE_RATE = 50
@@ -76,17 +77,19 @@ class TeeworldsEngine:
 
         input_manager_m.InputManager.handle_keyboard_press += self.gui.handle_keyboard_press
 
+        # Client
+        self.network = network_m.Network()
+        self.network.connect()
+
         # Game State Machine
         self.gsm = gsm_m.GSM(self)
 
-        # Client
-        self.client = client_m.Client(self.gsm)
-        self.gsm.client = self.client
+        self.gsm.network = self.network
 
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
 
-        self.gsm.set_state("Menu")
+        # self.gsm.set_state("")
 
         self.running = True
 
@@ -123,18 +126,16 @@ class TeeworldsEngine:
         pg.quit()
         sys.exit()
 
-    def start_server_client(self):
-        # Start the server thread
-        self.client.connect()
-
-        self.server_thread = threading.Thread(target=self.client.udp_client, daemon=True)
-        self.server_thread.start()
+    # def start_server_client(self):
+    #     # Start the server thread
+    #     self.network
+    #
+    #     self.server_thread = threading.Thread(target=self.network.start_client, daemon=True)
+    #     self.server_thread.start()
 
     def run(self):
         """Main game loop."""
         try:
-            self.start_server_client()
-
             accumulated_time = 0
             while self.running:
                 self.delta_time = self.clock.tick(120) / 1000

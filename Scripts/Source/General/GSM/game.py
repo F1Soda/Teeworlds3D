@@ -22,7 +22,9 @@ class Game(state_m.GameState):
         self.ctx = self.app.ctx
         self.object_picker = None
         self.win_size = self.app.win_size
-        self.client = gsm.client
+        self.client = gsm.network
+
+        self.cumulative_time_for_send_data_to_server = 0
 
     @property
     def time(self):
@@ -53,9 +55,10 @@ class Game(state_m.GameState):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
         if params is None:
             level_path = "Levels/Base/Test.json"
-            pos = (0, 1, 0)
+            spawn_pos = (0, 1, 0)
+            existing_clients = {}
         else:
-            level_path, pos = params
+            level_path, spawn_pos, existing_clients = params
 
         self._load_level(level_path)
 
@@ -66,7 +69,11 @@ class Game(state_m.GameState):
         self.app.set_mouse_visible(True)
         self.app.set_mouse_grab(False)
 
-        self.spawn_player(pos)
+        self.spawn_player(spawn_pos)
+
+        for client_id, pos in existing_clients.items():
+            if client_id != self.app.network.id:
+                self.spawn_client_wrapper(pos, client_id)
 
     def exit(self):
         self.level.delete()
@@ -84,8 +91,23 @@ class Game(state_m.GameState):
     def spawn_player(self, pos):
         self.level.spawn_player(pos)
 
+    def spawn_client_wrapper(self, pos, client_id):
+        self.level.spawn_client(pos, client_id)
+
     def update_game_state(self, state):
-        ...
+        action = state["action"]
+        source = state["source"]
+        print(state)
+        match action:
+            case "spawn":
+                if source != self.app.network.id:
+                    client_wrapper = self.level.client_wrappers.get(action["source"])
+                    if client_wrapper:
+                        client_wrapper.transformation.pos = state["spawn_pos"]
+                    else:
+                        self.spawn_client_wrapper(state["spawn_pos"], source)
+                else:
+                    raise Exception("Twice get spawn for same player")
 
     def send_game_state(self, state):
         self.client.send_action(state)
@@ -100,8 +122,24 @@ class Game(state_m.GameState):
         object_picker_m.ObjectPicker.picking_pass()
 
     def fixed_update(self):
+        # TODO: тут нужно добавить логику на правильный расчет DT
         self.physic_world.step(DT)
         self.level.fixed_apply_components()
+
+        self.cumulative_time_for_send_data_to_server += DT
+        if self.cumulative_time_for_send_data_to_server > 0.3:
+            self.cumulative_time_for_send_data_to_server = 0
+            self.send_data_to_server()
+
+    def send_data_to_server(self):
+        response = {}
+        response["action"] = "update"
+        response["pos"] = (self.level.player.transformation.pos.x,
+                           self.level.player.transformation.pos.y,
+                           self.level.player.transformation.pos.z
+                           )
+        data_about_other_clients = self.app.network.send(response)
+        self.update_game_state(data_about_other_clients)
 
     def render_level(self):
         self.app.ctx.screen.use()

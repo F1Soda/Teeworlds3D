@@ -1,6 +1,9 @@
 import Scripts.Source.Multiplayer.networking as networking_m
 import socket
+import select
 from uuid import UUID
+import time
+import threading
 
 
 class Client:
@@ -12,26 +15,29 @@ class Client:
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.connected = False
 
-    def udp_client(self):
-        try:
-            while True:
-                # Send the message to the server
-                # self.client_socket.sendto(self.message.encode(), ("localhost", 9000))
+    def listen(self):
+        while self.gsm.app.running:
+            # try:
+            data, _ = self.client_socket.recvfrom(1024)
+            print(f"Received from server: {data.decode()}")
+            response = eval(data.decode())  # Assume safe, handle carefully
+            action = response["action"]
 
-                # Receive a response from the server
-                raw_response, _ = self.client_socket.recvfrom(1024)
-                print(f"Server response: {raw_response.decode()}")
-                response = eval(raw_response.decode(), {"UUID": UUID})
-                action = response["action"]
-                match action:
-                    case "spawn":
-                        self.gsm.spawn_client(pos=response["pos"], id=response["source"])
-                    case "move":
-                        self.gsm.state.move_client(pos=response["pos"], id=response["source"])
+            match action:
+                case "spawn":
+                    # Your game logic for spawning a new client
+                    print("Spawning new client...")
+                case "move":
+                    # Your game logic for moving a client
+                    print(f"Moving client to position {response['pos']}")
+            # except socket.error:
+            #     break
 
-        finally:
-            # Close the socket
-            self.client_socket.close()
+    def start_client(self):
+
+        listen_thread = threading.Thread(target=self.listen)
+        listen_thread.daemon = True  # Allow this thread to exit when the main program exits
+        listen_thread.start()
 
     def connect(self) -> bool:
         message = {"action": "handshake"}
@@ -45,14 +51,16 @@ class Client:
         self.sessions.append(response["level"])
         self.observer.set_id(observer_id)
 
-
         self.connected = True
         return True
 
+    def send_data(self, message):
+        ...
+
     def ask_server_spawn(self):
         message = {
-                "action": "spawn",
-            }
+            "action": "spawn",
+        }
         self.client_socket.sendto(self.observer.prepare_data(message), ("localhost", 9000))
 
         # raw_response, _ = self.client_socket.recvfrom(1024)
