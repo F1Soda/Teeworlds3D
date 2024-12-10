@@ -14,10 +14,17 @@ Network = network_m.Network
 
 client_lock = threading.Lock()
 
+MAX_COUNT = 4
+
 
 class Server:
     def __init__(self, level_path):
-        self.config = {"level": level_path}
+        self.config = {"level": level_path,
+                       "max_count": MAX_COUNT,
+                       "count_players": 0,
+                       "mode": "Deathmatch",
+                       "name": "room_0"
+                       }
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.game_state = {}
         # В clients actions хранится действия, которые должен сделать клиент для синхронизации игры
@@ -32,6 +39,7 @@ class Server:
 
     def add_client(self, guid, pos):
         self.game_state[guid] = {"pos": pos}
+        self.config["count_players"] += 1
         self.client_actions[guid] = {}
 
     def run_server(self):
@@ -44,7 +52,7 @@ class Server:
         except socket.error as e:
             str(e)
 
-        self.server_socket.listen(4)
+        self.server_socket.listen(MAX_COUNT)
 
         count_threads = 0
 
@@ -72,7 +80,7 @@ class Server:
         while True:
             try:
                 raw_response, _ = conn.recvfrom(1024)
-                Server.log(f"{count_thread}: Received data: {raw_response}", level=1)
+                # Server.log(f"{count_thread}: Received data: {raw_response}", level=1)
                 response = eval(raw_response, {"UUID": UUID})
 
                 # print("Received: ", response)
@@ -139,13 +147,15 @@ class Server:
                             del self.client_actions[source][synced_id]
                 case "echo":
                     reply["action"] = "echo"
+                case "disconnect":
+                    with client_lock:
+                        del self.client_actions[source]
+                        del self.game_state[source]
 
         return reply
 
     def get_handshake_config(self, reply):
-        reply["actions"]["handshake"] = {
-            "level": self.config["level"]
-        }
+        reply["actions"]["handshake"] = self.config
         return reply
 
     def get_spawn_pos_response(self, reply):

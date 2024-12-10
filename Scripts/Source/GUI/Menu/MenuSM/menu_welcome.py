@@ -14,7 +14,6 @@ class MenuWelcome(menu_state_m.MenuState):
 
         canvas = menu_sm.gui.canvas
 
-
         rcp = glm.vec2(0.01, 0.7)
 
         teeworlds_label = elements.Text("teeworlds_label", canvas, win_size,
@@ -76,4 +75,3 @@ class MenuWelcome(menu_state_m.MenuState):
         self.exit()
 
         canvas.update_position()
-

@@ -1,22 +1,18 @@
-import asyncio
 import os
 import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
-
-import glm
-import pygame as pg
-import moderngl as mgl
 
 import Scripts.Source.GUI.library as library_gui_m
 import Scripts.Source.Render.library as library_object_m
 import Scripts.Source.General.Managers.data_manager as data_manager_m
 import Scripts.Source.General.Managers.input_manager as input_manager_m
 import Scripts.Source.General.GSM.gsm as gsm_m
-import Scripts.Source.Multiplayer.client as client_m
-import threading
 import Scripts.Source.GUI.gui as canvas_m
 import Scripts.Source.Multiplayer.network as network_m
+import glm
+import pygame as pg
+import moderngl as mgl
 
 WIN_SIZE = (1280, 720)
 FIXED_UPDATE_RATE = 50
@@ -79,7 +75,6 @@ class TeeworldsEngine:
 
         # Client
         self.network = network_m.Network()
-        self.network.connect()
 
         # Game State Machine
         self.gsm = gsm_m.GSM(self)
@@ -89,7 +84,7 @@ class TeeworldsEngine:
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
 
-        # self.gsm.set_state("")
+        self.gsm.set_state("Menu")
 
         self.running = True
 
@@ -119,19 +114,12 @@ class TeeworldsEngine:
         pg.mouse.set_visible(value)
 
     def exit(self):
-        # if self.client.observer.is_connected:
-        #     asyncio.run(self.client.disconnect(), debug=True)
+        if self.network.id != -1:
+            self.network.disconnect()
         input_manager_m.InputManager.release()
         self.gsm.state.exit()
         pg.quit()
         sys.exit()
-
-    # def start_server_client(self):
-    #     # Start the server thread
-    #     self.network
-    #
-    #     self.server_thread = threading.Thread(target=self.network.start_client, daemon=True)
-    #     self.server_thread.start()
 
     def run(self):
         """Main game loop."""
@@ -165,9 +153,8 @@ class TeeworldsEngine:
                 pg.display.flip()
         except KeyboardInterrupt:
             self.running = False
-            # asyncio.run(self.client.disconnect(), debug=True)
-            # if self.server_thread and self.server_thread.is_alive():
-            #     self.server_thread.join()
+            if self.network.id != -1:
+                self.network.disconnect()
 
 
 if __name__ == '__main__':

@@ -13,7 +13,8 @@ class Menu(state_m.GameState):
 
     def enter(self, params=None):
         self.menu_sm = menu_sm_m.MenuSM(self.app, self.fsm)
-        print(params)
+        if params:
+            print("Menu | passed params: ", params)
 
     def exit(self):
         self.menu_sm.release()

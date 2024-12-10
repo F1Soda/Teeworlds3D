@@ -18,6 +18,3 @@ class GSM(fsm_m.FSM):
         self.add_state(editor_m.Editor.NAME, editor_m.Editor(app, self))
         self.add_state(game_m.Game.NAME, game_m.Game(app, self))
         self.add_state(connection_m.Connection.NAME, connection_m.Connection(app, self))
-
-        # self.set_state("Game", "Levels/Player/TestCollision.json")
-        self.set_state("Connection", "Levels/Player/TestCollision.json")

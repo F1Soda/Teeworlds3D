@@ -55,6 +55,15 @@ class ObjectCreator:
         client_wrapper = object_m.Object(ObjectCreator.rely_level, "Client_Wrapper_" + client_id)
         client_wrapper.add_component(components.ClientWrapper())
         body = ObjectCreator.create_cube("red_lit", "body")
+        dumpy_gun = ObjectCreator.create_dumpy_weapon()
+        dumpy_gun.transformation.scale.z = 1
+        dumpy_gun.transformation.scale = dumpy_gun.transformation.scale
+        body.add_children(dumpy_gun)
+        dumpy_gun.transformation.pos = (
+                dumpy_gun.transformation.pos +
+                body.transformation.right * (0.5 + dumpy_gun.transformation.scale.x/2) +
+                body.transformation.forward * 0.3
+        )
         client_wrapper.add_children(body)
         return client_wrapper
 

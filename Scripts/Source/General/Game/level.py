@@ -35,6 +35,8 @@ class Level:
 
         self.client_wrappers = {}
 
+        self.is_game = None
+
     def change_hidden_line_mode(self):
         if self.render_hidden_lines == components.renderer_m.HiddenLineState.Off:
             self.render_hidden_lines = components.renderer_m.HiddenLineState.Line
@@ -271,6 +273,7 @@ class Level:
         self.objects[light.id] = light
 
     def load(self, file_path=None, is_game=False):
+        self.is_game = is_game
         if is_game and not DEBUG:
             self.player = object_creator_m.ObjectCreator.create_player()
 
@@ -385,12 +388,13 @@ class Level:
             obj.on_gizmos(self.camera_component)
 
     def apply_components(self):
-        # print("next frame")
         if self.app.NAME == "Game":
             self.app.game_gui.debug_global_text.text = f"({self.hookshot_root.transformation.rot.x:.2f}, {self.hookshot_root.transformation.rot.y:.2f}, {self.hookshot_root.transformation.rot.z:.2f})"
             self.app.game_gui.debug_LOCAL_text.text = f"({self.hookshot_model.transformation.pos.x:.2f}, {self.hookshot_model.transformation.pos.y:.2f}, {self.hookshot_model.transformation.pos.z:.2f})"
 
             self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
+        if not self.is_game:
+            self.camera.apply_components()
         for obj in self.objects.values():
             obj.apply_components()
 
@@ -435,7 +439,4 @@ class Level:
         wrapper = object_creator_m.ObjectCreator.create_client_wrapper(client_id)
         wrapper.transformation.pos = pos
         self.client_wrappers[client_id] = wrapper
-
-    def move_client(self, pos, client_id):
-        self.client_wrappers[client_id].transformation.pos = pos
     ################

@@ -57,6 +57,13 @@ def _init_textures(ctx):
 
     textures['crosshair'] = texture
 
+    # default map screen
+    texture = pg.image.load('Textures/default_map_screen.png').convert_alpha()
+    texture = pg.transform.flip(texture, flip_x=False, flip_y=True)
+    texture = ctx.texture(size=texture.get_size(), components=4, data=pg.image.tostring(texture, 'RGBA'))
+
+    textures['default_map_screen'] = texture
+
 
 def init(ctx):
     _inti_shader_programs(ctx)
