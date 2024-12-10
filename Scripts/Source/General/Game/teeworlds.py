@@ -84,7 +84,10 @@ class TeeworldsEngine:
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
 
-        self.gsm.set_state("Menu")
+        self.network.connect()
+        self.gsm.set_state("Connection")
+
+        # self.gsm.set_state("Menu")
 
         self.running = True
 

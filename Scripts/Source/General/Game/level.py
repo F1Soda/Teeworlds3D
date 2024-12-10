@@ -363,6 +363,12 @@ class Level:
             self.app.editor_gui.update_data_in_hierarchy()
         return obj
 
+    def delete_object(self, obj):
+        obj.delete()
+        del self.objects[obj.id]
+        if self.app.NAME == "Editor":
+            self.app.editor_gui.update_data_in_hierarchy()
+
     def init_gizmo(self):
         axis = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0, 0), (1, 0, 0), (1, 0, 0), self.camera_component, size=3)
         self.transform_axis_gizmo[axis.id] = axis
@@ -438,5 +444,6 @@ class Level:
     def spawn_client(self, pos, client_id):
         wrapper = object_creator_m.ObjectCreator.create_client_wrapper(client_id)
         wrapper.transformation.pos = pos
+        self.add_object(wrapper)
         self.client_wrappers[client_id] = wrapper
     ################

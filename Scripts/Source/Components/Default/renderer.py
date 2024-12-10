@@ -54,7 +54,6 @@ class Renderer(component_m.Component):
         self._vao = self.get_vao(self.material.shader_program, self.mesh_filter)
         self._vao_picking = self.get_vao(self.picking_material.shader_program, self.mesh_filter.mesh)
 
-
     def _enable_hidden_line(self):
         if self.mesh_filter is None:
             return
@@ -92,6 +91,7 @@ class Renderer(component_m.Component):
             self._enable_hidden_line()
 
     def update_render_mode(self):
+        # Вот тут я хз че за блять remove_object, когда transparency_renderer это list. Пускай останется =)
         if self.material.render_mode == material_m.RenderMode.Opaque:
             if self in self.level.transparency_renderer:
                 self.level.transparency_renderer.remove_object(self)
@@ -134,7 +134,8 @@ class Renderer(component_m.Component):
     def get_vao(self, shader_program, mesh_filter) -> mgl.VertexArray | None:
         if shader_program is None or mesh_filter is None:
             return None
-        vao = self.ctx.vertex_array(shader_program.bin_program, [(mesh_filter.mesh.vbo, mesh_filter.mesh.data_format, *mesh_filter.mesh.attributes)])
+        vao = self.ctx.vertex_array(shader_program.bin_program, [
+            (mesh_filter.mesh.vbo, mesh_filter.mesh.data_format, *mesh_filter.mesh.attributes)])
         return vao
 
     def process_window_resize(self, new_size):
@@ -145,7 +146,6 @@ class Renderer(component_m.Component):
         if self.vao is None:
             return
         self.material.update(self.transformation, self.light_component)
-
 
         if self.material.render_mode == material_m.RenderMode.Opaque:
             if self.level.render_hidden_lines != HiddenLineState.Off and self.vao_hidden_line:
@@ -191,6 +191,11 @@ class Renderer(component_m.Component):
         self.vao = self.get_vao(self._material.shader_program, self.mesh_filter)
 
     def delete(self):
+        if self in self.level.transparency_renderer:
+            self.level.transparency_renderer.remove(self)
+        elif self in self.level.opaque_renderer:
+            self.level.opaque_renderer.remove(self)
+
         self.rely_object = None
         self.transformation = None
         self.camera_component = None

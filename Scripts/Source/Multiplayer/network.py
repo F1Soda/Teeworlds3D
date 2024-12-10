@@ -27,7 +27,11 @@ class Network:
 
     def disconnect(self):
         message = {"actions": {"disconnect": {"reason": "Player leave the game"}}}
-        self.send(message)
+        try:
+            response = self.prepare_data(message)
+            self.client.send(response)
+        except socket.error as e:
+            pass
         self.client.close()
         self.id = -1
         self.sessions = []

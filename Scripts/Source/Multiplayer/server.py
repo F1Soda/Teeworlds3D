@@ -77,6 +77,8 @@ class Server:
                 start_new_thread(self.threaded_client, (conn, guid_client, count_threads,))
 
     def threaded_client(self, conn, guid, count_thread):
+        successfully_disconnect = False
+
         while True:
             try:
                 raw_response, _ = conn.recvfrom(1024)
@@ -87,6 +89,10 @@ class Server:
 
                 reply = {}
                 reply = self.make_response(response, reply)
+
+                if reply.get("disconnect"):
+                    successfully_disconnect = True
+                    break
 
                 player_data = response.get("player_data")
                 if player_data:
@@ -102,21 +108,17 @@ class Server:
                 reply["source"] = str(response["source"])
 
                 conn.sendall(str(reply).encode())
-            except Exception as e:
+            except SyntaxError as e:
                 print(e)
+                break
+            except Exception as e:
                 raise
 
-        print("Lost connection")
-        del self.game_state[guid]
+        if not successfully_disconnect:
+            with client_lock:
+                self.disconnect_client(guid)
+            print(f"Lost connection with {guid}")
         conn.close()
-
-    def notify_clients_with_action(self, source, action, action_data):
-        for client_guid in self.client_actions.keys():
-            if client_guid != source:
-                self.client_actions[client_guid][action_data["id_action"]] = {
-                    "action": action,
-                    "action_data": action_data
-                }
 
     def make_response(self, data, reply):
         source = data["source"]
@@ -149,14 +151,47 @@ class Server:
                     reply["action"] = "echo"
                 case "disconnect":
                     with client_lock:
-                        del self.client_actions[source]
-                        del self.game_state[source]
+                        self.disconnect_client(source)
+                    reply = {"disconnect": True}
 
         return reply
+
+    def notify_clients_with_action(self, source, action, action_data):
+        for client_guid in self.client_actions.keys():
+            if client_guid != source:
+                self.client_actions[client_guid][action_data["id_action"]] = {
+                    "action": action,
+                    "action_data": action_data
+                }
 
     def get_handshake_config(self, reply):
         reply["actions"]["handshake"] = self.config
         return reply
+
+    def disconnect_client(self, guid):
+        for client_guid in self.client_actions.keys():
+            if client_guid != guid:
+                actions_to_drop = []
+                for action_id, action in self.client_actions[client_guid].items():
+                    if action["action_data"]["source"] == guid:
+                        actions_to_drop.append(action_id)
+
+                for action_id in actions_to_drop:
+                    del self.client_actions[client_guid][action_id]
+
+                key = "disconnect_client"
+                key_value = {
+                    "source": guid,
+                    "id_action": str(uuid.uuid1())
+                }
+
+                self.client_actions[client_guid][key_value["id_action"]] = {
+                    "action": key,
+                    "action_data": key_value
+                }
+        self.config["count_players"] -= 1
+        del self.client_actions[guid]
+        del self.game_state[guid]
 
     def get_spawn_pos_response(self, reply):
         reply["actions"]["spawn"] = {

@@ -79,6 +79,8 @@ class Object:
     def delete(self):
         for component in self.components:
             component.delete()
+        for child in self.child_objects:
+            child.delete()
         self.components_to_call_on_gizmos = None
         self.components_to_apply_fixed_update = None
 

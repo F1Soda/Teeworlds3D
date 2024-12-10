@@ -113,6 +113,22 @@ class Game(state_m.GameState):
                     else:
                         raise Exception(f"Twice get spawn for same player!\nthis client id = {self.app.network.id}\n"
                                         f"source, that should be spawned: {state["actions"][action]["source"]}")
+                case "disconnect_client":
+                    if state["actions"][action]["source"] != self.app.network.id:
+                        client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
+                        if client_wrapper:
+                            self.level.delete_object(client_wrapper)
+                            del self.level.client_wrappers[state["actions"][action]["source"]]
+                        else:
+                            raise Exception(
+                                f"Attemp to disconnect non existing client!\nthis client id = {self.app.network.id}\n"
+                                f"source, that should be disconnected: {state["actions"][action]["source"]}")
+
+                        self.synced_actions_id.append(state["actions"][action]["id_action"])
+                    else:
+                        raise Exception(
+                            f"Called disconnect with user agreement!\nthis client id = {self.app.network.id}\n"
+                            f"source, that should be disconnected: {state["actions"][action]["source"]}")
 
         for client_guid in state["game_state"].keys():
             if client_guid != self.app.network.id and self.level.client_wrappers.get(client_guid):
@@ -121,7 +137,7 @@ class Game(state_m.GameState):
                 cw.transformation.rot = state["game_state"][client_guid]["rot"]
 
     # def send_game_state(self, state):
-    #     self.client.send_action(state)
+    #     self.client.send_action(state)as
 
     ###############
 
@@ -150,9 +166,10 @@ class Game(state_m.GameState):
 
         response["actions"]['synced'] = self.synced_actions_id
 
+        server_response = self.app.network.send(response)
+
         self.synced_actions_id.clear()
 
-        server_response = self.app.network.send(response)
         self.update_game_state(server_response)
 
     def render_level(self):
