@@ -40,5 +40,6 @@ class Player(component_m.Component):
     def serialize(self) -> {}:
         return {
             "health": self.health,
-            "pos": self.transformation.pos
+            "pos": (self.transformation.pos.x, self.transformation.pos.y, self.transformation.pos.z),
+            "rot": (self.transformation.rot.x, self.transformation.rot.y, self.transformation.rot.z)
         }

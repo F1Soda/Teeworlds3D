@@ -25,6 +25,8 @@ class Game(state_m.GameState):
         self.client = gsm.network
 
         self.cumulative_time_for_send_data_to_server = 0
+        self.is_synced = False
+        self.synced_actions_id = []
 
     @property
     def time(self):
@@ -71,9 +73,9 @@ class Game(state_m.GameState):
 
         self.spawn_player(spawn_pos)
 
-        for client_id, pos in existing_clients.items():
+        for client_id, data in existing_clients.items():
             if client_id != self.app.network.id:
-                self.spawn_client_wrapper(pos, client_id)
+                self.spawn_client_wrapper(data["pos"], client_id)
 
     def exit(self):
         self.level.delete()
@@ -95,22 +97,31 @@ class Game(state_m.GameState):
         self.level.spawn_client(pos, client_id)
 
     def update_game_state(self, state):
-        action = state["action"]
-        source = state["source"]
         print(state)
-        match action:
-            case "spawn":
-                if source != self.app.network.id:
-                    client_wrapper = self.level.client_wrappers.get(action["source"])
-                    if client_wrapper:
-                        client_wrapper.transformation.pos = state["spawn_pos"]
-                    else:
-                        self.spawn_client_wrapper(state["spawn_pos"], source)
-                else:
-                    raise Exception("Twice get spawn for same player")
+        for action in state["actions"]:
+            match action:
+                case "spawn_client":
+                    if state["actions"][action]["source"] != self.app.network.id:
+                        client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
+                        if client_wrapper:
+                            client_wrapper.transformation.pos = state["actions"][action]["spawn_pos"]
+                        else:
+                            self.spawn_client_wrapper(state["actions"][action]["spawn_pos"],
+                                                      state["actions"][action]["source"])
 
-    def send_game_state(self, state):
-        self.client.send_action(state)
+                        self.synced_actions_id.append(state["actions"][action]["id_action"])
+                    else:
+                        raise Exception(f"Twice get spawn for same player!\nthis client id = {self.app.network.id}\n"
+                                        f"source, that should be spawned: {state["actions"][action]["source"]}")
+
+        for client_guid in state["game_state"].keys():
+            if client_guid != self.app.network.id and self.level.client_wrappers.get(client_guid):
+                cw = self.level.client_wrappers[client_guid]
+                cw.transformation.pos = state["game_state"][client_guid]["pos"]
+                cw.transformation.rot = state["game_state"][client_guid]["rot"]
+
+    # def send_game_state(self, state):
+    #     self.client.send_action(state)
 
     ###############
 
@@ -127,19 +138,22 @@ class Game(state_m.GameState):
         self.level.fixed_apply_components()
 
         self.cumulative_time_for_send_data_to_server += DT
-        if self.cumulative_time_for_send_data_to_server > 0.3:
+        if self.cumulative_time_for_send_data_to_server > 0:
             self.cumulative_time_for_send_data_to_server = 0
             self.send_data_to_server()
 
     def send_data_to_server(self):
         response = {}
-        response["action"] = "update"
-        response["pos"] = (self.level.player.transformation.pos.x,
-                           self.level.player.transformation.pos.y,
-                           self.level.player.transformation.pos.z
-                           )
-        data_about_other_clients = self.app.network.send(response)
-        self.update_game_state(data_about_other_clients)
+        response["actions"] = {}
+
+        response["player_data"] = self.level.player_component.serialize()
+
+        response["actions"]['synced'] = self.synced_actions_id
+
+        self.synced_actions_id.clear()
+
+        server_response = self.app.network.send(response)
+        self.update_game_state(server_response)
 
     def render_level(self):
         self.app.ctx.screen.use()
