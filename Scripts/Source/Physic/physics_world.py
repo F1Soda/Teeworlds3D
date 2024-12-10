@@ -58,7 +58,8 @@ class PhysicWorld:
                 continue
 
             for collide_object in self.collide_objects:
-                if collide_object.collider.rely_object.id == physic_object.collider.rely_object.id or collide_object.collider.is_trigger:
+                if (collide_object.collider.rely_object.id == physic_object.collider.rely_object.id or
+                        collide_object.collider.is_trigger):
                     continue
 
                 collide_point = physic_object.collider.get_collide_point(collide_object.collider)
@@ -74,7 +75,8 @@ class PhysicWorld:
                 collide_with = trigger.collide_with(collide_object.collider)
 
                 if collide_with:
-                    if collide_object not in self.triggered_colliders_enter[trigger]:
+                    if collide_object not in self.triggered_colliders_enter[trigger] and collide_object not in \
+                            self.triggered_colliders_current_triggering[trigger]:
                         self.triggered_colliders_enter[trigger].append(collide_object)
                         self.triggered_colliders_current_triggering[trigger].append(collide_object)
                 else:
@@ -135,7 +137,7 @@ class PhysicWorld:
         self.solvers.append(impulse_solver_m.ImpulseSolver())
         self.solvers.append(position_solver_m.PositionSolver())
 
-    def _ray_cast_hit_cube(self, start, direction, mesh_filter) -> glm.vec3:
+    def _ray_cast_hit_cube(self, start, direction, mesh_filter) -> glm.vec3 | None:
         direction = direction / glm.length(direction)
 
         global_vertices = []

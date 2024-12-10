@@ -321,10 +321,10 @@ class Level:
             self.player.add_children(self.camera)
 
             self.player.add_component(components.MeshFilter(object_creator_m.library_m.meshes['cube']))
-            cube_renderer = components.Renderer(object_creator_m.library_m.materials["cyan_unlit"], True)
-            self.player.add_component(cube_renderer)
+            # cube_renderer = components.Renderer(object_creator_m.library_m.materials["cyan_unlit"], True)
+            # self.player.add_component(cube_renderer)
 
-            self.opaque_renderer.append(cube_renderer)
+            # self.opaque_renderer.append(cube_renderer)
 
             self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
 

@@ -44,7 +44,7 @@ class Game(state_m.GameState):
             self.level.delete()
         if self.gizmos:
             self.gizmos.delete()
-        self.gizmos = []
+        # self.gizmos = []
         self.level = level_m.Level(self, self.gui)
         object_creator_m.ObjectCreator.rely_level = self.level
         object_picker_m.ObjectPicker.init(self, False)
@@ -97,7 +97,7 @@ class Game(state_m.GameState):
         self.level.spawn_client(pos, client_id)
 
     def update_game_state(self, state):
-        print(state)
+        # print(state)
         for action in state["actions"]:
             match action:
                 case "spawn_client":
@@ -149,14 +149,13 @@ class Game(state_m.GameState):
         object_picker_m.ObjectPicker.picking_pass()
 
     def fixed_update(self):
-        # TODO: тут нужно добавить логику на правильный расчет DT
-        self.physic_world.step(DT)
+        self.physic_world.step(self.app.fixed_delta_time)
         self.level.fixed_apply_components()
 
-        self.cumulative_time_for_send_data_to_server += DT
-        if self.cumulative_time_for_send_data_to_server > 0:
-            self.cumulative_time_for_send_data_to_server = 0
-            self.send_data_to_server()
+        # self.cumulative_time_for_send_data_to_server += DT
+        # if self.cumulative_time_for_send_data_to_server > 0:
+        #     self.cumulative_time_for_send_data_to_server = 0
+        self.send_data_to_server()
 
     def send_data_to_server(self):
         response = {}
@@ -181,9 +180,6 @@ class Game(state_m.GameState):
         self.level.render_transparent_objects()
 
     def render_gizmo(self):
-        for gizmo in self.gizmos:
-            gizmo.apply()
-
         self.level.on_draw_gizmos()
 
     def render_gui(self):
@@ -196,5 +192,5 @@ class Game(state_m.GameState):
     def process_window_resize(self, new_size):
         self.win_size = new_size
         self.game_gui.process_window_resize(new_size)
-        self.gizmos.process_window_resize(new_size)
+        # self.gizmos.process_window_resize(new_size)
         object_picker_m.ObjectPicker.process_window_resize(new_size)

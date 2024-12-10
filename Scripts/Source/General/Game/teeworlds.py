@@ -15,6 +15,7 @@ import pygame as pg
 import moderngl as mgl
 
 WIN_SIZE = (1280, 720)
+
 FIXED_UPDATE_RATE = 50
 
 
@@ -129,8 +130,6 @@ class TeeworldsEngine:
         try:
             accumulated_time = 0
             while self.running:
-                self.delta_time = self.clock.tick(120) / 1000
-                self.update_time()
                 accumulated_time += self.delta_time
 
                 # Fixed Update
@@ -154,6 +153,12 @@ class TeeworldsEngine:
                 self.gsm.state.render_gui()
 
                 pg.display.flip()
+
+                self.delta_time = self.clock.tick(120) / 1000
+                # print("dt: ", self.delta_time)
+                # print("time: ", self.time)
+                # self.update_time()
+                self.time += self.delta_time
         except KeyboardInterrupt:
             self.running = False
             if self.network.id != -1:

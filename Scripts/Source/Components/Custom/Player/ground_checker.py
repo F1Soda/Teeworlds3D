@@ -32,11 +32,15 @@ class GroundChecker(component_m.Component):
     def transformation(self, value):
         self._transformation = value
 
-    def on_trigger_enter(self, collider):
+    def on_trigger_enter(self, collider_obj):
+        if collider_obj.collider.rely_object.name == "Player":
+            return
         self.player_controller.can_move = True
+        # print(f"CAN MOVE = TRUE, {collider_obj.collider.rely_object.name}")
 
-    def on_trigger_exit(self, collider):
+    def on_trigger_exit(self, collider_obj):
         self.player_controller.can_move = False
+        # print(f"CAN MOVE = FALSE, {collider_obj.collider.rely_object.name}")
 
     def delete(self):
         self._transformation = None

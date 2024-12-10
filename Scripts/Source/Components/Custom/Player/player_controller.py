@@ -20,7 +20,7 @@ class PlayerState(enum.Enum):
 class PlayerController(component_m.Component):
     def __init__(self, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
-        input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
+        # input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
         input_manager_m.InputManager.handle_right_click_event += self._handle_mouse_right_press
 
         self.state = PlayerState.Normal
@@ -29,7 +29,8 @@ class PlayerController(component_m.Component):
         self._rigidbody = None
         self._player = None
         self.max_velocity = 10
-        self.acceleration = 10
+        self.acceleration = 40
+        self.hookshot_speed = 0
         self.can_move = True
         self.debug_box = None
 
@@ -44,6 +45,8 @@ class PlayerController(component_m.Component):
         super().init(app, rely_object)
         self._transformation = self.rely_object.transformation
         self._rigidbody = self.rely_object.get_component_by_name("Rigidbody")
+
+        self.rely_object.components_to_apply_fixed_update.append(self)
 
     @property
     def player(self):
@@ -74,11 +77,11 @@ class PlayerController(component_m.Component):
         if keys[pg.K_SPACE]:
             self._jump()
 
-    def _jump(self, height_coefficient=20):
+    def _jump(self, height_coefficient=40):
         self.rigidbody.add_force(self.transformation.up * height_coefficient)
 
     def apply(self):
-        #print("PLAYER_CONTROLLER")
+        # print("PLAYER_CONTROLLER")
         if self.state in [self.state.HookshotFlyingPlayer, PlayerState.HookShotThrown]:
             self.hookshot_dir = glm.normalize(self._hookshot_position - self.transformation.pos)
             if self.state == self.state.HookshotFlyingPlayer:
@@ -89,6 +92,9 @@ class PlayerController(component_m.Component):
         #     if self.camera_component:
         #         self.hookshot_transformation.forward = self.camera_component.transformation.forward
         # print("PLAYER_CONTROLLER_END")
+
+    def fixed_apply(self):
+        self._handle_keyboard_press(input_manager_m.InputManager.keys)
 
     def hookshot_start(self):
         hookshot_throw_speed = 40
@@ -107,8 +113,7 @@ class PlayerController(component_m.Component):
         self.hookshot_model_transformation.rot = glm.vec3(0)
         self.hookshot_model_transformation.rely_object.enable = False
 
-
-    def _handle_keyboard_press(self, keys, pressed_char):
+    def _handle_keyboard_press(self, keys):
         if keys[pg.K_SPACE] and self.state == PlayerState.HookshotFlyingPlayer:
             self.state = PlayerState.Normal
             self._jump(100)
@@ -128,7 +133,7 @@ class PlayerController(component_m.Component):
             self.hookshot_dir = glm.normalize(hit_point - self.transformation.pos)
             self._hookshot_size = 0
             self.debug_box.transformation.pos = hit_point
-            print("START FLY")
+            # print("START FLY")
             self.hookshot_model_transformation.rely_object.enable = True
             return True
         return False
@@ -143,7 +148,7 @@ class PlayerController(component_m.Component):
 
         self.transformation.pos = self.transformation.pos + self.hookshot_dir * hookshot_speed_multiplier * self.hookshot_speed * self.app.delta_time
         self.hookshot_transformation.forward = self.hookshot_dir
-        self.hookshot_transformation.scale = glm.vec3(1,1,self.hookshot_distance)
+        self.hookshot_transformation.scale = glm.vec3(1, 1, self.hookshot_distance)
         reached_hookshot_position_distance = 1
         if self.hookshot_distance < reached_hookshot_position_distance:
             self.state = PlayerState.Normal

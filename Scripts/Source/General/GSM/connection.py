@@ -12,7 +12,12 @@ class Connection(state_m.GameState):
     def enter(self, params=None):
         request_to_spawn = {"actions": {"spawn": None}}
 
-        response = self.fsm.app.network.send(request_to_spawn)
+        response = None
+
+        try:
+            response = self.fsm.network.send(request_to_spawn)
+        except OSError as e:
+            self.fsm.set_state("Menu", f"Fail connect to server: {e}")
 
         if response is None:
             self.fsm.set_state("Menu", f"Fail connect to server")
