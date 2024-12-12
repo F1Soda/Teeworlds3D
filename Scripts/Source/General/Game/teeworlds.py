@@ -85,7 +85,7 @@ class TeeworldsEngine:
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
 
-        #self.network.connect()
+        # self.network.connect()
 
         self.gsm.set_state("Debug")
 

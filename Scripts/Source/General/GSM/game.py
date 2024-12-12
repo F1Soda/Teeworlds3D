@@ -81,7 +81,6 @@ class Game(state_m.GameState):
 
     def exit(self):
         self.level.delete()
-        # self.gizmos.delete()
         self.game_gui.delete()
         object_picker_m.ObjectPicker.release()
         object_creator_m.ObjectCreator.release()
