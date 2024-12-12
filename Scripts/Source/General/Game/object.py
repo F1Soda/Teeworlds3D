@@ -2,8 +2,15 @@ import typing
 import Scripts.Source.Components.Default.component as component_m
 import Scripts.Source.Components.Default.transformation as transformation_m
 import Scripts.Source.Components.Default.renderer as renderer_m
+import enum
 
 GLOBAL_INDEX = 0
+
+
+class Tags(enum.Enum):
+    Default = "Default",
+    Enemy = "Enemy",
+    Ally = "Ally"
 
 
 class Object:
@@ -31,6 +38,7 @@ class Object:
         self._enable = True
 
         self.is_deleted = False
+        self.tag = Tags.Default
 
     @property
     def enable(self):

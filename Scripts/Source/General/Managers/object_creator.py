@@ -65,6 +65,7 @@ class ObjectCreator:
                 body.transformation.forward * 0.3
         )
         client_wrapper.add_children(body)
+        client_wrapper.tag = object_m.Tags.Enemy
         return client_wrapper
 
     @staticmethod
