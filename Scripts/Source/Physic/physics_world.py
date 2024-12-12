@@ -63,12 +63,16 @@ class PhysicWorld:
             raise Exception("If physic object contain Rigidbody, then it also should contain Collider!")
 
     def remove_object(self, game_object):
-        rigidbody_component = game_object.get_component_by_name("RigidBody")
-        collider_component = game_object.get_component_by_name("Mesh Collider")
-        if collider_component:
-            self.collide_objects = [collider_component != x.collider for x in self.physic_objects]
-        if rigidbody_component:
-            self.physic_objects = [rigidbody_component != x.rigidbody for x in self.physic_objects]
+        # rigidbody_component = game_object.get_component_by_name("RigidBody")
+        # collider_component = game_object.get_component_by_name("Collider")
+        # if collider_component:
+        #     self.collide_objects = [collider_component != x.collider for x in self.physic_objects]
+        # if rigidbody_component:
+        #     self.physic_objects = [rigidbody_component != x.rigidbody for x in self.physic_objects]
+        if self.collide_objects.get(game_object.id):
+            del self.collide_objects[game_object.id]
+        if self.physic_objects.get(game_object.id):
+            del self.physic_objects[game_object.id]
 
     def _resolve_constrains(self, dt):
         collisions = []
@@ -82,7 +86,6 @@ class PhysicWorld:
                     continue
 
                 d = glm.length(physic_object.collider.transformation.pos - collide_object.collider.transformation.pos)
-                collide_obj = collide_object.collider.rely_object
                 if d - physic_object.collider.max_radius_of_collisions - collide_object.collider.max_radius_of_collisions > 0:
                     continue
 

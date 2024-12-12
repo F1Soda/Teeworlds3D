@@ -10,7 +10,8 @@ GLOBAL_INDEX = 0
 class Tags(enum.Enum):
     Default = "Default",
     Enemy = "Enemy",
-    Ally = "Ally"
+    Ally = "Ally",
+    Ground = "Ground"
 
 
 class Object:
@@ -115,6 +116,7 @@ class Object:
             component.delete()
         for child in self.child_objects:
             child.delete()
+
         self.components_to_call_on_gizmos = None
         self.components_to_apply_fixed_update = None
         self.is_deleted = True

@@ -223,7 +223,7 @@
         },
         "11": {
             "name": "ground_11",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [

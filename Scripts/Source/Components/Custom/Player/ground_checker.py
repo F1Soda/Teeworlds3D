@@ -1,5 +1,6 @@
 import Scripts.Source.Components.Default.component as component_m
 import Scripts.Source.Components.Default.transformation as transformation_m
+import Scripts.Source.General.Game.object as object_m
 
 NAME = 'Ground Checker'
 DESCRIPTION = 'Enable or disable move on the ground or above it'
@@ -33,12 +34,14 @@ class GroundChecker(component_m.Component):
         self._transformation = value
 
     def on_trigger_enter(self, collider_obj):
-        if collider_obj.collider.rely_object.name == "Player":
+        if collider_obj.collider.rely_object.tag != object_m.Tags.Ground:
             return
         self.player_controller.can_move = True
         print(f"CAN MOVE = TRUE, {collider_obj.collider.rely_object.name}")
 
     def on_trigger_exit(self, collider_obj):
+        if collider_obj.collider.rely_object.tag != object_m.Tags.Ground:
+            return
         self.player_controller.can_move = False
         print(f"CAN MOVE = FALSE, {collider_obj.collider.rely_object.name}")
 

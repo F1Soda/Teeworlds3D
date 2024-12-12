@@ -372,6 +372,7 @@ class Level:
         return obj
 
     def delete_object(self, obj):
+        self.app.physic_world.remove_object(obj)
         obj.delete()
         del self.objects[obj.id]
         if self.app.NAME == "Editor":
