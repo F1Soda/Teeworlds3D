@@ -5,8 +5,12 @@ import glm
 
 class PhysicObject:
     def __init__(self, rigidbody, collider):
+        self.id = collider.rely_object.id
         self.rigidbody = rigidbody
         self.collider = collider
+
+    def __str__(self):
+        return f"Physic Object \"{self.collider.rely_object.name}\": Collider: {self.collider}, Rigidbody: {self.rigidbody}"
 
 
 class Collision:
@@ -20,7 +24,7 @@ class PhysicWorld:
     def __init__(self, game):
         self.level = None
         self.paused = False
-        self.physic_objects, self.collide_objects, self.triggers = [], [], []
+        self.physic_objects, self.collide_objects, self.triggers = {}, {}, set()
         self.solvers = []
         self._collisions = []
         self.triggered_colliders_enter = {}
@@ -39,10 +43,24 @@ class PhysicWorld:
         rigidbody_component = game_object.get_component_by_name("RigidBody")
         if collider_component is None:
             raise Exception("Physic object should contain collider component!")
+
         physic_object = PhysicObject(rigidbody_component, collider_component)
-        self.collide_objects.append(physic_object)
-        if rigidbody_component:
-            self.physic_objects.append(physic_object)
+        if physic_object.id in self.collide_objects.keys():
+            return
+        self.collide_objects[physic_object.id] = physic_object
+
+        if collider_component.is_trigger:
+            self.triggers.add(collider_component)
+            self.triggered_colliders_enter[collider_component] = set()
+            self.triggered_colliders_current_triggering[collider_component] = set()
+            self.triggered_colliders_exit[collider_component] = set()
+
+        if rigidbody_component and collider_component:
+            if physic_object.id in self.physic_objects.keys():
+                return
+            self.physic_objects[physic_object.id] = physic_object
+        elif rigidbody_component and not collider_component:
+            raise Exception("If physic object contain Rigidbody, then it also should contain Collider!")
 
     def remove_object(self, game_object):
         rigidbody_component = game_object.get_component_by_name("RigidBody")
@@ -54,11 +72,11 @@ class PhysicWorld:
 
     def _resolve_constrains(self, dt):
         collisions = []
-        for physic_object in self.physic_objects:
+        for physic_object in self.physic_objects.values():
             if not physic_object.rigidbody.enable:
                 continue
 
-            for collide_object in self.collide_objects:
+            for collide_object in self.collide_objects.values():
                 if (collide_object.collider.rely_object.id == physic_object.collider.rely_object.id or
                         collide_object.collider.is_trigger):
                     continue
@@ -69,7 +87,7 @@ class PhysicWorld:
                     collisions.append(Collision(physic_object, collide_object.collider, collide_point))
 
         for trigger in self.triggers:
-            for collide_object in self.collide_objects:
+            for collide_object in self.collide_objects.values():
                 if collide_object.collider.rely_object.id == trigger.rely_object.id:
                     continue
 
@@ -78,22 +96,22 @@ class PhysicWorld:
                 if collide_with:
                     if collide_object not in self.triggered_colliders_enter[trigger] and collide_object not in \
                             self.triggered_colliders_current_triggering[trigger]:
-                        self.triggered_colliders_enter[trigger].append(collide_object)
-                        self.triggered_colliders_current_triggering[trigger].append(collide_object)
+                        self.triggered_colliders_enter[trigger].add(collide_object)
+                        self.triggered_colliders_current_triggering[trigger].add(collide_object)
                 else:
                     if collide_object in self.triggered_colliders_current_triggering[trigger]:
-                        self.triggered_colliders_exit[trigger].append(collide_object)
+                        self.triggered_colliders_exit[trigger].add(collide_object)
                         self.triggered_colliders_current_triggering[trigger].remove(collide_object)
 
         for trigger, collided_objects in self.triggered_colliders_enter.items():
             for collided_object in collided_objects:
                 trigger.on_collision_enter(collided_object)
-            self.triggered_colliders_enter[trigger] = []
+            self.triggered_colliders_enter[trigger].clear()
 
         for trigger, collided_objects in self.triggered_colliders_exit.items():
             for collided_object in collided_objects:
                 trigger.on_collision_exit(collided_object)
-            self.triggered_colliders_exit[trigger] = []
+            self.triggered_colliders_exit[trigger].clear()
 
         for solver in self.solvers:
             solver.solve(collisions, dt)
@@ -102,12 +120,12 @@ class PhysicWorld:
         if self.paused:
             return
 
-        for physic_object in self.physic_objects:
+        for physic_object in self.physic_objects.values():
             physic_object.rigidbody.apply_gravity()
 
         self._resolve_constrains(dt)
 
-        for physic_object in self.physic_objects:
+        for physic_object in self.physic_objects.values():
             physic_object.rigidbody.apply_forces_and_clear(dt)
 
     def init_physic_object_by_level(self, level):
@@ -117,21 +135,9 @@ class PhysicWorld:
             self._init_game_object(game_object)
 
     def _init_game_object(self, game_object):
-        rigidbody_component = game_object.get_component_by_name("RigidBody")
         collider_component = game_object.get_component_by_name("Collider")
         if collider_component is not None:
-            physic_object = PhysicObject(rigidbody_component, collider_component)
-            if collider_component in self.collide_objects:
-                return
-            self.collide_objects.append(physic_object)
-            if rigidbody_component is not None and collider_component is not None:
-                self.physic_objects.append(physic_object)
-
-            if collider_component.is_trigger:
-                self.triggers.append(collider_component)
-                self.triggered_colliders_enter[collider_component] = []
-                self.triggered_colliders_current_triggering[collider_component] = []
-                self.triggered_colliders_exit[collider_component] = []
+            self.add_object(game_object)
 
         for child in game_object.child_objects:
             self._init_game_object(child)
@@ -154,7 +160,8 @@ class PhysicWorld:
             a, b, c = [global_vertices[index] for index in mesh_filter.mesh.indices[i * 2]]
 
             n = glm.cross(b - a, c - a)
-            if abs(n_dot_d := glm.dot(n, direction)) < 10 ** -5:
+            n_dot_d = glm.dot(n, direction)
+            if abs(n_dot_d) < 10 ** -5:
                 continue
 
             t = glm.dot(n, a - start) / n_dot_d

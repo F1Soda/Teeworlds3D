@@ -363,9 +363,9 @@ class Level:
 
     def add_object(self, obj):
         self.objects[obj.id] = obj
-        # collider = obj.get_component_by_name("Collider")
-        # if collider:
-        #     self.app.physic_world.add_object(obj)
+        collider = obj.get_component_by_name("Collider")
+        if collider:
+            self.app.physic_world.add_object(obj)
 
         if self.app.NAME == "Editor":
             self.app.editor_gui.update_data_in_hierarchy()
