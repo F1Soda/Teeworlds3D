@@ -15,6 +15,8 @@ class ClientWrapper(component_m.Component):
 
         self._transformation = None
 
+        self.id = None
+
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)

@@ -20,7 +20,7 @@ class Component:
 
     @property
     def enable_with_rely_object(self):
-        return self.enable and self.rely_object.enable
+        return self.enable and self.rely_object.enable_relative_parent
 
     def on_enable(self):
         ...

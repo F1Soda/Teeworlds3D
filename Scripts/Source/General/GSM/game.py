@@ -27,6 +27,7 @@ class Game(state_m.GameState):
         self.cumulative_time_for_send_data_to_server = 0
         self.is_synced = False
         self.synced_actions_id = []
+        self.actions_to_send_server = {}
 
     @property
     def fixed_delta_time(self):
@@ -95,7 +96,7 @@ class Game(state_m.GameState):
         self.level.spawn_player(pos)
 
     def spawn_client_wrapper(self, pos, client_id):
-        self.level.spawn_client(pos, client_id)
+        self.level.create_and_spawn_client(pos, client_id)
 
     def update_game_state(self, state):
         # print(state)
@@ -106,6 +107,7 @@ class Game(state_m.GameState):
                         client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
                         if client_wrapper:
                             client_wrapper.transformation.pos = state["actions"][action]["spawn_pos"]
+                            client_wrapper.rely_object.enable = True
                         else:
                             self.spawn_client_wrapper(state["actions"][action]["spawn_pos"],
                                                       state["actions"][action]["source"])
@@ -130,6 +132,17 @@ class Game(state_m.GameState):
                         raise Exception(
                             f"Called disconnect with user agreement!\nthis client id = {self.app.network.id}\n"
                             f"source, that should be disconnected: {state["actions"][action]["source"]}")
+                case "kill_client":
+                    source = state["actions"][action]["source"]
+                    if source == self.app.network.id:
+                        raise Exception("Server not should send kill message to killer!")
+                    source_to_kill = state["actions"][action]["source_to_kill"]
+                    if source_to_kill == self.app.network.id:
+                        self.level.kill_player()
+                    else:
+                        self.level.kill_client(source_to_kill)
+
+                    self.synced_actions_id.append(state["actions"][action]["id_action"])
 
         for client_guid in state["game_state"].keys():
             if client_guid != self.app.network.id and self.level.client_wrappers.get(client_guid):
@@ -163,6 +176,11 @@ class Game(state_m.GameState):
         response["player_data"] = self.level.player_component.serialize()
 
         response["actions"]['synced'] = self.synced_actions_id
+
+        for action_key, action_values in self.actions_to_send_server.items():
+            response["actions"][action_key] = action_values
+
+        self.actions_to_send_server.clear()
 
         server_response = self.app.network.send(response)
 

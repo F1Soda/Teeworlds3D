@@ -54,7 +54,8 @@ class ObjectCreator:
     def create_client_wrapper(client_id="") -> object_m.Object:
         client_wrapper = ObjectCreator.create_cube("red_lit", "Client_Wrapper_" + client_id)
         # object_m.Object(ObjectCreator.rely_level, "Client_Wrapper_" + client_id)
-        client_wrapper.add_component(components.ClientWrapper())
+        cw_component = client_wrapper.add_component(components.ClientWrapper())
+        cw_component.id = client_id
         # body = ObjectCreator.create_cube("red_lit", "body")
         dumpy_gun = ObjectCreator.create_dumpy_weapon()
         dumpy_gun.transformation.scale.z = 1

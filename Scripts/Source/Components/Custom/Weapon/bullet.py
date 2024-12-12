@@ -1,5 +1,6 @@
 import Scripts.Source.Components.Default.component as component_m
 import Scripts.Source.Components.Default.transformation as transformation_m
+import Scripts.Source.General.Game.object as object_m
 import glm
 
 NAME = 'Bullet'
@@ -20,6 +21,8 @@ class Bullet(component_m.Component):
         self._transformation = None
         self.trigger = None
 
+        self.player_is_owner_bullet = False
+
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)
@@ -36,6 +39,9 @@ class Bullet(component_m.Component):
         self.action_after_life_time(self)
         self.elapsed_time = 0
 
+        if self.player_is_owner_bullet and collider_obj.collider.rely_object.tag == object_m.Tags.Enemy:
+            client_wrapper_component = collider_obj.collider.rely_object.get_component_by_name("Client Wrapper")
+            self.app.level.send_kill_client(client_wrapper_component.id)
 
     @property
     def transformation(self):

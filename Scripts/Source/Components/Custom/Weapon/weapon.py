@@ -32,6 +32,7 @@ class Weapon(component_m.Component):
 
             bullet = object_creator_m.ObjectCreator.create_bullet(pool_object)
             component = bullet.add_component(bullet_m.Bullet(15, action_after_bullet_lifetime))
+            component.player_is_owner_bullet = True
             self.app.level.add_object(bullet)
             return component
 

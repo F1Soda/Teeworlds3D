@@ -33,7 +33,8 @@ class PoolBase:
             print(f"Atempt to delete {item}\n in follow list:")
             for item in self._active:
                 print(item)
-            raise
+            # raise
+            pass
 
     def back_to_pool_all(self):
         for active_item in self._active:

@@ -149,6 +149,17 @@ class Server:
                             del self.client_actions[source][synced_id]
                 case "echo":
                     reply["action"] = "echo"
+                case "kill":
+                    for action_data in data["actions"]["kill"]:
+                        key = "kill_client"
+                        key_value = {
+                            "source": source,
+                            "source_to_kill": action_data["source_to_kill"],
+                            "id_action": str(uuid.uuid1())
+                        }
+                        with client_lock:
+                            self.notify_clients_with_action(source, key, key_value)
+
                 case "disconnect":
                     with client_lock:
                         self.disconnect_client(source)

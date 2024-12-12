@@ -42,6 +42,10 @@ class Object:
         self.tag = Tags.Default
 
     @property
+    def enable_relative_parent(self):
+        return self.enable and (self.parent_object.enable_relative_parent if self.parent_object else True)
+
+    @property
     def enable(self):
         return self._enable
 

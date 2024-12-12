@@ -74,5 +74,6 @@ components = {
     "Mesh Filter": MeshFilter,
     "Ground Checker": GroundChecker,
     "Weapon": Weapon,
-    "Bullet": Bullet
+    "Bullet": Bullet,
+    "Client Wrapper": ClientWrapper
 }

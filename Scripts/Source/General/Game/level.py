@@ -422,7 +422,7 @@ class Level:
     def render_opaque_objects(self):
         # print("render opaque")
         for renderer in self.opaque_renderer:
-            if renderer.rely_object.enable and renderer.enable:
+            if renderer.enable_with_rely_object:
                 renderer.apply()
 
     def render_transparent_objects(self):
@@ -450,9 +450,27 @@ class Level:
     def spawn_player(self, pos):
         self.player.transformation.pos = pos
 
-    def spawn_client(self, pos, client_id):
+    def create_and_spawn_client(self, pos, client_id):
         wrapper = object_creator_m.ObjectCreator.create_client_wrapper(client_id)
         wrapper.transformation.pos = pos
         self.add_object(wrapper)
         self.client_wrappers[client_id] = wrapper
+
+    def send_kill_client(self, client_id):
+        if self.app.actions_to_send_server.get("kill") is None:
+            self.app.actions_to_send_server["kill"] = []
+        self.app.actions_to_send_server["kill"].append({
+            "source_to_kill": client_id
+        })
+        self.kill_client(client_id)
+
+    def kill_client(self, client_id):
+        client_wrapper = self.client_wrappers.get(client_id)
+        if client_wrapper:
+            client_wrapper.enable = False
+        else:
+            raise Exception(f"There is no client with id: {client_id}.")
+
+    def kill_player(self):
+        print("You was killed!!!")
     ################
