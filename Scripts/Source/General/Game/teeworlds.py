@@ -87,7 +87,7 @@ class TeeworldsEngine:
 
         # self.network.connect()
 
-        self.gsm.set_state("Debug")
+        self.gsm.set_state("Menu")
 
         # self.gsm.set_state("Connection")
 

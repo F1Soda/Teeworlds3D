@@ -69,6 +69,8 @@ class DataManager:
                             obj.name = value
                         if key == "components":
                             DataManager.parse_components(value, obj, later_initialization_dict, scene)
+                        if key == "tag":
+                            obj.tag = object_m.Tags[value]
                     scene.objects[obj_id] = obj
             return True
         except json.decoder.JSONDecodeError as e:

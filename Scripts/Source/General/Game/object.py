@@ -148,7 +148,7 @@ class Object:
     def serialize(self):
         return {
             'name': self.name,
-            'tag': self.tag,
+            'tag': self.tag.value[0],
             'components': {
                 component.name: component.serialize() for component in self.components
             }

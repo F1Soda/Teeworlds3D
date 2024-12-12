@@ -6,6 +6,7 @@
     "objects": {
         "5": {
             "name": "Light",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -50,6 +51,7 @@
         },
         "6": {
             "name": "cube_6",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -92,6 +94,7 @@
         },
         "8": {
             "name": "cube_8",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -134,6 +137,7 @@
         },
         "9": {
             "name": "cube_9",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -176,6 +180,7 @@
         },
         "10": {
             "name": "octahedron_10",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -218,13 +223,14 @@
         },
         "11": {
             "name": "ground_11",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
                         "vec",
                         [
                             0.0,
-                            -0.45,
+                            -0.44999998807907104,
                             0.0
                         ]
                     ],
@@ -263,6 +269,7 @@
         },
         "12": {
             "name": "cube_12",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -308,6 +315,7 @@
         },
         "13": {
             "name": "cube_13",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -353,6 +361,7 @@
         },
         "14": {
             "name": "octahedron_14",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -398,6 +407,7 @@
         },
         "15": {
             "name": "octahedron_15",
+            "tag": "Default",
             "components": {
                 "Transformation": {
                     "pos": [
