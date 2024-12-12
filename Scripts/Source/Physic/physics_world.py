@@ -35,13 +35,14 @@ class PhysicWorld:
         self.solvers.remove(solver)
 
     def add_object(self, game_object):
-        collider_component = game_object.get_component_by_name("Mesh Collider")
+        collider_component = game_object.get_component_by_name("Collider")
+        rigidbody_component = game_object.get_component_by_name("RigidBody")
         if collider_component is None:
             raise Exception("Physic object should contain collider component!")
-        self.collide_objects.append(collider_component)
-        rigidbody_component = game_object.get_component_by_name("RigidBody")
+        physic_object = PhysicObject(rigidbody_component, collider_component)
+        self.collide_objects.append(physic_object)
         if rigidbody_component:
-            self.physic_objects.append(PhysicObject(rigidbody_component, collider_component))
+            self.physic_objects.append(physic_object)
 
     def remove_object(self, game_object):
         rigidbody_component = game_object.get_component_by_name("RigidBody")
@@ -120,6 +121,8 @@ class PhysicWorld:
         collider_component = game_object.get_component_by_name("Collider")
         if collider_component is not None:
             physic_object = PhysicObject(rigidbody_component, collider_component)
+            if collider_component in self.collide_objects:
+                return
             self.collide_objects.append(physic_object)
             if rigidbody_component is not None and collider_component is not None:
                 self.physic_objects.append(physic_object)

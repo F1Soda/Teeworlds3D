@@ -321,20 +321,24 @@ class Level:
             self.player.add_children(self.camera)
 
             self.player.add_component(components.MeshFilter(object_creator_m.library_m.meshes['cube']))
-            # cube_renderer = components.Renderer(object_creator_m.library_m.materials["cyan_unlit"], True)
-            # self.player.add_component(cube_renderer)
-
-            # self.opaque_renderer.append(cube_renderer)
 
             self.camera.transformation.pos = self.camera.transformation.pos + glm.vec3(0, 0.5, 0)
 
             self.weapon = object_creator_m.ObjectCreator.create_dumpy_weapon()
             self.weapon.remove_component_by_name("Box Collider")
-            weapon_component = self.weapon.add_component(components.Weapon(1, 1, 1, 1, "Weapon", "WEP"))
+
+            pool_object = object_m.Object(self, "bullet pool")
+            self.add_object(pool_object)
+
+            weapon_component = self.weapon.add_component(
+                components.Weapon(1, 1, 1, 0.1, pool_object, self.camera.transformation, "Weapon", "WEP"))
             weapon_component.camera_transformation = self.camera.transformation
+
+            player_controller_component.weapon_component = weapon_component
+
             self.player.add_children(self.weapon)
             self.weapon.transformation.pos = self.weapon.transformation.pos + self.player.transformation.right * (
-                    0.1 + 1 / 2) + self.player.transformation.forward * (0.2)
+                    0.1 + 1 / 2) + self.player.transformation.forward * 0.2
             self.player.transformation.pos = self.player.transformation.up
 
             player_controller_component.debug_box = object_creator_m.ObjectCreator.create_cube("red_unlit", "debug_box")
@@ -359,6 +363,10 @@ class Level:
 
     def add_object(self, obj):
         self.objects[obj.id] = obj
+        # collider = obj.get_component_by_name("Collider")
+        # if collider:
+        #     self.app.physic_world.add_object(obj)
+
         if self.app.NAME == "Editor":
             self.app.editor_gui.update_data_in_hierarchy()
         return obj

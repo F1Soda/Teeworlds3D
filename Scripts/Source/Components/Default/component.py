@@ -18,6 +18,12 @@ class Component:
         self.use_fixed_update = False
         self.use_on_draw_gizmos = False
 
+    def on_enable(self):
+        ...
+
+    def on_disable(self):
+        ...
+
     def set_active(self, enable: bool):
         self.enable = enable
 

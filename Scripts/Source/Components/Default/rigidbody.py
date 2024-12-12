@@ -7,6 +7,7 @@ DESCRIPTION = 'Physics'
 
 gravity = glm.vec3(0, -1, 0) * 9.8
 
+
 class RigidBody(component_m.Component):
     def __init__(self, mass, is_kinematic=False, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
@@ -52,11 +53,11 @@ class RigidBody(component_m.Component):
             self.add_force(gravity * self.mass)
 
     def apply_forces_and_clear(self, dt):
-        if glm.length(self.velocity) > 10*-5:
+        if glm.length(self.velocity) > 10 * -5:
             self.velocity = self.velocity + self.force / self.mass * dt
             self.transformation.pos = self.transformation.pos + self.velocity * dt
         else:
-            self.velocity = glm.vec3( )
+            self.velocity = glm.vec3()
         # Очень плохо
         self.force = glm.vec3(0)
 

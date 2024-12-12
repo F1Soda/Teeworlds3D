@@ -236,8 +236,6 @@ def _init_textures(ctx):
     textures['grid'] = texture
 
 
-
-
 def get_segment_vao(ctx, start, end):
     buffer_format = '3f'
     data = np.array([start, end], dtype='f4')

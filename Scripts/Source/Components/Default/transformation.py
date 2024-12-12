@@ -52,6 +52,10 @@ class Transformation(component_m.Component):
     def forward(self):
         return self._forward
 
+    @property
+    def forward_correct(self):
+        return glm.vec3(self.forward.x, -self.forward.y, self.forward.z)
+
     @forward.setter
     def forward(self, value):
         # Convert input to glm.vec3 if it’s a tuple
@@ -59,7 +63,6 @@ class Transformation(component_m.Component):
             value = glm.vec3(*value)
         # print("Change forward for ", self.rely_object.name, f"from {self._forward} to {value}")
         value = value / glm.length(value)
-
 
         # Calculate the new rotation matrix using glm.lookAt
         self.m_r = glm.lookAt(self.pos, self.pos + value, VEC_UP)
@@ -154,14 +157,13 @@ class Transformation(component_m.Component):
 
             child.rot = child.rot + diff
 
-
     @property
     def scale(self):
         return self._scale
 
     @scale.setter
     def scale(self, value):
-        diff = (self._scale - value)/2
+        diff = (self._scale - value) / 2
         if isinstance(value, glm.vec3):
             self._scale = value
         elif isinstance(value, tuple):

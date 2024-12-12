@@ -22,6 +22,7 @@ class PlayerController(component_m.Component):
         super().__init__(NAME, DESCRIPTION, enable)
         # input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
         input_manager_m.InputManager.handle_right_click_event += self._handle_mouse_right_press
+        input_manager_m.InputManager.handle_left_click_event += self._handle_mouse_left_press
 
         self.state = PlayerState.Normal
 
@@ -40,6 +41,7 @@ class PlayerController(component_m.Component):
         self.camera_component = None
         self.hookshot_transformation = None
         self.hookshot_model_transformation = None
+        self.weapon_component = None
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
@@ -137,6 +139,10 @@ class PlayerController(component_m.Component):
             self.hookshot_model_transformation.rely_object.enable = True
             return True
         return False
+
+    def _handle_mouse_left_press(self, mouse_pos):
+        self.weapon_component.fire()
+        return True
 
     def move_hookshot(self):
         self.rigidbody.use_gravity = False

@@ -61,7 +61,7 @@ class ObjectCreator:
         body.add_children(dumpy_gun)
         dumpy_gun.transformation.pos = (
                 dumpy_gun.transformation.pos +
-                body.transformation.right * (0.5 + dumpy_gun.transformation.scale.x/2) +
+                body.transformation.right * (0.5 + dumpy_gun.transformation.scale.x / 2) +
                 body.transformation.forward * 0.3
         )
         client_wrapper.add_children(body)
@@ -73,8 +73,19 @@ class ObjectCreator:
         gun_scale = gun.transformation.scale * 0.2
         gun_scale.z *= 8
         gun.transformation.scale = gun_scale
-        # gun.transformation.rot = (90,0,0)
+
         return gun
+
+    @staticmethod
+    def create_bullet(parent):
+        bullet = ObjectCreator.create_cube("orange_unlit", "Bullet")
+        bullet.transformation.scale = (0.1, 0.1, 0.5)
+        collider = bullet.get_component_by_name("Box Collider")
+        collider.is_trigger = True
+        collider.draw_collider = True
+        if parent:
+            parent.add_children(bullet)
+        return bullet
 
     @staticmethod
     def create_light() -> object_m.Object:

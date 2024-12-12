@@ -32,8 +32,6 @@ class MeshCollider(collider_m.Collider):
 
         return self._center
 
-
-
     @property
     def mesh_filter(self):
         if self._mesh_filter is None:
@@ -49,7 +47,6 @@ class MeshCollider(collider_m.Collider):
         if self.mesh_filter is None:
             return None
         return self.mesh_filter.mesh.hidden_vbo
-
 
     @property
     def vertices(self):

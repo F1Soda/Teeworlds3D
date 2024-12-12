@@ -28,10 +28,31 @@ class Object:
         self.components_to_call_on_gizmos = []
 
         self._renderer: renderer_m.Renderer = None
-        self.enable = True
+        self._enable = True
+
+    @property
+    def enable(self):
+        return self._enable
+
+    @enable.setter
+    def enable(self, value):
+        self._enable = value
+        if value:
+            self.on_enable()
+        else:
+            self.on_disable()
+
+    def on_enable(self):
+        for component in self.components:
+            component.on_enable()
+
+    def on_disable(self):
+        for component in self.components:
+            component.on_disable()
 
     def add_children(self, children):
         self.child_objects.append(children)
+        children.parent_object = self
         self.transformation.add_child(children.transformation)
 
     def add_component(self, component) -> component_m.Component:
@@ -92,6 +113,9 @@ class Object:
             child.apply_components()
 
     def fixed_apply_components(self):
+        if self.enable is False:
+            return
+
         for component in self.components_to_apply_fixed_update:
             if component.enable:
                 component.fixed_apply()
@@ -99,6 +123,8 @@ class Object:
             child.fixed_apply_components()
 
     def on_gizmos(self, camera_component):
+        if self.enable is False:
+            return
         for component in self.components_to_call_on_gizmos:
             if component.enable:
                 component.on_gizmos(camera_component)

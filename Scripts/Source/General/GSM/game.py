@@ -29,6 +29,10 @@ class Game(state_m.GameState):
         self.synced_actions_id = []
 
     @property
+    def fixed_delta_time(self):
+        return self.app.fixed_delta_time
+
+    @property
     def time(self):
         return self.app.time
 
@@ -51,8 +55,6 @@ class Game(state_m.GameState):
         self.object_picker = object_picker_m.ObjectPicker
         self.level.load(file_path, is_game=True)
 
-        # self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
-
     def enter(self, params=None):
         self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
         if params is None:
@@ -67,9 +69,9 @@ class Game(state_m.GameState):
         self.physic_world.init_physic_object_by_level(self.level)
         self.physic_world.add_default_solvers()
 
-        self.app.grab_mouse_inside_bounded_window = False
-        self.app.set_mouse_visible(True)
-        self.app.set_mouse_grab(False)
+        self.app.grab_mouse_inside_bounded_window = True
+        self.app.set_mouse_visible(False)
+        self.app.set_mouse_grab(True)
 
         self.spawn_player(spawn_pos)
 
@@ -136,9 +138,6 @@ class Game(state_m.GameState):
                 cw.transformation.pos = state["game_state"][client_guid]["pos"]
                 cw.transformation.rot = state["game_state"][client_guid]["rot"]
 
-    # def send_game_state(self, state):
-    #     self.client.send_action(state)as
-
     ###############
 
     def before_exit(self):
@@ -155,7 +154,8 @@ class Game(state_m.GameState):
         # self.cumulative_time_for_send_data_to_server += DT
         # if self.cumulative_time_for_send_data_to_server > 0:
         #     self.cumulative_time_for_send_data_to_server = 0
-        self.send_data_to_server()
+        if self.app.network.id != -1:
+            self.send_data_to_server()
 
     def send_data_to_server(self):
         response = {}

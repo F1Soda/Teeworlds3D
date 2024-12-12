@@ -1,5 +1,4 @@
 import Scripts.Source.General.GSM.game_state as state_m
-import asyncio
 
 
 class Connection(state_m.GameState):
