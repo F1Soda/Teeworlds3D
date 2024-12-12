@@ -191,6 +191,8 @@ class Renderer(component_m.Component):
         self.vao = self.get_vao(self._material.shader_program, self.mesh_filter)
 
     def delete(self):
+        if self.level is None:
+            pass
         if self in self.level.transparency_renderer:
             self.level.transparency_renderer.remove(self)
         elif self in self.level.opaque_renderer:

@@ -73,12 +73,17 @@ class PhysicWorld:
     def _resolve_constrains(self, dt):
         collisions = []
         for physic_object in self.physic_objects.values():
-            if not physic_object.rigidbody.enable:
+            if not physic_object.rigidbody.enable_with_rely_object:
                 continue
 
             for collide_object in self.collide_objects.values():
                 if (collide_object.collider.rely_object.id == physic_object.collider.rely_object.id or
-                        collide_object.collider.is_trigger):
+                        collide_object.collider.is_trigger or not collide_object.collider.enable_with_rely_object):
+                    continue
+
+                d = glm.length(physic_object.collider.transformation.pos - collide_object.collider.transformation.pos)
+                collide_obj = collide_object.collider.rely_object
+                if d - physic_object.collider.max_radius_of_collisions - collide_object.collider.max_radius_of_collisions > 0:
                     continue
 
                 collide_point = physic_object.collider.get_collide_point(collide_object.collider)
@@ -87,8 +92,11 @@ class PhysicWorld:
                     collisions.append(Collision(physic_object, collide_object.collider, collide_point))
 
         for trigger in self.triggers:
+            if not trigger.enable_with_rely_object:
+                continue
             for collide_object in self.collide_objects.values():
-                if collide_object.collider.rely_object.id == trigger.rely_object.id:
+                if (collide_object.collider.rely_object.id == trigger.rely_object.id or
+                        not collide_object.collider.enable_with_rely_object):
                     continue
 
                 collide_with = trigger.collide_with(collide_object.collider)

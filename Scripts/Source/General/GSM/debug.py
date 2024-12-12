@@ -17,4 +17,4 @@ class Debug(state_m.GameState):
         else:
             level = params
 
-        self.fsm.set_state("Game", (level, (0, 1, 0), {}))
+        self.fsm.set_state("Game", (level, (0, 3, 0), {}))

@@ -331,7 +331,7 @@ class Level:
             self.add_object(pool_object)
 
             weapon_component = self.weapon.add_component(
-                components.Weapon(1, 1, 1, 0.1, pool_object, self.camera.transformation, "Weapon", "WEP"))
+                components.Weapon(1, 1, 1, 0.15, pool_object, self.camera.transformation, "Weapon", "WEP"))
             weapon_component.camera_transformation = self.camera.transformation
 
             player_controller_component.weapon_component = weapon_component

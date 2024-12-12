@@ -15,6 +15,15 @@ class MeshCollider(collider_m.Collider):
         self._center = None
 
     @property
+    def max_radius_of_collisions(self):
+        if self._max_radius_of_collisions is None:
+            self._max_radius_of_collisions = 0
+            for vertex in self.mesh_filter.mesh.vertices:
+                self._max_radius_of_collisions = max(self._max_radius_of_collisions,
+                                                     glm.length(glm.mul(self.m_model, vertex) - self.center))
+        return self._max_radius_of_collisions
+
+    @property
     def m_model(self):
         return self.transformation.m_model
 

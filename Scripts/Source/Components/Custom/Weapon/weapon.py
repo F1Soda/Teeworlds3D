@@ -3,7 +3,6 @@ import Scripts.Source.Components.Default.transformation as transformation_m
 import Scripts.Source.General.ObjectsPool.pool_base as pool_base_m
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.Components.Custom.Weapon.bullet as bullet_m
-import glm
 
 NAME = 'Weapon'
 DESCRIPTION = 'Weapon'
@@ -32,7 +31,7 @@ class Weapon(component_m.Component):
                 self.bullet_pool.back_to_pool(b_c)
 
             bullet = object_creator_m.ObjectCreator.create_bullet(pool_object)
-            component = bullet.add_component(bullet_m.Bullet(1, action_after_bullet_lifetime))
+            component = bullet.add_component(bullet_m.Bullet(15, action_after_bullet_lifetime))
             self.app.level.add_object(bullet)
             return component
 
@@ -52,7 +51,7 @@ class Weapon(component_m.Component):
             return
         self.last_shot_time = self.app.time
         b_c = self.bullet_pool.get()
-        b_c.transformation.pos = self.camera_transformation.global_pos
+        b_c.transformation.pos = self.camera_transformation.global_pos + self.camera_transformation.forward.xyz * 0.5
         b_c.transformation.forward = self.camera_transformation.forward.xyz
         b_c.direction = self.camera_transformation.forward.xyz
 

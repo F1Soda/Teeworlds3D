@@ -27,6 +27,11 @@ class Collider(component_m.Component):
         self.is_trigger = False
         self.on_collision_enter = utils_m.EventDelegate()
         self.on_collision_exit = utils_m.EventDelegate()
+        self._max_radius_of_collisions = None
+
+    @property
+    def max_radius_of_collisions(self):
+        return self._max_radius_of_collisions
 
     @property
     def m_model(self):

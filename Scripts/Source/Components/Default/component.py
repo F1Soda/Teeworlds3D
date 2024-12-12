@@ -18,6 +18,10 @@ class Component:
         self.use_fixed_update = False
         self.use_on_draw_gizmos = False
 
+    @property
+    def enable_with_rely_object(self):
+        return self.enable and self.rely_object.enable
+
     def on_enable(self):
         ...
 

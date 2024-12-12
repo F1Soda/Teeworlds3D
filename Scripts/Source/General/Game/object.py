@@ -30,6 +30,8 @@ class Object:
         self._renderer: renderer_m.Renderer = None
         self._enable = True
 
+        self.is_deleted = False
+
     @property
     def enable(self):
         return self._enable
@@ -98,12 +100,16 @@ class Object:
         return None
 
     def delete(self):
+        if self.is_deleted:
+            return
+
         for component in self.components:
             component.delete()
         for child in self.child_objects:
             child.delete()
         self.components_to_call_on_gizmos = None
         self.components_to_apply_fixed_update = None
+        self.is_deleted = True
 
     def apply_components(self):
         for component in self.components:

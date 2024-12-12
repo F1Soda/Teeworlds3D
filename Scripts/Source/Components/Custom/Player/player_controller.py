@@ -23,6 +23,7 @@ class PlayerController(component_m.Component):
         # input_manager_m.InputManager.handle_keyboard_press += self._handle_keyboard_press
         input_manager_m.InputManager.handle_right_click_event += self._handle_mouse_right_press
         input_manager_m.InputManager.handle_left_click_event += self._handle_mouse_left_press
+        input_manager_m.InputManager.handle_left_hold_event += self._handle_mouse_left_press
 
         self.state = PlayerState.Normal
 
