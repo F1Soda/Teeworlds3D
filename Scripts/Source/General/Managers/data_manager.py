@@ -149,3 +149,18 @@ class DataManager:
 
         if later_initialization_dict.get(obj.id):
             DataManager.later_initialization(obj, later_initialization_dict, scene)
+
+    @staticmethod
+    def load_user_data(file_path):
+        user_data = {}
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            user_data["user_name"] = data["user_name"]
+        return user_data
+
+    @staticmethod
+    def save_user_name(file_path, user_name):
+        with open(file_path, 'w') as f:
+            save = {'user_name': user_name}
+
+            json.dump(save, f, indent=4)

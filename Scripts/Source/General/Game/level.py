@@ -453,6 +453,7 @@ class Level:
         self.client_wrappers[client_id] = wrapper
 
     def send_kill_client(self, client_id):
+        self.app.user_stats["kills"] += 1
         if self.app.actions_to_send_server.get("kill") is None:
             self.app.actions_to_send_server["kill"] = []
         self.app.actions_to_send_server["kill"].append({

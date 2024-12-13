@@ -58,7 +58,7 @@ class MenuWelcome(menu_state_m.MenuState):
         rcp.y -= 0.06
 
         def settings_button_action(button, gui, pos):
-            pass
+            self.fsm.set_state("SETTINGS")
 
         settings_button = elements.Button("Settings Button", canvas, win_size, self,
                                           "Settings",

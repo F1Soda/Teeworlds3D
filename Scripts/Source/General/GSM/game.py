@@ -5,6 +5,7 @@ import Scripts.Source.GUI.Game.GameSM.game_sm as game_sm_m
 import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Physic.physics_world as physics_world_m
 import Scripts.Source.General.Managers.game_event_log_manager as game_event_log_manager_m
+import Scripts.Source.General.Managers.data_manager as data_manager_m
 import moderngl as mgl
 
 DT = 0.02
@@ -30,6 +31,14 @@ class Game(state_m.GameState):
         self.is_synced = False
         self.synced_actions_id = []
         self.actions_to_send_server = {}
+
+        self.user_name = "default"
+        self.user_stats = {
+            "kills": 0,
+            "deaths": 0
+        }
+
+        self.client_stats = {}
 
     @property
     def fixed_delta_time(self):
@@ -68,6 +77,8 @@ class Game(state_m.GameState):
             level_path, spawn_pos, existing_clients = params
 
         self._load_level(level_path)
+
+        self.user_name = self.app.user_data["user_name"]
 
         self.physic_world.init_physic_object_by_level(self.level)
         self.physic_world.add_default_solvers()
@@ -113,6 +124,11 @@ class Game(state_m.GameState):
                             client_wrapper.transformation.pos = state["actions"][action]["spawn_pos"]
                             client_wrapper.rely_object.enable = True
                         else:
+                            self.game_event_log_manager.add_message("Somebody connected")
+                            self.client_stats[state["actions"][action]["source"]] = {
+                                "kills": 0,
+                                "deaths": 0
+                            }
                             self.spawn_client_wrapper(state["actions"][action]["spawn_pos"],
                                                       state["actions"][action]["source"])
 
@@ -124,6 +140,8 @@ class Game(state_m.GameState):
                     if state["actions"][action]["source"] != self.app.network.id:
                         client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
                         if client_wrapper:
+                            del self.client_stats[state["actions"][action]["source"]]
+                            self.game_event_log_manager.add_message("Somebody leave the game")
                             self.level.delete_object(client_wrapper)
                             del self.level.client_wrappers[state["actions"][action]["source"]]
                         else:
@@ -141,9 +159,15 @@ class Game(state_m.GameState):
                     if source == self.app.network.id:
                         raise Exception("Server not should send kill message to killer!")
                     source_to_kill = state["actions"][action]["source_to_kill"]
+                    self.client_stats[source]["kills"] += 1
+
                     if source_to_kill == self.app.network.id:
+                        self.user_stats["deaths"] += 1
+                        self.game_event_log_manager.add_message("Somebody KILL you")
                         self.level.kill_player()
                     else:
+                        self.client_stats[source_to_kill]["deaths"] += 1
+                        self.game_event_log_manager.add_message("Somebody KILL Somebody")
                         self.level.kill_client(source_to_kill)
 
                     self.synced_actions_id.append(state["actions"][action]["id_action"])

@@ -85,9 +85,11 @@ class TeeworldsEngine:
         # Other
         self.fixed_delta_time = 1 / FIXED_UPDATE_RATE
 
+        self.user_data = data_manager_m.DataManager.load_user_data("Data/UserData.json")
+
         # self.network.connect()
 
-        self.gsm.set_state("Debug")
+        self.gsm.set_state("Menu")
 
         # self.gsm.set_state("Connection")
 
