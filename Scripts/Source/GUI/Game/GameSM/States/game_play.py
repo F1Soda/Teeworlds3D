@@ -80,6 +80,10 @@ class GamePlay(game_state_m.GameState):
     def set_game_event_log(self, text):
         self.game_event_log.text = text
 
+    def update(self):
+        self.fps_text.text = f"FPS: {self.gsm.app.get_fps():.0f}"
+
+
     def release(self):
         self.gsm = None
         for element in self.elements:

@@ -117,6 +117,9 @@ class PlayerController(component_m.Component):
         self.hookshot_model_transformation.rely_object.enable = False
 
     def _handle_keyboard_press(self, keys):
+        if not self.enable_with_rely_object:
+            return
+
         if keys[pg.K_SPACE] and self.state == PlayerState.HookshotFlyingPlayer:
             self.state = PlayerState.Normal
             self._jump(100)
@@ -130,6 +133,9 @@ class PlayerController(component_m.Component):
         return True
 
     def _handle_mouse_right_press(self, mouse_pos):
+        if not self.enable_with_rely_object:
+            return
+
         hit_point = self.app.physic_world.ray_cast_hit(self.camera_component.transformation.global_pos,
                                                        self.camera_component.transformation.forward)
         if hit_point:
@@ -144,6 +150,8 @@ class PlayerController(component_m.Component):
         return False
 
     def _handle_mouse_left_press(self, mouse_pos):
+        if not self.enable_with_rely_object:
+            return
         self.weapon_component.fire()
         return True
 

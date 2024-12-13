@@ -45,14 +45,21 @@ class RigidBody(component_m.Component):
         self.velocity += impulse / self.mass
 
     def add_force(self, add_force):
+        if not self.enable_with_rely_object:
+            return
         self.force = self.force + add_force
         # ApplyTorque(glm::cross(position, force));
 
     def apply_gravity(self):
+        if not self.enable_with_rely_object:
+            return
         if self.use_gravity and self.mass > 0 and not self.is_kinematic:
             self.add_force(gravity * self.mass)
 
     def apply_forces_and_clear(self, dt):
+        print(self.force)
+        if not self.enable_with_rely_object:
+            return
         if glm.length(self.velocity) > 10 * -5:
             self.velocity = self.velocity + self.force / self.mass * dt
             self.transformation.pos = self.transformation.pos + self.velocity * dt
@@ -62,7 +69,10 @@ class RigidBody(component_m.Component):
         self.force = glm.vec3(0)
 
     def clear_force(self):
-        self.force = glm.vec3()
+        self.force = glm.vec3(0)
+
+    def clear_velocity(self):
+        self.velocity = glm.vec3(0)
 
     def fixed_apply(self):
         pass

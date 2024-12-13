@@ -40,6 +40,9 @@ class Game(state_m.GameState):
 
         self.client_stats = {}
 
+    def get_fps(self):
+        return self.app.get_fps()
+
     @property
     def fixed_delta_time(self):
         return self.app.fixed_delta_time
@@ -52,8 +55,9 @@ class Game(state_m.GameState):
     def delta_time(self):
         return self.app.delta_time
 
-    def get_fps(self):
-        return self.app.get_fps()
+    @property
+    def network(self):
+        return self.app.network
 
     def _load_level(self, file_path=None):
         if self.level:
@@ -66,6 +70,20 @@ class Game(state_m.GameState):
         object_picker_m.ObjectPicker.init(self, False)
         self.object_picker = object_picker_m.ObjectPicker
         self.level.load(file_path, is_game=True)
+
+    @property
+    def grab_mouse_inside_bounded_window(self):
+        return self.app.grab_mouse_inside_bounded_window
+
+    @grab_mouse_inside_bounded_window.setter
+    def grab_mouse_inside_bounded_window(self, value):
+        self.app.grab_mouse_inside_bounded_window = value
+
+    def set_mouse_visible(self, value):
+        self.app.set_mouse_visible(value)
+
+    def set_mouse_grab(self, value):
+        self.app.set_mouse_grab(value)
 
     def enter(self, params=None):
         self.game_sm = game_sm_m.GameSM(self.app, self.fsm)
@@ -111,6 +129,36 @@ class Game(state_m.GameState):
     def spawn_player(self, pos):
         self.level.spawn_player(pos)
 
+    def send_request_to_spawn(self):
+        if self.network.id == -1:
+            spawn_pos = (0,3,0)
+            self.spawn_player(spawn_pos)
+            self.level.player_component.respawn()
+            self.grab_mouse_inside_bounded_window = True
+            self.set_mouse_grab(True)
+            self.set_mouse_visible(False)
+            self.game_sm.set_state("PLAY")
+            return
+
+        request_to_spawn = {"actions": {"spawn": self.app.user_data["user_name"]}}
+
+        response = None
+
+        try:
+            response = self.fsm.network.send(request_to_spawn)
+        except OSError as e:
+            self.fsm.set_state("Menu", f"Fail connect to server: {e}")
+        if response is None:
+            self.fsm.set_state("Menu", f"Fail connect to server")
+        else:
+            spawn_pos = response["actions"]["spawn"]["spawn_pos"]
+            self.spawn_player(spawn_pos)
+            self.level.player_component.respawn()
+            self.grab_mouse_inside_bounded_window = True
+            self.set_mouse_grab(True)
+            self.set_mouse_visible(False)
+            self.game_sm.set_state("PLAY")
+
     def init_client_wrapper_and_data(self, data, client_id):
         print(data)
         self.level.create_and_spawn_client(data["pos"], client_id)
@@ -129,14 +177,9 @@ class Game(state_m.GameState):
                         client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
                         if client_wrapper:
                             client_wrapper.transformation.pos = state["actions"][action]["spawn_pos"]
-                            client_wrapper.rely_object.enable = True
+                            client_wrapper.enable = True
                         else:
                             self.game_event_log_manager.add_message(f"{state["actions"][action]["name"]} connected")
-                            # self.client_stats[state["actions"][action]["source"]] = {
-                            #     "kills": 0,
-                            #     "deaths": 0,
-                            #     "name": state["actions"][action]["name"]
-                            # }
                             self.init_client_wrapper_and_data(state["game_state"][state["actions"][action]["source"]],
                                                               state["actions"][action]["source"])
 
@@ -175,10 +218,18 @@ class Game(state_m.GameState):
                         self.user_stats["deaths"] += 1
                         self.game_event_log_manager.add_message(
                             f"{self.client_stats[source]["name"]} KILL {self.user_name}")
-                        self.level.kill_player()
+                        self.level.kill_player(f"{self.client_stats[source]["name"]} kill you. Take revenge on him!")
                     else:
                         self.client_stats[source_to_kill]["deaths"] += 1
-                        self.game_event_log_manager.add_message("Somebody KILL Somebody")
+
+                        reason = state["actions"][action]["reason"]
+                        if reason:
+                            if reason == "fall down":
+                                self.game_event_log_manager.add_message(
+                                    f"{self.client_stats[source_to_kill]["name"]} decided to fall")
+                        else:
+                            self.game_event_log_manager.add_message(
+                                f"{self.client_stats[source]["name"]} KILL {self.client_stats[source_to_kill]["name"]}")
                         self.level.kill_client(source_to_kill)
 
                     self.synced_actions_id.append(state["actions"][action]["id_action"])
@@ -197,6 +248,7 @@ class Game(state_m.GameState):
     def update(self):
         self.level.apply_components()
         object_picker_m.ObjectPicker.picking_pass()
+        self.game_sm.update()
 
     def fixed_update(self):
         self.physic_world.step(self.app.fixed_delta_time)

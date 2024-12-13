@@ -91,9 +91,9 @@ class TeeworldsEngine:
 
         # self.gsm.set_state("Debug")
 
-        # self.gsm.set_state("Connection")
+        self.gsm.set_state("Connection")
 
-        self.gsm.set_state("Menu")
+        # self.gsm.set_state("Menu")
 
         self.running = True
 

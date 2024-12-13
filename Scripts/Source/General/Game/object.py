@@ -126,8 +126,10 @@ class Object:
         self.is_deleted = True
 
     def apply_components(self):
+        if not self.enable:
+            return
         for component in self.components:
-            if component.enable and component.name not in ["Renderer", "Plane"]:
+            if component.enable_with_rely_object and component.name not in ["Renderer", "Plane"]:
                 component.apply()
         for child in self.child_objects:
             child.apply_components()

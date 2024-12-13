@@ -156,7 +156,8 @@ class Server:
                         key_value = {
                             "source": source,
                             "source_to_kill": action_data["source_to_kill"],
-                            "id_action": str(uuid.uuid1())
+                            "id_action": str(uuid.uuid1()),
+                            "reason": action_data.get("reason")
                         }
                         # self.game_state[source]["kills"] += 1
                         # self.game_state[action_data["source_to_kill"]]["deaths"] += 1

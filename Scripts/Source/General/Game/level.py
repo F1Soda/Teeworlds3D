@@ -281,7 +281,7 @@ class Level:
             self.player_rb.restitution = 0
             self.player_rb.static_friction = 0
             self.player_rb.dynamic_friction = 1
-            self.player.add_component(components.BoxCollider())
+            player_collider = self.player.add_component(components.BoxCollider())
 
             ground_checker = object_m.Object(self, "Ground Checker", self.player)
 
@@ -347,6 +347,12 @@ class Level:
 
             self.player_component = self.player.get_component_by_name("Player")
 
+            self.player_component.rigidbody = self.player_rb
+            self.player_component.collider = player_collider
+            self.player_component.weapon = self.weapon
+            self.player_component.player_controller = player_controller_component
+            self.player_component.fps_camera_movement = self.camera.get_component_by_name("FPS Camera Movement")
+
         else:
             self.camera = object_creator_m.ObjectCreator.create_camera_in_editor()
             self.camera_component = self.camera.get_component_by_name("Camera")
@@ -403,15 +409,15 @@ class Level:
             obj.on_gizmos(self.camera_component)
 
     def apply_components(self):
-
         if not self.is_game:
             self.camera.apply_components()
         for obj in self.objects.values():
             obj.apply_components()
 
     def fixed_apply_components(self):
-        if self.app.NAME == "Game":
-            self.app.game_sm.state.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
+        # if self.app.NAME == "Game":
+        #     pass
+        #     # self.app.game_sm.state.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         for obj in self.objects.values():
             obj.fixed_apply_components()
 
@@ -461,6 +467,18 @@ class Level:
         })
         self.kill_client(client_id)
 
+    def send_kill_player(self, reason):
+        self.app.user_stats["deaths"] += 1
+        if self.app.actions_to_send_server.get("kill") is None:
+            self.app.actions_to_send_server["kill"] = []
+        self.app.actions_to_send_server["kill"].append({
+            "source_to_kill": self.app.network.id,
+            "reason": reason
+        })
+        if reason == "fall down":
+            self.app.game_event_log_manager.add_message(f"{self.app.user_name} decided to fall")
+        self.kill_player("This idea was not very good =(")
+
     def kill_client(self, client_id):
         client_wrapper = self.client_wrappers.get(client_id)
         self.app.game_event_log_manager.add_message(
@@ -470,6 +488,12 @@ class Level:
         else:
             raise Exception(f"There is no client with id: {client_id}.")
 
-    def kill_player(self):
-        print("You was killed!!!")
+    def kill_player(self, die_info):
+        # print("You was killed!!!")
+        self.app.game_sm.set_state("DIED")
+        self.app.game_sm.state.set_die_info(die_info)
+        self.player_component.die()
+        self.app.grab_mouse_inside_bounded_window = False
+        self.app.set_mouse_visible(True)
+        self.app.set_mouse_grab(False)
     ################

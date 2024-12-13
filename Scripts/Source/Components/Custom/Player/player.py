@@ -14,12 +14,38 @@ class Player(component_m.Component):
         self.max_length_hook = 10
         self.weapon = None
         self.in_hook_move = False
-
+        self.player_controller = None
+        self.rigidbody = None
+        self.collider = None
+        self.fps_camera_movement = None
+        self.alive = True
         self._transformation = None
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)
+
+    def apply(self):
+        if self.transformation.pos.y < -50 and self.alive:
+            self.app.level.send_kill_player("fall down")
+            self.transformation.pos = self.transformation.pos
+
+    def die(self):
+        self.weapon.enable = False
+        self.player_controller.enable = False
+        self.rigidbody.enable = False
+        self.collider.enable = False
+        self.fps_camera_movement.enable = False
+        self.alive = False
+
+    def respawn(self):
+        self.weapon.enable = True
+        self.player_controller.enable = True
+        self.rigidbody.enable = True
+        self.rigidbody.clear_velocity()
+        self.collider.enable = True
+        self.fps_camera_movement.enable = True
+        self.alive = True
 
     @property
     def transformation(self):
