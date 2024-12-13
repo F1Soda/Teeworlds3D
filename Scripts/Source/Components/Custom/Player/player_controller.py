@@ -125,6 +125,8 @@ class PlayerController(component_m.Component):
             self.hookshot_stop()
             self.rigidbody.velocity = self.hookshot_dir * self.hookshot_speed
         self._move(keys)
+        if keys[pg.K_r]:
+            self.weapon_component.reload()
         return True
 
     def _handle_mouse_right_press(self, mouse_pos):

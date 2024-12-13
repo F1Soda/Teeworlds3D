@@ -6,6 +6,10 @@ class GameState(state_m.State):
         super().__init__(gsm)
         self.app = app
 
+    @property
+    def delta_time(self):
+        return self.app.delta_time
+
     def process_window_resize(self, new_size):
         ...
 

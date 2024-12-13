@@ -1,8 +1,8 @@
 import Scripts.Source.Abstract.FSM.fsm as fsm_m
 
-import Scripts.Source.GUI.Menu.MenuSM.menu_welcome as menu_welcome_m
-import Scripts.Source.GUI.Menu.MenuSM.menu_play as menu_play_m
-import Scripts.Source.GUI.Menu.MenuSM.menu_editor as menu_editor_m
+import Scripts.Source.GUI.Menu.MenuSM.States.menu_welcome as menu_welcome_m
+import Scripts.Source.GUI.Menu.MenuSM.States.menu_play as menu_play_m
+import Scripts.Source.GUI.Menu.MenuSM.States.menu_editor as menu_editor_m
 
 
 class MenuSM(fsm_m.FSM):

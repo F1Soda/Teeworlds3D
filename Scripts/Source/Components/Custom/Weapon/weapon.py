@@ -16,12 +16,16 @@ class Weapon(component_m.Component):
 
         self.damage = damage
         self.magazine_size = magazine_size
+        self.ammo = magazine_size
         self.reload_time = reload_time
         self.fire_rate = fire_rate
         self.pool_object = pool_object
         self.last_shot_time = 0
 
         self.camera_transformation = camera_transformation
+        self._is_reloading = False
+
+        self.elapsed_time_for_reloading = 0
 
         def before_return_func_bullet(b_c):
             b_c.rely_object.enable = False
@@ -46,18 +50,29 @@ class Weapon(component_m.Component):
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.get_component_by_type(transformation_m.Transformation)
+        self.app.game_sm.state.set_ammo(self.ammo)
 
     def fire(self):
-        if self.app.time - self.last_shot_time < self.fire_rate:
+        if self.app.time - self.last_shot_time < self.fire_rate or self._is_reloading:
             return
         self.last_shot_time = self.app.time
         b_c = self.bullet_pool.get()
         b_c.transformation.pos = self.camera_transformation.global_pos + self.camera_transformation.forward.xyz * 0.5
         b_c.transformation.forward = self.camera_transformation.forward.xyz
         b_c.direction = self.camera_transformation.forward.xyz
+        self.ammo -= 1
+        if self.ammo <= 0:
+            self.reload()
+        else:
+            self.app.game_sm.state.set_ammo(self.ammo)
 
     def reload(self):
-        ...
+        if self.ammo == self.magazine_size:
+            return
+
+        self._is_reloading = True
+        self.elapsed_time_for_reloading = 0
+        self.app.game_sm.state.display_reloading()
 
     @property
     def transformation(self):
@@ -70,9 +85,13 @@ class Weapon(component_m.Component):
         self._transformation = value
 
     def apply(self):
-        # if self.camera_transformation:
         self.transformation.forward = self.camera_transformation.forward
-        # pass
+        if self._is_reloading:
+            self.elapsed_time_for_reloading += self.app.delta_time
+            if self.elapsed_time_for_reloading > self.reload_time:
+                self.ammo = self.magazine_size
+                self.app.game_sm.state.set_ammo(self.ammo)
+                self._is_reloading = False
 
     def delete(self):
         self._transformation = None

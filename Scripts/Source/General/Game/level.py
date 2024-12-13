@@ -331,7 +331,7 @@ class Level:
             self.add_object(pool_object)
 
             weapon_component = self.weapon.add_component(
-                components.Weapon(1, 1, 1, 0.15, pool_object, self.camera.transformation, "Weapon", "WEP"))
+                components.Weapon(1, 30, 1, 0.15, pool_object, self.camera.transformation, "Weapon", "WEP"))
             weapon_component.camera_transformation = self.camera.transformation
 
             player_controller_component.weapon_component = weapon_component
@@ -403,11 +403,7 @@ class Level:
             obj.on_gizmos(self.camera_component)
 
     def apply_components(self):
-        if self.app.NAME == "Game":
-            self.app.game_gui.debug_global_text.text = f"({self.hookshot_root.transformation.rot.x:.2f}, {self.hookshot_root.transformation.rot.y:.2f}, {self.hookshot_root.transformation.rot.z:.2f})"
-            self.app.game_gui.debug_LOCAL_text.text = f"({self.hookshot_model.transformation.pos.x:.2f}, {self.hookshot_model.transformation.pos.y:.2f}, {self.hookshot_model.transformation.pos.z:.2f})"
 
-            self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         if not self.is_game:
             self.camera.apply_components()
         for obj in self.objects.values():
@@ -415,7 +411,7 @@ class Level:
 
     def fixed_apply_components(self):
         if self.app.NAME == "Game":
-            self.app.game_gui.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
+            self.app.game_sm.state.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         for obj in self.objects.values():
             obj.fixed_apply_components()
 

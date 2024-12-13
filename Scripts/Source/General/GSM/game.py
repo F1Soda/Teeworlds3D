@@ -1,7 +1,7 @@
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.General.Managers.object_picker as object_picker_m
 import Scripts.Source.General.GSM.game_state as state_m
-import Scripts.Source.GUI.Game.game_gui as game_gui_m
+import Scripts.Source.GUI.Game.GameSM.game_sm as game_sm_m
 import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Physic.physics_world as physics_world_m
 import moderngl as mgl
@@ -17,7 +17,7 @@ class Game(state_m.GameState):
         self.level = None
         self.physic_world = physics_world_m.PhysicWorld(self)
         self.gizmos = None
-        self.game_gui = None
+        self.game_sm = None
         self.gui = app.gui
         self.ctx = self.app.ctx
         self.object_picker = None
@@ -57,7 +57,7 @@ class Game(state_m.GameState):
         self.level.load(file_path, is_game=True)
 
     def enter(self, params=None):
-        self.game_gui = game_gui_m.GameGUI(self, self.app.win_size, self.app.gui)
+        self.game_sm = game_sm_m.GameSM(self.app, self.fsm)
         if params is None:
             level_path = "Levels/Base/Test.json"
             spawn_pos = (0, 1, 0)
@@ -82,7 +82,7 @@ class Game(state_m.GameState):
 
     def exit(self):
         self.level.delete()
-        self.game_gui.delete()
+        self.game_sm.release()
         object_picker_m.ObjectPicker.release()
         object_creator_m.ObjectCreator.release()
         self.app.set_mouse_grab(False)
