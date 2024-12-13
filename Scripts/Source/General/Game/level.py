@@ -377,8 +377,12 @@ class Level:
             self.app.editor_gui.update_data_in_hierarchy()
         return obj
 
+    def delete_object_by_id(self, obj_id):
+        self.delete_object(self.objects[obj_id])
+
     def delete_object(self, obj):
-        self.app.physic_world.remove_object(obj)
+        if self.app.NAME == "Game":
+            self.app.physic_world.remove_object(obj)
 
         for child in obj.child_objects:
             self.delete_object(child)

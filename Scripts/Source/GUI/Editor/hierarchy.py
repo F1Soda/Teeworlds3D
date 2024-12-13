@@ -19,6 +19,8 @@ class Hierarchy(element_m.Element):
         self.main_block = main_block
         self.selected_elements = []
 
+        input_manager_m.InputManager.handle_keyboard_press += self._handle_delete_objs
+
         # Events
         self.select_element = utils_m.EventDelegate()
         self.unselect_element = utils_m.EventDelegate()
@@ -43,7 +45,7 @@ class Hierarchy(element_m.Element):
 
         def custom_right_click_handle(pos: glm.vec2):
             self.sub_menu.active = True
-            if pos.y/self.gui.win_size.y > 0.7:
+            if pos.y / self.gui.win_size.y > 0.7:
                 self.sub_menu.position.absolute.center = glm.vec2(
                     pos.x - self.sub_menu.position.absolute.size.x / 2,
                     pos.y - self.sub_menu.position.absolute.size.y / 2
@@ -79,6 +81,11 @@ class Hierarchy(element_m.Element):
         self.sub_menu_other = None
 
         self._init_sub_menu()
+
+    def _handle_delete_objs(self, keys, char):
+        if keys[pg.K_DELETE]:
+            for button, obj_id in self.selected_elements:
+                self.gui.app.gsm.state.level.delete_object_by_id(obj_id)
 
     def _create_element_in_content(self, content, action, text, number):
         content_element = elements.Block(f"Element_{number}_in_content_{content.name}", None, self.win_size,
@@ -761,7 +768,6 @@ class Hierarchy(element_m.Element):
         self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_2, "By point and segment", 3,
                                         0.2)
         self._create_button_in_sub_menu(self.sub_menu_plane, create_ask_window_element_3, "By point and plane", 4)
-
 
     def _init_sub_menu_polyhedrons(self):
         self.sub_menu_polyhedrons = elements.Content("Sub Menu polyhedrons", self, self.win_size,
