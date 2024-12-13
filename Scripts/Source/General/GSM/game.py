@@ -73,12 +73,13 @@ class Game(state_m.GameState):
             level_path = "Levels/Base/Test.json"
             spawn_pos = (0, 1, 0)
             existing_clients = {}
+            user_name = "Default"
         else:
-            level_path, spawn_pos, existing_clients = params
+            level_path, spawn_pos, existing_clients, user_name = params
 
         self._load_level(level_path)
 
-        self.user_name = self.app.user_data["user_name"]
+        self.user_name = user_name
 
         self.physic_world.init_physic_object_by_level(self.level)
         self.physic_world.add_default_solvers()
@@ -91,7 +92,7 @@ class Game(state_m.GameState):
 
         for client_id, data in existing_clients.items():
             if client_id != self.app.network.id:
-                self.spawn_client_wrapper(data["pos"], client_id)
+                self.init_client_wrapper_and_data(data, client_id)
 
         self.game_event_log_manager = game_event_log_manager_m.GameEventLogManager(self.game_sm.state)
 
@@ -110,8 +111,14 @@ class Game(state_m.GameState):
     def spawn_player(self, pos):
         self.level.spawn_player(pos)
 
-    def spawn_client_wrapper(self, pos, client_id):
-        self.level.create_and_spawn_client(pos, client_id)
+    def init_client_wrapper_and_data(self, data, client_id):
+        print(data)
+        self.level.create_and_spawn_client(data["pos"], client_id)
+        self.client_stats[client_id] = {
+            "kills": data["kills"],
+            "deaths": data["deaths"],
+            "name": data["name"],
+        }
 
     def update_game_state(self, state):
         # print(state)
@@ -124,13 +131,14 @@ class Game(state_m.GameState):
                             client_wrapper.transformation.pos = state["actions"][action]["spawn_pos"]
                             client_wrapper.rely_object.enable = True
                         else:
-                            self.game_event_log_manager.add_message("Somebody connected")
-                            self.client_stats[state["actions"][action]["source"]] = {
-                                "kills": 0,
-                                "deaths": 0
-                            }
-                            self.spawn_client_wrapper(state["actions"][action]["spawn_pos"],
-                                                      state["actions"][action]["source"])
+                            self.game_event_log_manager.add_message(f"{state["actions"][action]["name"]} connected")
+                            # self.client_stats[state["actions"][action]["source"]] = {
+                            #     "kills": 0,
+                            #     "deaths": 0,
+                            #     "name": state["actions"][action]["name"]
+                            # }
+                            self.init_client_wrapper_and_data(state["game_state"][state["actions"][action]["source"]],
+                                                              state["actions"][action]["source"])
 
                         self.synced_actions_id.append(state["actions"][action]["id_action"])
                     else:
@@ -140,8 +148,10 @@ class Game(state_m.GameState):
                     if state["actions"][action]["source"] != self.app.network.id:
                         client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
                         if client_wrapper:
+                            source = state["actions"][action]["source"]
+                            self.game_event_log_manager.add_message(
+                                f"{self.client_stats[source]["name"]} leave the game")
                             del self.client_stats[state["actions"][action]["source"]]
-                            self.game_event_log_manager.add_message("Somebody leave the game")
                             self.level.delete_object(client_wrapper)
                             del self.level.client_wrappers[state["actions"][action]["source"]]
                         else:
@@ -163,7 +173,8 @@ class Game(state_m.GameState):
 
                     if source_to_kill == self.app.network.id:
                         self.user_stats["deaths"] += 1
-                        self.game_event_log_manager.add_message("Somebody KILL you")
+                        self.game_event_log_manager.add_message(
+                            f"{self.client_stats[source]["name"]} KILL {self.user_name}")
                         self.level.kill_player()
                     else:
                         self.client_stats[source_to_kill]["deaths"] += 1
@@ -191,9 +202,6 @@ class Game(state_m.GameState):
         self.physic_world.step(self.app.fixed_delta_time)
         self.level.fixed_apply_components()
 
-        # self.cumulative_time_for_send_data_to_server += DT
-        # if self.cumulative_time_for_send_data_to_server > 0:
-        #     self.cumulative_time_for_send_data_to_server = 0
         if self.app.network.id != -1:
             self.send_data_to_server()
 
@@ -202,6 +210,9 @@ class Game(state_m.GameState):
         response["actions"] = {}
 
         response["player_data"] = self.level.player_component.serialize()
+        response["player_data"]["kills"] = self.user_stats["kills"]
+        response["player_data"]["deaths"] = self.user_stats["deaths"]
+        response["player_data"]["name"] = self.user_name
 
         response["actions"]['synced'] = self.synced_actions_id
 

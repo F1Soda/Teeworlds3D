@@ -102,6 +102,10 @@ class PhysicWorld:
                         not collide_object.collider.enable_with_rely_object):
                     continue
 
+                d = glm.length(trigger.transformation.pos - collide_object.collider.transformation.pos)
+                if d - trigger.max_radius_of_collisions - collide_object.collider.max_radius_of_collisions > 0:
+                    continue
+
                 collide_with = trigger.collide_with(collide_object.collider)
 
                 if collide_with:

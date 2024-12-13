@@ -463,6 +463,8 @@ class Level:
 
     def kill_client(self, client_id):
         client_wrapper = self.client_wrappers.get(client_id)
+        self.app.game_event_log_manager.add_message(
+            f"{self.app.user_name} KILL {self.app.client_stats[client_id]["name"]}")
         if client_wrapper:
             client_wrapper.enable = False
         else:

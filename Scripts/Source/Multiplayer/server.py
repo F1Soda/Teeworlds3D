@@ -38,7 +38,7 @@ class Server:
         self.run_server()
 
     def add_client(self, guid, pos):
-        self.game_state[guid] = {"pos": pos}
+        self.game_state[guid] = {"pos": pos, "rot": (0, 0, 0), "kills": 0, "deaths": 0, "name": "default"}
         self.config["count_players"] += 1
         self.client_actions[guid] = {}
 
@@ -82,10 +82,7 @@ class Server:
         while True:
             try:
                 raw_response, _ = conn.recvfrom(1024)
-                # Server.log(f"{count_thread}: Received data: {raw_response}", level=1)
                 response = eval(raw_response, {"UUID": UUID})
-
-                # print("Received: ", response)
 
                 reply = {}
                 reply = self.make_response(response, reply)
@@ -130,15 +127,19 @@ class Server:
                 case "handshake":
                     reply = self.get_handshake_config(reply)
                 case "spawn":
+                    user_name = data["actions"][action]
+
                     reply = self.get_spawn_pos_response(reply)
                     self.game_state[source]["pos"] = reply["actions"]["spawn"]["spawn_pos"]
                     self.game_state[source]["rot"] = (0, 0, 0)
+                    self.game_state[source]["name"] = user_name
 
                     key = "spawn_client"
                     key_value = {
                         "spawn_pos": self.game_state[source]["pos"],
                         "source": source,
-                        "id_action": str(uuid.uuid1())
+                        "id_action": str(uuid.uuid1()),
+                        "name": user_name
                     }
 
                     with client_lock:
@@ -157,6 +158,8 @@ class Server:
                             "source_to_kill": action_data["source_to_kill"],
                             "id_action": str(uuid.uuid1())
                         }
+                        # self.game_state[source]["kills"] += 1
+                        # self.game_state[action_data["source_to_kill"]]["deaths"] += 1
                         with client_lock:
                             self.notify_clients_with_action(source, key, key_value)
 

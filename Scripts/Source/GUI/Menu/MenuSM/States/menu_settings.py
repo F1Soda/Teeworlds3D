@@ -67,6 +67,7 @@ class MenuSettings(menu_state_m.MenuState):
 
         def save_button_action(button, gui, pos):
             data_manager_m.DataManager.save_user_name("Data/UserData.json", self.input_field.text.text)
+            self.gsm.app.user_data["user_name"] = self.input_field.text.text
 
         save_button = elements.Button("Save Button", canvas, win_size, self,
                                       "Save",

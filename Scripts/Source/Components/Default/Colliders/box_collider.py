@@ -18,12 +18,14 @@ class BoxCollider(collider_m.Collider):
 
     @property
     def max_radius_of_collisions(self):
-        if self.use_transform_model_matrix:
-            if self._max_radius_of_collisions is None:
+        if self._max_radius_of_collisions is None:
+            if self.use_transform_model_matrix:
                 self._max_radius_of_collisions = glm.sqrt(
                     glm.dot(self.transformation.scale, self.transformation.scale)) / 2
-            return self._max_radius_of_collisions
-        return None
+            else:
+                self._max_radius_of_collisions = glm.sqrt(
+                    glm.dot(self.size, self.size)) / 2
+        return self._max_radius_of_collisions
 
     def init(self, app, rely_object):
         super().init(app, rely_object)

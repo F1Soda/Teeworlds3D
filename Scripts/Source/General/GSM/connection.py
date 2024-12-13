@@ -22,8 +22,9 @@ class Connection(state_m.GameState):
             self.fsm.set_state("Menu", f"Fail connect to server")
         else:
             spawn_pos = response["actions"]["spawn"]["spawn_pos"]
-            self.fsm.set_state("Game", ("Levels/Player/TestCollision.json", spawn_pos, response["game_state"],
-                                        self.app.user_data["user_name"]))
+
+            self.fsm.set_state("Game", (
+                "Levels/Player/TestCollision.json", spawn_pos, response["game_state"], self.app.user_data["user_name"]))
 
     def render_level(self):
         self.app.ctx.screen.use()
