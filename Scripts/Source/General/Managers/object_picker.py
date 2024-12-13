@@ -3,7 +3,7 @@ import moderngl as mgl
 import Scripts.Source.General.Managers.index_manager as index_manager_m
 import Scripts.Source.General.Managers.input_manager as input_manager_m
 import Scripts.Source.General.utils as utils_m
-
+import pygame as pg
 
 class ObjectPicker:
     _pick_fbo = None  # type: mgl.Framebuffer
@@ -179,7 +179,15 @@ class ObjectPicker:
                                                            ObjectPicker._last_picked_obj_m_model)
         difference = dot - ObjectPicker._last_mouse_dot
         ObjectPicker._last_mouse_dot = dot
-        ObjectPicker.last_picked_obj_transformation.pos = ObjectPicker.last_picked_obj_transformation.pos + (axis.end - axis.start) * difference / 100
+
+        if input_manager_m.InputManager.keys[pg.K_1]:
+            ObjectPicker.last_picked_obj_transformation.scale = ObjectPicker.last_picked_obj_transformation.scale + (
+                        axis.end - axis.start) * difference / 100
+        if input_manager_m.InputManager.keys[pg.K_2]:
+            ObjectPicker.last_picked_obj_transformation.rot = ObjectPicker.last_picked_obj_transformation.rot + (
+                    axis.end - axis.start) * difference
+        else:
+            ObjectPicker.last_picked_obj_transformation.pos = ObjectPicker.last_picked_obj_transformation.pos + (axis.end - axis.start) * difference / 100
         return True
 
     @staticmethod

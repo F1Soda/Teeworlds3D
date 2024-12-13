@@ -87,13 +87,13 @@ class TeeworldsEngine:
 
         self.user_data = data_manager_m.DataManager.load_user_data("Data/UserData.json")
 
-        self.network.connect()
+        # self.network.connect()
 
         # self.gsm.set_state("Debug")
 
-        self.gsm.set_state("Connection")
+        # self.gsm.set_state("Connection")
 
-        # self.gsm.set_state("Menu")
+        self.gsm.set_state("Menu")
 
         self.running = True
 

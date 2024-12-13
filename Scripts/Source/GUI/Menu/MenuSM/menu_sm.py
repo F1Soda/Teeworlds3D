@@ -15,8 +15,8 @@ class MenuSM(fsm_m.FSM):
         self.add_state(menu_play_m.MenuPlay.NAME, menu_play_m.MenuPlay(self, gsm))
         self.add_state(menu_editor_m.MenuEditor.NAME, menu_editor_m.MenuEditor(self, gsm))
         self.add_state(menu_settings_m.MenuSettings.NAME, menu_settings_m.MenuSettings(self, gsm))
-        # self.set_state(menu_welcome_m.MenuWelcome.NAME)
-        self.set_state(menu_settings_m.MenuSettings.NAME)
+        self.set_state(menu_welcome_m.MenuWelcome.NAME)
+        # self.set_state(menu_settings_m.MenuSettings.NAME)
 
         pass
 
