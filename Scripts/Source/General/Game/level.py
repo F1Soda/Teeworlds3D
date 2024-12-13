@@ -379,10 +379,14 @@ class Level:
 
     def delete_object(self, obj):
         self.app.physic_world.remove_object(obj)
+
+        for child in obj.child_objects:
+            self.delete_object(child)
         obj.delete()
-        del self.objects[obj.id]
-        if self.app.NAME == "Editor":
-            self.app.editor_gui.update_data_in_hierarchy()
+        if self.objects.get(obj.id):
+            del self.objects[obj.id]
+            if self.app.NAME == "Editor":
+                self.app.editor_gui.update_data_in_hierarchy()
 
     def init_gizmo(self):
         axis = gizmos_m.Gizmos.WordAxisGizmo(self.ctx, (0, 0, 0), (1, 0, 0), (1, 0, 0), self.camera_component, size=3)

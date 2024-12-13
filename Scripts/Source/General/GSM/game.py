@@ -217,8 +217,9 @@ class Game(state_m.GameState):
                             self.game_event_log_manager.add_message(
                                 f"{self.client_stats[source]["name"]} leave the game")
                             del self.client_stats[state["actions"][action]["source"]]
-                            self.level.delete_object(client_wrapper)
                             self.level.delete_object(bp)
+                            self.level.delete_object(client_wrapper)
+
                             del self.level.client_wrappers[state["actions"][action]["source"]]
                         else:
                             raise Exception(

@@ -64,7 +64,7 @@ class PhysicWorld:
 
     def remove_object(self, game_object):
         # rigidbody_component = game_object.get_component_by_name("RigidBody")
-        # collider_component = game_object.get_component_by_name("Collider")
+        collider_component = game_object.get_component_by_name("Collider")
         # if collider_component:
         #     self.collide_objects = [collider_component != x.collider for x in self.physic_objects]
         # if rigidbody_component:
@@ -73,6 +73,9 @@ class PhysicWorld:
             del self.collide_objects[game_object.id]
         if self.physic_objects.get(game_object.id):
             del self.physic_objects[game_object.id]
+        if collider_component in self.triggers:
+            self.triggers.remove(collider_component)
+
 
     def _resolve_constrains(self, dt):
         collisions = []

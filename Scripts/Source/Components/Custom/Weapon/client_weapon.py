@@ -62,9 +62,10 @@ class ClientWeapon(component_m.Component):
         self._transformation = value
 
     def delete(self):
-        self.bullet_pool.back_to_pool_all()
-        for bullet in self.bullet_pool.pool:
-            bullet.rely_object.delete()
+        # self.bullet_pool.back_to_pool_all()
+        # for bullet in self.bullet_pool.pool:
+        #     if bullet.rely_object:
+        #         bullet.rely_object.delete()
 
         self.bullet_pool.pool.clear()
 
