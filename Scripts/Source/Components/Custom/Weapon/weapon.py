@@ -55,6 +55,7 @@ class Weapon(component_m.Component):
     def fire(self):
         if self.app.time - self.last_shot_time < self.fire_rate or self._is_reloading:
             return
+        # self.app.game_event_log_manager.add_message(f"AMMO: {self.ammo}")
         self.last_shot_time = self.app.time
         b_c = self.bullet_pool.get()
         b_c.transformation.pos = self.camera_transformation.global_pos + self.camera_transformation.forward.xyz * 0.5

@@ -4,6 +4,7 @@ import Scripts.Source.General.GSM.game_state as state_m
 import Scripts.Source.GUI.Game.GameSM.game_sm as game_sm_m
 import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Physic.physics_world as physics_world_m
+import Scripts.Source.General.Managers.game_event_log_manager as game_event_log_manager_m
 import moderngl as mgl
 
 DT = 0.02
@@ -21,6 +22,7 @@ class Game(state_m.GameState):
         self.gui = app.gui
         self.ctx = self.app.ctx
         self.object_picker = None
+        self.game_event_log_manager = None
         self.win_size = self.app.win_size
         self.client = gsm.network
 
@@ -79,6 +81,8 @@ class Game(state_m.GameState):
         for client_id, data in existing_clients.items():
             if client_id != self.app.network.id:
                 self.spawn_client_wrapper(data["pos"], client_id)
+
+        self.game_event_log_manager = game_event_log_manager_m.GameEventLogManager(self.game_sm.state)
 
     def exit(self):
         self.level.delete()

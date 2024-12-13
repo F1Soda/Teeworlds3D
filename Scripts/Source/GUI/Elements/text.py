@@ -101,6 +101,10 @@ class Text(element_m.Element):
             past_center = self.position.relative.copy.center
             self.position.relative.size = size / self.rely_element.position.absolute.size
             self.position.relative.center = past_center
+        elif self.pivot == element_m.Pivot.LeftTop:
+            right_top_y = self.position.relative.right_top.y
+            self.position.relative.left_bottom = glm.vec2(self.position.relative.left_bottom.x, right_top_y - size.y / self.rely_element.position.absolute.size.y)
+            self.position.relative.right_top = glm.vec2(self.position.relative.right_top.x, right_top_y)
 
     def update_position(self):
         self.evaluate_text_size()

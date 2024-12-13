@@ -55,11 +55,30 @@ class GamePlay(game_state_m.GameState):
 
         self.elements.append(self.ammo_bar)
 
+        game_event_block = elements.Block("Game Event Log", canvas, self.win_size, glm.vec4(0.3))
+        game_event_block.position.relative.right_top = glm.vec2(0.98)
+        game_event_block.position.relative.left_bottom = glm.vec2(0.75, 0.83)
+
+        game_event_block.update_position()
+
+        self.elements.append(game_event_block)
+
+        self.game_event_log = elements.Text("server_info_text", game_event_block, win_size,
+                                            "", font_size=1.5)
+        self.game_event_log.pivot = element_m.Pivot.LeftTop
+        self.game_event_log.position.relative.left_bottom = glm.vec2(0.03, 0.97)
+        self.game_event_log.position.relative.right_top = glm.vec2(0.97, 0.97)
+
+        self.game_event_log.update_position()
+
     def set_ammo(self, ammo_count):
         self.ammo_bar.text = f"Ammo: {ammo_count}"
 
     def display_reloading(self):
         self.ammo_bar.text = f"Reloading"
+
+    def set_game_event_log(self, text):
+        self.game_event_log.text = text
 
     def release(self):
         self.gsm = None
