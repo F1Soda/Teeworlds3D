@@ -30,5 +30,3 @@ class Menu(state_m.GameState):
         self.app.ctx.enable(mgl.BLEND)
         self.gui.render()
 
-    def before_exit(self):
-        self.app.exit()

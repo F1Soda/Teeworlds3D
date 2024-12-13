@@ -30,5 +30,3 @@ class Connection(state_m.GameState):
         self.app.ctx.screen.use()
         self.app.ctx.clear(color=(0.357, 0.502, 0.11, 1))
 
-    def before_exit(self):
-        self.app.exit()

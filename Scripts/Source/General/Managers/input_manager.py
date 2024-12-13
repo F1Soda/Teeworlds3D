@@ -71,8 +71,10 @@ class InputManager:
                 pg.mouse.set_pos(InputManager._app.win_size.x // 2, InputManager._app.win_size.y // 2)
 
         for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                InputManager._app.before_exit()
+            if event.type == pg.QUIT:
+                InputManager._app.before_exit(False)
+            if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                InputManager._app.before_exit(True)
             elif event.type == pg.VIDEORESIZE:
                 InputManager._app.process_window_resize(event)
             elif event.type == pg.KEYDOWN:

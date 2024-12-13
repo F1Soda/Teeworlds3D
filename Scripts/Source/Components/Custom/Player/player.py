@@ -30,6 +30,14 @@ class Player(component_m.Component):
             self.app.level.send_kill_player("fall down")
             self.transformation.pos = self.transformation.pos
 
+    def stop_move(self):
+        self.player_controller.enable = False
+        self.fps_camera_movement.enable = False
+
+    def continue_move(self):
+        self.player_controller.enable = True
+        self.fps_camera_movement.enable = True
+
     def die(self):
         self.weapon.enable = False
         self.player_controller.enable = False

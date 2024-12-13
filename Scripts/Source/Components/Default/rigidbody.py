@@ -57,7 +57,6 @@ class RigidBody(component_m.Component):
             self.add_force(gravity * self.mass)
 
     def apply_forces_and_clear(self, dt):
-        print(self.force)
         if not self.enable_with_rely_object:
             return
         if glm.length(self.velocity) > 10 * -5:

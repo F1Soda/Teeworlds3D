@@ -460,6 +460,7 @@ class Level:
 
     def send_kill_client(self, client_id):
         self.app.user_stats["kills"] += 1
+        self.app.client_stats[client_id]["deaths"] += 1
         if self.app.actions_to_send_server.get("kill") is None:
             self.app.actions_to_send_server["kill"] = []
         self.app.actions_to_send_server["kill"].append({
@@ -490,7 +491,9 @@ class Level:
 
     def kill_player(self, die_info):
         # print("You was killed!!!")
-        self.app.game_sm.set_state("DIED")
+        if self.app.game_sm.state.NAME != "EXIT":
+            self.app.game_sm.set_state("DIED")
+
         self.app.game_sm.state.set_die_info(die_info)
         self.player_component.die()
         self.app.grab_mouse_inside_bounded_window = False

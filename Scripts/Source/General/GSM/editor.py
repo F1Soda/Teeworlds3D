@@ -83,7 +83,7 @@ class Editor(state_m.GameState):
             self.ctx.disable(mgl.BLEND)
             self.ctx.enable(mgl.DEPTH_TEST)
 
-    def before_exit(self):
+    def before_exit(self, pressed_escape):
         self.editor_gui.ask_save_file_before_exit()
 
     def close_app(self):

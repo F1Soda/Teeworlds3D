@@ -87,11 +87,11 @@ class TeeworldsEngine:
 
         self.user_data = data_manager_m.DataManager.load_user_data("Data/UserData.json")
 
-        self.network.connect()
+        # self.network.connect()
 
-        # self.gsm.set_state("Debug")
+        self.gsm.set_state("Debug")
 
-        self.gsm.set_state("Connection")
+        # self.gsm.set_state("Connection")
 
         # self.gsm.set_state("Menu")
 
@@ -107,8 +107,8 @@ class TeeworldsEngine:
     def update_time(self):
         self.time = pg.time.get_ticks() * 0.001
 
-    def before_exit(self):
-        self.gsm.state.before_exit()
+    def before_exit(self, pressed_escape):
+        self.gsm.state.before_exit(pressed_escape)
 
     def get_fps(self):
         return round(self.clock.get_fps())

@@ -5,7 +5,6 @@ import Scripts.Source.GUI.Game.GameSM.game_sm as game_sm_m
 import Scripts.Source.General.Game.level as level_m
 import Scripts.Source.Physic.physics_world as physics_world_m
 import Scripts.Source.General.Managers.game_event_log_manager as game_event_log_manager_m
-import Scripts.Source.General.Managers.data_manager as data_manager_m
 import moderngl as mgl
 
 DT = 0.02
@@ -131,7 +130,7 @@ class Game(state_m.GameState):
 
     def send_request_to_spawn(self):
         if self.network.id == -1:
-            spawn_pos = (0,3,0)
+            spawn_pos = (0, 3, 0)
             self.spawn_player(spawn_pos)
             self.level.player_component.respawn()
             self.grab_mouse_inside_bounded_window = True
@@ -167,6 +166,16 @@ class Game(state_m.GameState):
             "deaths": data["deaths"],
             "name": data["name"],
         }
+
+    def get_stat_info(self):
+        res = f"{self.user_name}: Kills = {self.user_stats["kills"]}, Deaths = {self.user_stats["deaths"]}\n"
+
+        try:
+            for client_stat in self.client_stats.values():
+                res += f"{client_stat["name"]}: Kills = {client_stat["kills"]}, Deaths = {client_stat["deaths"]}\n"
+        except:
+            pass
+        return res
 
     def update_game_state(self, state):
         # print(state)
@@ -242,8 +251,28 @@ class Game(state_m.GameState):
 
     ###############
 
-    def before_exit(self):
-        self.app.exit()
+    def before_exit(self, pressed_escape):
+        if self.game_sm.state.NAME == "EXIT":
+            if pressed_escape:
+                self.back_to_game()
+            else:
+                self.app.exit()
+        else:
+            self.level.player_component.stop_move()
+            self.game_sm.set_state("EXIT")
+            self.grab_mouse_inside_bounded_window = False
+            self.set_mouse_grab(False)
+            self.set_mouse_visible(True)
+
+    def back_to_game(self):
+        if self.level.player_component.alive:
+            self.game_sm.set_state("PLAY")
+            self.level.player_component.continue_move()
+            self.grab_mouse_inside_bounded_window = True
+            self.set_mouse_grab(True)
+            self.set_mouse_visible(False)
+        else:
+            self.game_sm.set_state("DIE")
 
     def update(self):
         self.level.apply_components()

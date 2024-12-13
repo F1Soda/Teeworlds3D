@@ -25,8 +25,8 @@ class GameState(state_m.State):
     def render_gui(self):
         ...
 
-    def before_exit(self):
-        ...
+    def before_exit(self, pressed_escape):
+        self.app.exit()
 
     def release(self):
         super().release()

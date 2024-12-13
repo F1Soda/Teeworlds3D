@@ -2,6 +2,7 @@ import Scripts.Source.Abstract.FSM.fsm as fsm_m
 
 import Scripts.Source.GUI.Game.GameSM.States.game_play as game_play_m
 import Scripts.Source.GUI.Game.GameSM.States.game_died as game_died_m
+import Scripts.Source.GUI.Game.GameSM.States.game_exit as game_exit_m
 
 
 class GameSM(fsm_m.FSM):
@@ -11,6 +12,7 @@ class GameSM(fsm_m.FSM):
         self.gui = app.gui
         self.add_state(game_play_m.GamePlay.NAME, game_play_m.GamePlay(self, gsm))
         self.add_state(game_died_m.GameDied.NAME, game_died_m.GameDied(self, gsm))
+        self.add_state(game_exit_m.GameExit.NAME, game_exit_m.GameExit(self, gsm))
         self.set_state(game_play_m.GamePlay.NAME)
 
     def update(self):
