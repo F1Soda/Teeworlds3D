@@ -159,15 +159,24 @@ class Server:
                             "id_action": str(uuid.uuid1()),
                             "reason": action_data.get("reason")
                         }
-                        # self.game_state[source]["kills"] += 1
-                        # self.game_state[action_data["source_to_kill"]]["deaths"] += 1
                         with client_lock:
                             self.notify_clients_with_action(source, key, key_value)
-
                 case "disconnect":
                     with client_lock:
                         self.disconnect_client(source)
                     reply = {"disconnect": True}
+                case "spawn_bullet":
+                    for action_data in data["actions"][action]:
+                        key = "spawn_bullet"
+                        key_value = {
+                            "source": source,
+                            "id_action": str(uuid.uuid1()),
+                            "direction": action_data["direction"],
+                            "pos": action_data["pos"],
+                            "velocity": action_data["velocity"],
+                        }
+                        with client_lock:
+                            self.notify_clients_with_action(source, key, key_value)
 
         return reply
 

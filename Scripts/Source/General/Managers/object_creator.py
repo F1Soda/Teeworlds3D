@@ -67,6 +67,12 @@ class ObjectCreator:
                 client_wrapper.transformation.forward * 0.3
         )
         client_wrapper.tag = object_m.Tags.Enemy
+
+        pool_object = object_m.Object(ObjectCreator.rely_level, f"bullet pool for {client_id}")
+        ObjectCreator.rely_level.add_object(pool_object)
+
+        client_wrapper.add_component(components.ClientWeapon(pool_object))
+
         return client_wrapper
 
     @staticmethod

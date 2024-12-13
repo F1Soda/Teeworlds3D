@@ -37,7 +37,7 @@ class Weapon(component_m.Component):
             bullet = object_creator_m.ObjectCreator.create_bullet(pool_object)
             component = bullet.add_component(bullet_m.Bullet(15, action_after_bullet_lifetime))
             component.player_is_owner_bullet = True
-            self.app.level.add_object(bullet)
+            self.app.physic_world.add_object(bullet)
             return component
 
         def get_func_bullet(b_c):
@@ -62,6 +62,7 @@ class Weapon(component_m.Component):
         b_c.transformation.forward = self.camera_transformation.forward.xyz
         b_c.direction = self.camera_transformation.forward.xyz
         self.ammo -= 1
+        self.app.send_message_spawn_bullet(b_c)
         if self.ammo <= 0:
             self.reload()
         else:

@@ -415,14 +415,10 @@ class Level:
             obj.apply_components()
 
     def fixed_apply_components(self):
-        # if self.app.NAME == "Game":
-        #     pass
-        #     # self.app.game_sm.state.fps_text.text = f"FPS: {self.app.get_fps():.0f}"
         for obj in self.objects.values():
             obj.fixed_apply_components()
 
     def render_opaque_objects(self):
-        # print("render opaque")
         for renderer in self.opaque_renderer:
             if renderer.enable_with_rely_object:
                 renderer.apply()
@@ -455,8 +451,13 @@ class Level:
     def create_and_spawn_client(self, pos, client_id):
         wrapper = object_creator_m.ObjectCreator.create_client_wrapper(client_id)
         wrapper.transformation.pos = pos
+        weapon_component = wrapper.get_component_by_name("Client Weapon")
         self.add_object(wrapper)
-        self.client_wrappers[client_id] = wrapper
+        self.client_wrappers[client_id] = {
+            "wrapper": wrapper,
+            "bp": weapon_component.pool_object,
+            "weapon_component": weapon_component
+        }
 
     def send_kill_client(self, client_id):
         self.app.user_stats["kills"] += 1
@@ -481,10 +482,11 @@ class Level:
         self.kill_player("This idea was not very good =(")
 
     def kill_client(self, client_id):
-        client_wrapper = self.client_wrappers.get(client_id)
+        client_wrapper_data = self.client_wrappers.get(client_id)
         self.app.game_event_log_manager.add_message(
             f"{self.app.user_name} KILL {self.app.client_stats[client_id]["name"]}")
-        if client_wrapper:
+        if client_wrapper_data:
+            client_wrapper = client_wrapper_data["wrapper"]
             client_wrapper.enable = False
         else:
             raise Exception(f"There is no client with id: {client_id}.")

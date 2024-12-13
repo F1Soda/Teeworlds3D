@@ -246,3 +246,4 @@ def reset_mat(mat):
                 mat[i][j] = 1
             else:
                 mat[i][j] = 0
+

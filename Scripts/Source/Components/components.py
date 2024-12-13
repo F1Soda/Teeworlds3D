@@ -23,6 +23,7 @@ import Scripts.Source.Components.Custom.Player.ground_checker as ground_checker_
 import Scripts.Source.Components.Custom.Weapon.weapon as weapon_m
 import Scripts.Source.Components.Custom.Multiplayer.client_wrapper as client_wrapper_m
 import Scripts.Source.Components.Custom.Weapon.bullet as bullet_m
+import Scripts.Source.Components.Custom.Weapon.client_weapon as client_weapon_m
 
 Transformation = transformation_m.Transformation
 Renderer = renderer_m.Renderer
@@ -48,6 +49,7 @@ MeshFilter = mesh_filter_m.MeshFilter
 GroundChecker = ground_checker_m.GroundChecker
 Weapon = weapon_m.Weapon
 Bullet = bullet_m.Bullet
+ClientWeapon = client_weapon_m.ClientWeapon
 
 Debug = debug_m.Debug
 
@@ -75,5 +77,6 @@ components = {
     "Ground Checker": GroundChecker,
     "Weapon": Weapon,
     "Bullet": Bullet,
-    "Client Wrapper": ClientWrapper
+    "Client Wrapper": ClientWrapper,
+    "Client Weapon": ClientWeapon
 }

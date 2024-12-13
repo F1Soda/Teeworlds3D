@@ -22,6 +22,7 @@ class Bullet(component_m.Component):
         self.trigger = None
 
         self.player_is_owner_bullet = False
+        self.id_owner = -1
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
@@ -32,16 +33,24 @@ class Bullet(component_m.Component):
         self.trigger.on_collision_enter += self.on_trigger_enter
 
     def on_trigger_enter(self, collider_obj):
-        if collider_obj.collider.rely_object.name == "Player":
-            return
-        print(
-            f"Bullet_{self.rely_object.id}_{self.rely_object.enable} collided with {collider_obj.collider.rely_object.name}")
-        self.action_after_life_time(self)
-        self.elapsed_time = 0
+        if self.player_is_owner_bullet:
+            if collider_obj.collider.rely_object.name == "Player":
+                return
+            print(
+                f"Bullet_{self.rely_object.id}_{self.rely_object.enable} collided with {collider_obj.collider.rely_object.name}")
+            self.action_after_life_time(self)
+            self.elapsed_time = 0
 
-        if self.player_is_owner_bullet and collider_obj.collider.rely_object.tag == object_m.Tags.Enemy:
-            client_wrapper_component = collider_obj.collider.rely_object.get_component_by_name("Client Wrapper")
-            self.app.level.send_kill_client(client_wrapper_component.id)
+            if self.player_is_owner_bullet and collider_obj.collider.rely_object.tag == object_m.Tags.Enemy:
+                client_wrapper_component = collider_obj.collider.rely_object.get_component_by_name("Client Wrapper")
+                self.app.level.send_kill_client(client_wrapper_component.id)
+        else:
+            if collider_obj.collider.rely_object.id == self.id_owner:
+                return
+            print(
+                f"Bullet_{self.rely_object.id}_{self.rely_object.enable} collided with {collider_obj.collider.rely_object.name}")
+            self.action_after_life_time(self)
+            self.elapsed_time = 0
 
     @property
     def transformation(self):

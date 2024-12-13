@@ -1,3 +1,5 @@
+import glm
+
 import Scripts.Source.General.Managers.object_creator as object_creator_m
 import Scripts.Source.General.Managers.object_picker as object_picker_m
 import Scripts.Source.General.GSM.game_state as state_m
@@ -128,6 +130,16 @@ class Game(state_m.GameState):
     def spawn_player(self, pos):
         self.level.spawn_player(pos)
 
+    def send_message_spawn_bullet(self, bullet_component):
+        if self.actions_to_send_server.get("spawn_bullet") is None:
+            self.actions_to_send_server["spawn_bullet"] = []
+
+        self.actions_to_send_server["spawn_bullet"].append({
+            "direction": bullet_component.direction.to_tuple(),
+            "pos": bullet_component.transformation.pos.to_tuple(),
+            "velocity": bullet_component.velocity,
+        })
+
     def send_request_to_spawn(self):
         if self.network.id == -1:
             spawn_pos = (0, 3, 0)
@@ -170,11 +182,9 @@ class Game(state_m.GameState):
     def get_stat_info(self):
         res = f"{self.user_name}: Kills = {self.user_stats["kills"]}, Deaths = {self.user_stats["deaths"]}\n"
 
-        try:
-            for client_stat in self.client_stats.values():
-                res += f"{client_stat["name"]}: Kills = {client_stat["kills"]}, Deaths = {client_stat["deaths"]}\n"
-        except:
-            pass
+        for client_stat in self.client_stats.values():
+            res += f"{client_stat["name"]}: Kills = {client_stat["kills"]}, Deaths = {client_stat["deaths"]}\n"
+
         return res
 
     def update_game_state(self, state):
@@ -183,8 +193,9 @@ class Game(state_m.GameState):
             match action:
                 case "spawn_client":
                     if state["actions"][action]["source"] != self.app.network.id:
-                        client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
-                        if client_wrapper:
+                        client_wrapper_data = self.level.client_wrappers.get(state["actions"][action]["source"])
+                        if client_wrapper_data:
+                            client_wrapper = client_wrapper_data["wrapper"]
                             client_wrapper.transformation.pos = state["actions"][action]["spawn_pos"]
                             client_wrapper.enable = True
                         else:
@@ -198,13 +209,16 @@ class Game(state_m.GameState):
                                         f"source, that should be spawned: {state["actions"][action]["source"]}")
                 case "disconnect_client":
                     if state["actions"][action]["source"] != self.app.network.id:
-                        client_wrapper = self.level.client_wrappers.get(state["actions"][action]["source"])
-                        if client_wrapper:
+                        client_wrapper_data = self.level.client_wrappers.get(state["actions"][action]["source"])
+                        if client_wrapper_data:
+                            client_wrapper = client_wrapper_data["wrapper"]
+                            bp = client_wrapper_data["bp"]
                             source = state["actions"][action]["source"]
                             self.game_event_log_manager.add_message(
                                 f"{self.client_stats[source]["name"]} leave the game")
                             del self.client_stats[state["actions"][action]["source"]]
                             self.level.delete_object(client_wrapper)
+                            self.level.delete_object(bp)
                             del self.level.client_wrappers[state["actions"][action]["source"]]
                         else:
                             raise Exception(
@@ -242,10 +256,30 @@ class Game(state_m.GameState):
                         self.level.kill_client(source_to_kill)
 
                     self.synced_actions_id.append(state["actions"][action]["id_action"])
+                case "spawn_bullet":
+                    source = state["actions"][action]["source"]
+                    if source == self.app.network.id:
+                        raise Exception("Server not should send spawn bullet to creator of bullets(player)")
+
+                    client_wrapper_data = self.level.client_wrappers.get(state["actions"][action]["source"])
+
+                    if client_wrapper_data:
+                        weapon = client_wrapper_data["weapon_component"]
+                        bullet_data = state["actions"][action]
+                        direction = bullet_data["direction"]
+                        pos = bullet_data["pos"]
+                        velocity = bullet_data["velocity"]
+
+                        weapon.fire(velocity, direction, pos)
+                    else:
+                        raise Exception(
+                            f"Attemp to spawn bullet by non existing client!\nthis client id = {self.app.network.id}\n")
+
+                    self.synced_actions_id.append(state["actions"][action]["id_action"])
 
         for client_guid in state["game_state"].keys():
             if client_guid != self.app.network.id and self.level.client_wrappers.get(client_guid):
-                cw = self.level.client_wrappers[client_guid]
+                cw = self.level.client_wrappers[client_guid]["wrapper"]
                 cw.transformation.pos = state["game_state"][client_guid]["pos"]
                 cw.transformation.rot = state["game_state"][client_guid]["rot"]
 
@@ -331,6 +365,6 @@ class Game(state_m.GameState):
 
     def process_window_resize(self, new_size):
         self.win_size = new_size
-        self.game_gui.process_window_resize(new_size)
+        # self.game_sm.state.process_window_resize(new_size)
         # self.gizmos.process_window_resize(new_size)
         object_picker_m.ObjectPicker.process_window_resize(new_size)

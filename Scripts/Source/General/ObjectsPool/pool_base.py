@@ -1,6 +1,6 @@
 class PoolBase:
     def __init__(self, preload_count: int, preload_func, get_func, before_return_func):
-        self._pool = []
+        self.pool = []
         self._active = []
 
         self._preload_func = preload_func
@@ -15,8 +15,8 @@ class PoolBase:
             self.back_to_pool(preload_func())
 
     def get(self):
-        if len(self._pool) > 0:
-            item = self._pool.pop(0)
+        if len(self.pool) > 0:
+            item = self.pool.pop(0)
         else:
             item = self._preload_func()
         self._get_func(item)
@@ -25,7 +25,7 @@ class PoolBase:
 
     def back_to_pool(self, item):
         self._before_return_func(item)
-        self._pool.append(item)
+        self.pool.append(item)
         try:
             self._active.remove(item)
             # print("removed from active: ", item)

@@ -70,6 +70,8 @@ class Transformation(component_m.Component):
         # Extract Euler angles from the rotation matrix
         self.rot = -glm.degrees(glm.eulerAngles(glm.quat_cast(self.m_r)))
 
+        self._forward = value
+
     @property
     def parent_scale(self):
         if self.parent:
