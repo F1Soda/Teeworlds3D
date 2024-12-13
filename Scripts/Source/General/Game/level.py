@@ -494,7 +494,7 @@ class Level:
         if self.app.game_sm.state.NAME != "EXIT":
             self.app.game_sm.set_state("DIED")
 
-        self.app.game_sm.state.set_die_info(die_info)
+            self.app.game_sm.state.set_die_info(die_info)
         self.player_component.die()
         self.app.grab_mouse_inside_bounded_window = False
         self.app.set_mouse_visible(True)

@@ -37,7 +37,7 @@ class GameExit(game_state_m.GameState):
         menu_label.update_position()
 
         def continue_button_action(button, gui, pos):
-            ...
+            self.gsm.state.back_to_game()
 
         continue_button = elements.Button("Continue Button", background, win_size, self,
                                           "Continue",
@@ -73,7 +73,7 @@ class GameExit(game_state_m.GameState):
         rcp.y -= button_size.y + gaps
 
         def exit_button_action(button, gui, pos):
-            ...
+            self.gsm.state.app.exit()
 
         exit_button = elements.Button("Exit Button", background, win_size, self,
                                       "Exit",

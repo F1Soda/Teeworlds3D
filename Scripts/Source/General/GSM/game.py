@@ -264,6 +264,9 @@ class Game(state_m.GameState):
             self.set_mouse_grab(False)
             self.set_mouse_visible(True)
 
+    def back_to_menu(self):
+        ...
+
     def back_to_game(self):
         if self.level.player_component.alive:
             self.game_sm.set_state("PLAY")
@@ -272,7 +275,7 @@ class Game(state_m.GameState):
             self.set_mouse_grab(True)
             self.set_mouse_visible(False)
         else:
-            self.game_sm.set_state("DIE")
+            self.game_sm.set_state("DIED")
 
     def update(self):
         self.level.apply_components()
