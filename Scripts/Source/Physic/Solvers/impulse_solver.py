@@ -14,26 +14,29 @@ class ImpulseSolver(solver_m.Solver):
 
             a_vel = a_body.velocity if a_body else glm.vec3()
             b_vel = b_body.velocity if b_body else glm.vec3()
-
-            a_inv_mass = a_body.inv_mass if a_body else 0
-            b_inv_mass = b_body.inv_mass if b_body else 0
-
-            r_vel = - a_vel + b_vel
-
+            r_vel = b_vel - a_vel
             n_spd = glm.dot(r_vel, n)
 
+            a_inv_mass = a_body.inv_mass if a_body else 1
+            b_inv_mass = b_body.inv_mass if b_body else 1
+
+            if n_spd >= 0:
+                continue
+
             # calculate impulse scalar
-            e = min((a_body.restitution if a_body else 1), (b_body.restitution if b_body else 1))
+            # e = min((a_body.restitution if a_body else 1), (b_body.restitution if b_body else 1))
+            e = (a_body.restitution if a_body else 1) * (b_body.restitution if b_body else 1)
             j = -(1 + e) * n_spd / (a_inv_mass + b_inv_mass)
 
+            impulse = j * n
+
             if (not a_body.is_kinematic) if a_body else False:
-                a_vel -= j * a_inv_mass * n
+                a_vel -= impulse * a_inv_mass
 
             if (not b_body.is_kinematic) if b_body else False:
-                b_vel += j * a_inv_mass * n
+                b_vel += j * impulse * b_inv_mass
 
             # Friction
-
             r_vel = b_vel - a_vel
             n_spd = glm.dot(r_vel, n)
 
@@ -49,10 +52,11 @@ class ImpulseSolver(solver_m.Solver):
             b_df = b_body.dynamic_friction if b_body else 1
             mu = pow(a_sf * a_sf + b_sf * b_sf, 0.5)
 
-            jt = -f_vel/(a_inv_mass + b_inv_mass)
 
-            if abs(jt) <= j * mu:
-                friction = jt * tangent
+            f = -f_vel / (a_inv_mass + b_inv_mass)
+
+            if abs(f) < j * mu:
+                friction = f * tangent
             else:
                 mu = pow(a_df * a_df + b_df * b_df, 0.5)
                 friction = -j * tangent * mu

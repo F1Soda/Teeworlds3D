@@ -1983,7 +1983,7 @@
         },
         "50": {
             "name": "cube_50",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2029,7 +2029,7 @@
         },
         "51": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2075,7 +2075,7 @@
         },
         "52": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2121,7 +2121,7 @@
         },
         "53": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2167,7 +2167,7 @@
         },
         "54": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2213,7 +2213,7 @@
         },
         "55": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2259,7 +2259,7 @@
         },
         "56": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2305,7 +2305,7 @@
         },
         "57": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2351,7 +2351,7 @@
         },
         "58": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2397,7 +2397,7 @@
         },
         "59": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -2443,7 +2443,7 @@
         },
         "60": {
             "name": "cube_51",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [

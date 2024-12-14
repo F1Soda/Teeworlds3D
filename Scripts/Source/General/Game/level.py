@@ -278,7 +278,7 @@ class Level:
             self.player_rb = self.player.add_component(components.RigidBody(1))
             self.player_rb.restitution = 0
             self.player_rb.static_friction = 0
-            self.player_rb.dynamic_friction = 1
+            self.player_rb.dynamic_friction = 3
             # self.player_rb.enable = False
             player_collider = self.player.add_component(components.BoxCollider())
             player_collider.draw_collider = False
