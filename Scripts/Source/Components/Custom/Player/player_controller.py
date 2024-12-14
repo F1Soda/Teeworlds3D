@@ -43,6 +43,7 @@ class PlayerController(component_m.Component):
         self.hookshot_transformation = None
         self.hookshot_model_transformation = None
         self.weapon_component = None
+        self.in_jump = False
 
     def init(self, app, rely_object):
         super().init(app, rely_object)
@@ -80,8 +81,11 @@ class PlayerController(component_m.Component):
         if keys[pg.K_SPACE]:
             self._jump()
 
-    def _jump(self, height_coefficient=80):
+    def _jump(self, height_coefficient=160):
+        # if self.in_jump:
+        #     return
         self.rigidbody.add_force(self.transformation.up * height_coefficient)
+        self.in_jump = True
 
     def apply(self):
         # print("PLAYER_CONTROLLER")

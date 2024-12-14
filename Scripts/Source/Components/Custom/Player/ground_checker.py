@@ -37,15 +37,16 @@ class GroundChecker(component_m.Component):
         self._transformation = value
 
     def on_trigger_enter(self, collider_obj):
-        print(f"ENTER: {collider_obj.collider.rely_object.name}")
+        # print(f"ENTER: {collider_obj.collider.rely_object.name}")
 
         if collider_obj.collider.rely_object.tag != object_m.Tags.Ground:
             return
         self.player_controller.can_move = True
+        self.player_controller.in_jump = False
         print(f"CAN MOVE = TRUE, {collider_obj.collider.rely_object.name}")
 
     def on_trigger_exit(self, collider_obj):
-        print(f"EXIT: {collider_obj.collider.rely_object.name}")
+        #print(f"EXIT: {collider_obj.collider.rely_object.name}")
         if collider_obj.collider.rely_object.tag != object_m.Tags.Ground:
             return
         self.player_controller.can_move = False

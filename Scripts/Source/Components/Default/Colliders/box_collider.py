@@ -14,6 +14,7 @@ class BoxCollider(collider_m.Collider):
         self.offset = glm.vec3(0)
         super().__init__(NAME, DESCRIPTION, enable)
         self.use_transform_model_matrix = True
+        self.use_transform_rotation_matrix = True
         self.base_name = "Collider"
 
     @property
@@ -37,6 +38,7 @@ class BoxCollider(collider_m.Collider):
             return self.transformation.m_model
 
         self._m_model = glm.translate(self.transformation.m_t, self.offset)
+        self._m_model = glm.mul(self._m_model, self.transformation.m_r)
         self._m_model = glm.scale(self._m_model, self._size)
         return self._m_model
 

@@ -278,7 +278,7 @@ class Level:
             self.player_rb = self.player.add_component(components.RigidBody(1))
             self.player_rb.restitution = 0
             self.player_rb.static_friction = 0
-            self.player_rb.dynamic_friction = 1
+            self.player_rb.dynamic_friction = 3
             # self.player_rb.enable = False
             player_collider = self.player.add_component(components.BoxCollider())
             player_collider.draw_collider = False
@@ -291,9 +291,9 @@ class Level:
             # self.ground_checker.transformation.scale = glm.vec3(0.6, 0.2, 0.6)
             gc_collider = self.player.add_component(components.BoxCollider())
             gc_collider.is_trigger = True
-            gc_collider.draw_collider = True
-            gc_collider.size = glm.vec3(0.2, 0.2, 0.2)
-            gc_collider.offset = glm.vec3(0, -1, 0)
+            gc_collider.draw_collider = False
+            gc_collider.size = glm.vec3(0.5, 0.05, 0.5)
+            gc_collider.offset = glm.vec3(0, -0.5, 0)
             gc_collider.use_transform_model_matrix = False
 
             self.app.physic_world.add_collider(gc_collider)
