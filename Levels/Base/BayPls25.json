@@ -1,12 +1,12 @@
 {
     "index_manager_data": {
-        "global_index": 44,
+        "global_index": 50,
         "unused_indices": []
     },
     "objects": {
         "5": {
             "name": "cube_5",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -52,7 +52,7 @@
         },
         "6": {
             "name": "Light",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -97,7 +97,7 @@
         },
         "7": {
             "name": "cube_7",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -143,7 +143,7 @@
         },
         "8": {
             "name": "cube_8",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -189,7 +189,7 @@
         },
         "9": {
             "name": "cube_9",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -235,7 +235,7 @@
         },
         "10": {
             "name": "cube_10",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -281,7 +281,7 @@
         },
         "11": {
             "name": "cube_11",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -327,7 +327,7 @@
         },
         "13": {
             "name": "cube_13",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -373,7 +373,7 @@
         },
         "14": {
             "name": "cube_14",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -419,7 +419,7 @@
         },
         "15": {
             "name": "cube_15",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -465,7 +465,7 @@
         },
         "17": {
             "name": "cube_17",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -511,7 +511,7 @@
         },
         "18": {
             "name": "cube_18",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -557,7 +557,7 @@
         },
         "19": {
             "name": "cube_19",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -603,7 +603,7 @@
         },
         "20": {
             "name": "cube_20",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -649,7 +649,7 @@
         },
         "21": {
             "name": "cube_21",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -695,7 +695,7 @@
         },
         "22": {
             "name": "cube_22",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -741,7 +741,7 @@
         },
         "23": {
             "name": "cube_23",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -787,7 +787,7 @@
         },
         "24": {
             "name": "cube_24",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -833,7 +833,7 @@
         },
         "25": {
             "name": "cube_25",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -879,7 +879,7 @@
         },
         "26": {
             "name": "cube_26",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -925,7 +925,7 @@
         },
         "27": {
             "name": "cube_27",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -971,7 +971,7 @@
         },
         "28": {
             "name": "cube_28",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1017,7 +1017,7 @@
         },
         "29": {
             "name": "cube_29",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1063,7 +1063,7 @@
         },
         "30": {
             "name": "cube_30",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1109,7 +1109,7 @@
         },
         "31": {
             "name": "cube_31",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1155,7 +1155,7 @@
         },
         "32": {
             "name": "cube_32",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1201,7 +1201,7 @@
         },
         "33": {
             "name": "cube_33",
-            "tag": "G",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1247,7 +1247,7 @@
         },
         "34": {
             "name": "cube_34",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1293,7 +1293,7 @@
         },
         "35": {
             "name": "cube_35",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1339,7 +1339,7 @@
         },
         "36": {
             "name": "cube_36",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1385,7 +1385,7 @@
         },
         "37": {
             "name": "cube_37",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1431,7 +1431,7 @@
         },
         "38": {
             "name": "cube_38",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1477,7 +1477,7 @@
         },
         "39": {
             "name": "cube_39",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1523,7 +1523,7 @@
         },
         "40": {
             "name": "cube_39",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1569,7 +1569,7 @@
         },
         "41": {
             "name": "cube_41",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1615,7 +1615,7 @@
         },
         "42": {
             "name": "cube_42",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1661,14 +1661,14 @@
         },
         "43": {
             "name": "cube_43",
-            "tag": "Default",
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
                         "vec",
                         [
                             52.24522399902344,
-                            0.0,
+                            10.203099250793457,
                             0.0
                         ]
                     ],
@@ -1683,9 +1683,9 @@
                     "scale": [
                         "vec",
                         [
-                            1.0,
-                            6.695718288421631,
-                            1.0
+                            15.845209121704102,
+                            73.27101135253906,
+                            30.58562660217285
                         ]
                     ],
                     "moveable": true,
@@ -1706,16 +1706,18 @@
             }
         },
         "44": {
-            "name": "cube_39",
-            "tag": "Default",
+            "name": "cube_44",
+            "tag": [
+                "Default"
+            ],
             "components": {
                 "Transformation": {
                     "pos": [
                         "vec",
                         [
-                            11.61286449432373,
-                            1.3221256732940674,
-                            -3.684922933578491
+                            -39.78257751464844,
+                            0.0,
+                            -18.92955780029297
                         ]
                     ],
                     "rot": [
@@ -1729,9 +1731,9 @@
                     "scale": [
                         "vec",
                         [
-                            0.2554156482219696,
-                            6.03469705581665,
-                            0.259583443403244
+                            10.03033447265625,
+                            75.8165512084961,
+                            27.985454559326172
                         ]
                     ],
                     "moveable": true,
@@ -1752,16 +1754,18 @@
             }
         },
         "45": {
-            "name": "cube_39",
-            "tag": "Default",
+            "name": "cube_45",
+            "tag": [
+                "Default"
+            ],
             "components": {
                 "Transformation": {
                     "pos": [
                         "vec",
                         [
-                            11.61286449432373,
-                            1.3221256732940674,
-                            -2.6242475509643555
+                            -59.38517761230469,
+                            0.0,
+                            16.550373077392578
                         ]
                     ],
                     "rot": [
@@ -1775,9 +1779,9 @@
                     "scale": [
                         "vec",
                         [
-                            0.2554156482219696,
-                            6.03469705581665,
-                            0.259583443403244
+                            16.116004943847656,
+                            98.79476928710938,
+                            24.79990005493164
                         ]
                     ],
                     "moveable": true,
@@ -1798,16 +1802,18 @@
             }
         },
         "46": {
-            "name": "cube_39",
-            "tag": "Default",
+            "name": "cube_46",
+            "tag": [
+                "Default"
+            ],
             "components": {
                 "Transformation": {
                     "pos": [
                         "vec",
                         [
-                            11.61286449432373,
-                            1.3221256732940674,
-                            -9.266568183898926
+                            -22.446998596191406,
+                            0.0,
+                            48.617713928222656
                         ]
                     ],
                     "rot": [
@@ -1821,9 +1827,9 @@
                     "scale": [
                         "vec",
                         [
-                            0.2554156482219696,
-                            6.03469705581665,
-                            0.259583443403244
+                            33.07239532470703,
+                            86.567626953125,
+                            15.022210121154785
                         ]
                     ],
                     "moveable": true,
@@ -1844,32 +1850,130 @@
             }
         },
         "47": {
-            "name": "cube_40",
-            "tag": "Default",
+            "name": "cube_47",
+            "tag": [
+                "Default"
+            ],
             "components": {
                 "Transformation": {
                     "pos": [
                         "vec",
                         [
-                            14.39033317565918,
-                            4.476556301116943,
-                            -0.8290485739707947
+                            28.858572006225586,
+                            0.0,
+                            35.388397216796875
                         ]
                     ],
                     "rot": [
                         "vec",
                         [
                             0.0,
-                            0.0,
+                            44.898468017578125,
                             0.0
                         ]
                     ],
                     "scale": [
                         "vec",
                         [
-                            6.776045799255371,
-                            1.0,
-                            17.366193771362305
+                            23.7531681060791,
+                            114.19029235839844,
+                            10.714706420898438
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "48": {
+            "name": "cube_48",
+            "tag": [
+                "Default"
+            ],
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -8.06550407409668,
+                            0.0,
+                            -49.551048278808594
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            19.63531494140625,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            48.08168029785156,
+                            108.08749389648438,
+                            12.832320213317871
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "49": {
+            "name": "cube_49",
+            "tag": [
+                "Default"
+            ],
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            36.28588104248047,
+                            0.0,
+                            -45.656925201416016
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            -49.635162353515625,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            25.395187377929688,
+                            84.98442077636719,
+                            13.884903907775879
                         ]
                     ],
                     "moveable": true,

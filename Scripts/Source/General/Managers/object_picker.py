@@ -189,7 +189,7 @@ class ObjectPicker:
 
         if input_manager_m.InputManager.keys[pg.K_1]:
             ObjectPicker.last_picked_obj_transformation.scale = ObjectPicker.last_picked_obj_transformation.scale + (
-                    axis.end - axis.start) * difference / 100 * distance
+                    axis.end - axis.start) * difference / 20 * distance
         elif input_manager_m.InputManager.keys[pg.K_2]:
             ObjectPicker.last_picked_obj_transformation.rot = ObjectPicker.last_picked_obj_transformation.rot + (
                     axis.end - axis.start) * difference
