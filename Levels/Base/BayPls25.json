@@ -1,6 +1,6 @@
 {
     "index_manager_data": {
-        "global_index": 50,
+        "global_index": 52,
         "unused_indices": []
     },
     "objects": {
@@ -1707,9 +1707,7 @@
         },
         "44": {
             "name": "cube_44",
-            "tag": [
-                "Default"
-            ],
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1755,9 +1753,7 @@
         },
         "45": {
             "name": "cube_45",
-            "tag": [
-                "Default"
-            ],
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1803,9 +1799,7 @@
         },
         "46": {
             "name": "cube_46",
-            "tag": [
-                "Default"
-            ],
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1851,9 +1845,7 @@
         },
         "47": {
             "name": "cube_47",
-            "tag": [
-                "Default"
-            ],
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1899,9 +1891,7 @@
         },
         "48": {
             "name": "cube_48",
-            "tag": [
-                "Default"
-            ],
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1947,9 +1937,7 @@
         },
         "49": {
             "name": "cube_49",
-            "tag": [
-                "Default"
-            ],
+            "tag": "Ground",
             "components": {
                 "Transformation": {
                     "pos": [
@@ -1974,6 +1962,98 @@
                             25.395187377929688,
                             84.98442077636719,
                             13.884903907775879
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "50": {
+            "name": "cube_50",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            14.119902610778809,
+                            4.751672267913818,
+                            -1.3334885835647583
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            6.792906761169434,
+                            1.0,
+                            16.809389114379883
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "51": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -6.69418478012085
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
                         ]
                     ],
                     "moveable": true,

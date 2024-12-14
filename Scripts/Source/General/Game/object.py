@@ -156,12 +156,24 @@ class Object:
     def serialize(self):
         return {
             'name': self.name,
-            'tag': self.tag.value,
+            'tag': self.dumpy_enum_tag_to_string(self.tag),
             'components': {
                 component.name: component.serialize() for component in self.components
             }
         }
 
+    def dumpy_enum_tag_to_string(self, tag):
+        match tag:
+            case Tags.Default:
+                return "Default"
+            case Tags.Enemy:
+                return "Enemy"
+            case Tags.Ally:
+                return "Ally"
+            case Tags.Ground:
+                return "Ground"
+            case _:
+                raise Exception("WTF?!")
 
     def __str__(self):
         return f"Object '{self.name}', id: {self.id}, global_pos: {self.transformation.global_pos.to_tuple()}"
