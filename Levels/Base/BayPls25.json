@@ -1,6 +1,6 @@
 {
     "index_manager_data": {
-        "global_index": 52,
+        "global_index": 61,
         "unused_indices": []
     },
     "objects": {
@@ -655,16 +655,16 @@
                     "pos": [
                         "vec",
                         [
-                            8.423946380615234,
+                            9.992566108703613,
                             0.512819766998291,
-                            0.0
+                            2.432119131088257
                         ]
                     ],
                     "rot": [
                         "vec",
                         [
                             0.0,
-                            22.17950439453125,
+                            41.0694580078125,
                             0.0
                         ]
                     ],
@@ -1696,7 +1696,7 @@
                     "enable": true
                 },
                 "Renderer": {
-                    "material": "gray_lit",
+                    "material": "green_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 },
@@ -1788,7 +1788,7 @@
                     "enable": true
                 },
                 "Renderer": {
-                    "material": "gray_lit",
+                    "material": "orange_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 },
@@ -1834,7 +1834,7 @@
                     "enable": true
                 },
                 "Renderer": {
-                    "material": "gray_lit",
+                    "material": "green_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 },
@@ -1880,7 +1880,7 @@
                     "enable": true
                 },
                 "Renderer": {
-                    "material": "gray_lit",
+                    "material": "blue_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 },
@@ -1926,7 +1926,7 @@
                     "enable": true
                 },
                 "Renderer": {
-                    "material": "gray_lit",
+                    "material": "red_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 },
@@ -1972,7 +1972,7 @@
                     "enable": true
                 },
                 "Renderer": {
-                    "material": "gray_lit",
+                    "material": "blue_lit",
                     "enable": true,
                     "enable_hidden_line": true
                 },
@@ -2037,7 +2037,421 @@
                         [
                             11.61058521270752,
                             0.7683840394020081,
-                            -6.69418478012085
+                            -5.795046806335449
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "52": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -4.744764804840088
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "53": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -3.5957717895507812
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "54": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -2.3454902172088623
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "55": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -1.1457806825637817
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "56": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -0.01205405592918396
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "57": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            1.3313201665878296
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "58": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.56063175201416,
+                            0.7683840394020081,
+                            5.867926120758057
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "59": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            2.735457420349121
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            0.18953025341033936,
+                            7.677028656005859,
+                            0.2757583558559418
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "60": {
+            "name": "cube_51",
+            "tag": "Default",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.61058521270752,
+                            0.7683840394020081,
+                            -6.652653694152832
                         ]
                     ],
                     "rot": [
