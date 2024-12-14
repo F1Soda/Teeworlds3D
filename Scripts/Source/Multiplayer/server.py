@@ -4,7 +4,7 @@ import threading
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
 
 import Scripts.Source.Multiplayer.network as network_m
-import uuid, ast
+import uuid
 import datetime
 import socket
 from _thread import *
