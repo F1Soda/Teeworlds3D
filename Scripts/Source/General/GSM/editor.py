@@ -24,6 +24,8 @@ class Editor(state_m.GameState):
 
         self.draw_gui = True
 
+        self.file_path_level = None
+
     @property
     def time(self):
         return self.app.time
@@ -40,10 +42,12 @@ class Editor(state_m.GameState):
         if self.gizmos:
             self.gizmos.delete()
         self.level = level_m.Level(self, self.gui)
-
+        self.file_path_level = file_path
         object_creator_m.ObjectCreator.rely_level = self.level
-        object_picker_m.ObjectPicker.init(self)
         self.level.load(file_path)
+
+        object_picker_m.ObjectPicker.init(self, camera_component=self.level.camera_component.transformation)
+
         self.gizmos = gizmos_m.Gizmos(self.ctx, self.level)
 
         self.editor_gui.update_data_in_hierarchy()

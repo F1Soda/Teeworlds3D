@@ -61,7 +61,8 @@ class MenuEditor(menu_state_m.MenuState):
         rcp.y -= 0.07
 
         def create_button_action(button, gui, pos):
-            pass
+            self.exit()
+            self.gsm.set_state("Editor", None)
 
         create_button = elements.Button("Create Button", canvas, win_size, self,
                                         "Create",

@@ -1,0 +1,1295 @@
+{
+    "index_manager_data": {
+        "global_index": 34,
+        "unused_indices": []
+    },
+    "objects": {
+        "5": {
+            "name": "cube_5",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.4180383086204529,
+                            -0.9001252055168152,
+                            -0.003708705073222518
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            35.530494689941406,
+                            1.975982904434204,
+                            42.89426040649414
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "6": {
+            "name": "Light",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            3.0,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Light": {
+                    "color": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "enable": true
+                }
+            }
+        },
+        "7": {
+            "name": "cube_7",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -16.73006820678711,
+                            2.9802775382995605,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            5.793889045715332,
+                            42.566986083984375
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "8": {
+            "name": "cube_8",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            17.726089477539062,
+                            2.93023943901062,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            5.962052345275879,
+                            42.65199279785156
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "9": {
+            "name": "cube_9",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.5119937658309937,
+                            2.933316946029663,
+                            -21.032867431640625
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            35.29673767089844,
+                            5.82774543762207,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "10": {
+            "name": "cube_10",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            2.3435535430908203,
+                            21.066917419433594
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            36.4255485534668,
+                            7.284029960632324,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "11": {
+            "name": "cube_11",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.973911285400391,
+                            2.8074982166290283,
+                            -7.800580978393555
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            9.707521438598633,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "13": {
+            "name": "cube_13",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.893387794494629,
+                            8.058869361877441,
+                            -7.864169120788574
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            4.739046573638916,
+                            1.0,
+                            4.4965596199035645
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "14": {
+            "name": "cube_14",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            5.996215343475342,
+                            0.535335898399353,
+                            13.903578758239746
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            6.190578460693359,
+                            4.233034610748291,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "15": {
+            "name": "cube_15",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -7.607047080993652,
+                            0.34485679864883423,
+                            -5.087724208831787
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            -45.895538330078125,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            9.605688095092773
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "16": {
+            "name": "cube_16",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -12.810245513916016,
+                            2.394449234008789,
+                            10.347771644592285
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            44.969757080078125
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            9.425127983093262,
+                            5.076450824737549
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "17": {
+            "name": "cube_17",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -1.6895946264266968,
+                            3.124061346054077,
+                            7.324005126953125
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            7.0003156661987305,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "18": {
+            "name": "cube_18",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            11.146743774414062,
+                            1.3368407487869263,
+                            7.407858371734619
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            10.547683715820312,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "19": {
+            "name": "cube_19",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            4.812686443328857,
+                            6.872615337371826,
+                            7.464021682739258
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            15.541594505310059,
+                            1.0,
+                            4.213577747344971
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "20": {
+            "name": "cube_20",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -0.6838624477386475,
+                            1.0595554113388062,
+                            -13.120218276977539
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            7.329641342163086,
+                            3.705819845199585,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "21": {
+            "name": "cube_21",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            8.423946380615234,
+                            0.512819766998291,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            22.17950439453125,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            9.80533504486084
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "22": {
+            "name": "cube_22",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -5.807041645050049,
+                            13.724993705749512,
+                            2.996098756790161
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "23": {
+            "name": "cube_23",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            9.529067993164062,
+                            12.517340660095215,
+                            -0.6437848210334778
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "24": {
+            "name": "cube_24",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -0.645426332950592,
+                            11.956573486328125,
+                            -12.832154273986816
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "25": {
+            "name": "cube_25",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            26.209144592285156,
+                            0.0
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            5.275970458984375,
+                            5.630761623382568,
+                            6.836928844451904
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "26": {
+            "name": "cube_26",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            16.26412010192871,
+                            10.000212669372559
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "27": {
+            "name": "cube_27",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            16.82879638671875,
+                            -31.18056869506836
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            6.654219627380371,
+                            6.699451923370361,
+                            7.4872236251831055
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "28": {
+            "name": "cube_28",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -0.031228631734848022,
+                            0.344216912984848,
+                            6.007571697235107
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            37.25164794921875,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            3.836155652999878,
+                            1.9669132232666016,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "29": {
+            "name": "cube_29",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            2.5572004318237305,
+                            2.162414312362671,
+                            -7.876867771148682
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            4.1546783447265625,
+                            0.347808837890625,
+                            22.418121337890625
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            6.176899433135986,
+                            0.8799493312835693,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "30": {
+            "name": "cube_30",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            0.0,
+                            16.841327667236328,
+                            30.327301025390625
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            5.9842095375061035,
+                            5.2519001960754395,
+                            5.360533714294434
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "31": {
+            "name": "cube_31",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -13.284344673156738,
+                            13.795269966125488,
+                            -11.378691673278809
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "32": {
+            "name": "cube_32",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -13.537224769592285,
+                            5.295750141143799,
+                            -13.873771667480469
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            5.67765474319458,
+                            1.0,
+                            4.911759376525879
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        },
+        "33": {
+            "name": "cube_33",
+            "tag": "Ground",
+            "components": {
+                "Transformation": {
+                    "pos": [
+                        "vec",
+                        [
+                            -14.617234230041504,
+                            3.3240480422973633,
+                            -13.852398872375488
+                        ]
+                    ],
+                    "rot": [
+                        "vec",
+                        [
+                            0.0,
+                            0.0,
+                            -45.205535888671875
+                        ]
+                    ],
+                    "scale": [
+                        "vec",
+                        [
+                            1.0,
+                            5.374878883361816,
+                            1.0
+                        ]
+                    ],
+                    "moveable": true,
+                    "enable": true
+                },
+                "Mesh Filter": {
+                    "mesh": "cube",
+                    "enable": true
+                },
+                "Renderer": {
+                    "material": "gray_lit",
+                    "enable": true,
+                    "enable_hidden_line": true
+                },
+                "Box Collider": {
+                    "enable": true
+                }
+            }
+        }
+    }
+}

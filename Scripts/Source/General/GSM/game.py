@@ -89,7 +89,7 @@ class Game(state_m.GameState):
     def enter(self, params=None):
         self.game_sm = game_sm_m.GameSM(self.app, self.fsm)
         if params is None:
-            level_path = "Levels/Base/Test.json"
+            level_path = "Levels/Base/TestCollision.json"
             spawn_pos = (0, 1, 0)
             existing_clients = {}
             user_name = "Default"

@@ -5,6 +5,7 @@ import Scripts.Source.General.Managers.input_manager as input_manager_m
 import Scripts.Source.General.utils as utils_m
 import pygame as pg
 
+
 class ObjectPicker:
     _pick_fbo = None  # type: mgl.Framebuffer
     _editor = None
@@ -15,16 +16,17 @@ class ObjectPicker:
     _last_picked_obj_m_model = None
     _last_picked_obj_material = None
     _last_mouse_dot = 0
-
-
+    camera_transformation = None
 
     @staticmethod
-    def init(editor, subscribe_to_events=True):
+    def init(editor, subscribe_to_events=True, camera_component=None):
         ObjectPicker._editor = editor
         ObjectPicker._pick_fbo = editor.ctx.framebuffer(
             color_attachments=[editor.ctx.texture((int(editor.win_size.x), int(editor.win_size.y)), 4, dtype='f4')],
             depth_attachment=editor.ctx.depth_renderbuffer((int(editor.win_size.x), int(editor.win_size.y)))
         )
+
+        ObjectPicker.camera_component = camera_component
 
         if subscribe_to_events:
             input_manager_m.InputManager.handle_left_click_event += ObjectPicker.process_left_click
@@ -180,14 +182,20 @@ class ObjectPicker:
         difference = dot - ObjectPicker._last_mouse_dot
         ObjectPicker._last_mouse_dot = dot
 
+        distance = 1
+        if ObjectPicker.camera_transformation:
+            distance = glm.length(
+                ObjectPicker.camera_transformation.pos - ObjectPicker.last_picked_obj_transformation.pos)
+
         if input_manager_m.InputManager.keys[pg.K_1]:
             ObjectPicker.last_picked_obj_transformation.scale = ObjectPicker.last_picked_obj_transformation.scale + (
-                        axis.end - axis.start) * difference / 100
-        if input_manager_m.InputManager.keys[pg.K_2]:
+                    axis.end - axis.start) * difference / 100 * distance
+        elif input_manager_m.InputManager.keys[pg.K_2]:
             ObjectPicker.last_picked_obj_transformation.rot = ObjectPicker.last_picked_obj_transformation.rot + (
                     axis.end - axis.start) * difference
         else:
-            ObjectPicker.last_picked_obj_transformation.pos = ObjectPicker.last_picked_obj_transformation.pos + (axis.end - axis.start) * difference / 100
+            ObjectPicker.last_picked_obj_transformation.pos = ObjectPicker.last_picked_obj_transformation.pos + (
+                    axis.end - axis.start) * distance * difference / 20
         return True
 
     @staticmethod

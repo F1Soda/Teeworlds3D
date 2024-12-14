@@ -13,7 +13,8 @@ class Debug(state_m.GameState):
 
     def enter(self, params=None):
         if params is None:
-            level = "Levels/Player/TestCollision.json"
+            level = "Levels/Base/BayPls25.json"
+            # level = "Levels/Player/Test.json"
         else:
             level = params
 

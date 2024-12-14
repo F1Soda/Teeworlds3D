@@ -9,8 +9,8 @@ import pygame as pg
 NAME = "Free Fly Move"
 DESCRIPTION = "Компонент для свободного передвижения камеры"
 
-SPEED = 5
-SHIFT_SPEED = 10
+SPEED = 15
+SHIFT_SPEED = 20
 SENSITIVITY = 0.2
 
 VEC_UP = glm.vec3(0, 1, 0)

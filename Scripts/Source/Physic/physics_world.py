@@ -45,8 +45,8 @@ class PhysicWorld:
             raise Exception("Physic object should contain collider component!")
 
         physic_object = PhysicObject(rigidbody_component, collider_component)
-        if physic_object.id in self.collide_objects.keys():
-            return
+        # if physic_object.id in self.collide_objects.keys():
+        #     return
         self.collide_objects[physic_object.id] = physic_object
 
         if collider_component.is_trigger:
@@ -62,6 +62,22 @@ class PhysicWorld:
         elif rigidbody_component and not collider_component:
             raise Exception("If physic object contain Rigidbody, then it also should contain Collider!")
 
+    def add_collider(self, collider_component):
+        if collider_component is None:
+            raise Exception("Physic object should contain collider component!")
+
+        physic_object = PhysicObject(None, collider_component)
+        if physic_object.id in self.collide_objects.keys():
+            return
+        self.collide_objects[physic_object.id] = physic_object
+
+        if collider_component.is_trigger:
+            self.triggers.add(collider_component)
+            self.triggered_colliders_enter[collider_component] = set()
+            self.triggered_colliders_current_triggering[collider_component] = set()
+            self.triggered_colliders_exit[collider_component] = set()
+
+
     def remove_object(self, game_object):
         collider_component = game_object.get_component_by_name("Collider")
         if self.collide_objects.get(game_object.id):
@@ -70,6 +86,9 @@ class PhysicWorld:
             del self.physic_objects[game_object.id]
         if collider_component in self.triggers:
             self.triggers.remove(collider_component)
+            del self.triggered_colliders_enter[collider_component]
+            del self.triggered_colliders_current_triggering[collider_component]
+            del self.triggered_colliders_exit[collider_component]
 
     def _resolve_constrains(self, dt):
         collisions = []
@@ -82,7 +101,8 @@ class PhysicWorld:
                         collide_object.collider.is_trigger or not collide_object.collider.enable_with_rely_object):
                     continue
 
-                d = glm.length(physic_object.collider.transformation.pos - collide_object.collider.transformation.pos)
+                d = glm.length(
+                    physic_object.collider.transformation.global_pos - collide_object.collider.transformation.global_pos)
                 if d - physic_object.collider.max_radius_of_collisions - collide_object.collider.max_radius_of_collisions > 0:
                     continue
 
@@ -99,17 +119,19 @@ class PhysicWorld:
                         not collide_object.collider.enable_with_rely_object):
                     continue
 
-                d = glm.length(trigger.transformation.pos - collide_object.collider.transformation.pos)
+                d = glm.length(trigger.transformation.global_pos - collide_object.collider.transformation.global_pos)
                 if d - trigger.max_radius_of_collisions - collide_object.collider.max_radius_of_collisions > 0:
                     continue
 
                 collide_with = trigger.collide_with(collide_object.collider)
 
                 if collide_with:
+                    # print(f"Collide {trigger.rely_object.name} with {collide_object.collider.rely_object.name}")
                     if collide_object not in self.triggered_colliders_enter[trigger] and collide_object not in \
                             self.triggered_colliders_current_triggering[trigger]:
                         self.triggered_colliders_enter[trigger].add(collide_object)
                         self.triggered_colliders_current_triggering[trigger].add(collide_object)
+
                 else:
                     if collide_object in self.triggered_colliders_current_triggering[trigger]:
                         self.triggered_colliders_exit[trigger].add(collide_object)

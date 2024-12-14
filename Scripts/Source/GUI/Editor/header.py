@@ -33,7 +33,9 @@ class Header(element_m.Element):
         rrt = glm.vec2(0.05, 1 - 0.1)
 
         def save_action(button, gui, pos):
-            file_path = easygui.fileopenbox(title='Save', filetypes='\\*.json')
+            file_path = self.gui.app.gsm.state.file_path_level
+            if file_path is None:
+                file_path = easygui.fileopenbox(title='Save', filetypes='\\*.json')
             if file_path:
                 if file_path.endswith(".json"):
                     data_manager_m.DataManager.save_scene(editor_gui.app.level, file_path)

@@ -87,6 +87,11 @@ class Hierarchy(element_m.Element):
             for button, obj_id in self.selected_elements:
                 self.gui.app.gsm.state.level.delete_object_by_id(obj_id)
 
+    # def _handle_copy_obj(self, keys, char):
+    #     if keys[pg.K_LCTRL] and keys[pg.K_c]:
+    #         for button, obj_id in self.selected_elements:
+    #             self.gui.app.gsm.state.level.delete_object_by_id(obj_id)
+
     def _create_element_in_content(self, content, action, text, number):
         content_element = elements.Block(f"Element_{number}_in_content_{content.name}", None, self.win_size,
                                          (1, 1, 1, 0.5))
@@ -111,6 +116,7 @@ class Hierarchy(element_m.Element):
     def process_window_resize(self, new_size: glm.vec2):
         super().process_window_resize(new_size)
         self.update_content()
+
 
     def _init_sub_menu(self):
         self._init_sub_menu_plane()
@@ -865,6 +871,8 @@ class Hierarchy(element_m.Element):
         self.selected_elements.clear()
 
     def delete(self):
+        input_manager_m.InputManager.handle_keyboard_press -= self._handle_delete_objs
+
         self.gui = None
         self.main_block = None
         self.selected_elements.clear()

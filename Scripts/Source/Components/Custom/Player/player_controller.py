@@ -80,7 +80,7 @@ class PlayerController(component_m.Component):
         if keys[pg.K_SPACE]:
             self._jump()
 
-    def _jump(self, height_coefficient=40):
+    def _jump(self, height_coefficient=80):
         self.rigidbody.add_force(self.transformation.up * height_coefficient)
 
     def apply(self):

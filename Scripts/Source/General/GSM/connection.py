@@ -24,7 +24,7 @@ class Connection(state_m.GameState):
             spawn_pos = response["actions"]["spawn"]["spawn_pos"]
 
             self.fsm.set_state("Game", (
-                "Levels/Player/TestCollision.json", spawn_pos, response["game_state"], self.app.user_data["user_name"]))
+                response["actions"]["spawn"]["level"], spawn_pos, response["game_state"], self.app.user_data["user_name"]))
 
     def render_level(self):
         self.app.ctx.screen.use()

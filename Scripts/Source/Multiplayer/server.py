@@ -220,7 +220,8 @@ class Server:
     def get_spawn_pos_response(self, reply):
         reply["actions"]["spawn"] = {
             "spawn_pos": (5, 10, 0),
-            "rot": (0, 0, 0)
+            "rot": (0, 0, 0),
+            "level": self.config["level"]
         }
         return reply
 
@@ -240,4 +241,4 @@ class Server:
 
 
 if __name__ == '__main__':
-    server = Server("Levels/Player/TestCollision.json")
+    server = Server("Levels/Base/BayPls25.json")

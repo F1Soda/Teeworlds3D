@@ -73,11 +73,11 @@ class Collider(component_m.Component):
 
         max_dot = -10e9
         for vertex in self.vertices:
-            vertex = glm.mul(self.m_model, vertex)
-            dot = glm.dot(vertex, direction)
+            vertex_global = glm.mul(self.m_model, vertex)
+            dot = glm.dot(vertex_global, direction)
             if dot > max_dot:
                 max_dot = dot
-                max_point = vertex
+                max_point = vertex_global
 
         return max_point
 

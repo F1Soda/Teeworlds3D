@@ -162,8 +162,9 @@ class Object:
             }
         }
 
+
     def __str__(self):
-        return f"Object '{self.name}', id: {self.id}, pos: {self.transformation.pos.to_tuple()}"
+        return f"Object '{self.name}', id: {self.id}, global_pos: {self.transformation.global_pos.to_tuple()}"
 
     def __repr__(self):
         return str(self)

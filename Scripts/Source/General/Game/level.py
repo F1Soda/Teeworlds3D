@@ -7,8 +7,6 @@ import Scripts.Source.General.Managers.index_manager as index_manager_m
 import Scripts.Source.Components.components as components
 import Scripts.Source.General.Game.object as object_m
 
-DEBUG = False
-
 
 class Level:
     def __init__(self, app, gui):
@@ -274,27 +272,36 @@ class Level:
 
     def load(self, file_path=None, is_game=False):
         self.is_game = is_game
-        if is_game and not DEBUG:
+        if is_game:
             self.player = object_creator_m.ObjectCreator.create_player()
 
             self.player_rb = self.player.add_component(components.RigidBody(1))
             self.player_rb.restitution = 0
             self.player_rb.static_friction = 0
             self.player_rb.dynamic_friction = 1
+            # self.player_rb.enable = False
             player_collider = self.player.add_component(components.BoxCollider())
+            player_collider.draw_collider = False
 
-            ground_checker = object_m.Object(self, "Ground Checker", self.player)
+            # self.ground_checker = object_m.Object(self, "Ground Checker")
 
-            self.player.add_children(ground_checker)
+            # self.player.add_children(self.ground_checker)
 
-            ground_checker.transformation.pos = ground_checker.transformation.pos - glm.vec3(0, 0.5, 0)
-            gc_collider = ground_checker.add_component(components.BoxCollider())
+            # ground_checker.transformation.pos = self.player.transformation.global_pos.xyz # - glm.vec3(0, 0.5, 0)
+            # self.ground_checker.transformation.scale = glm.vec3(0.6, 0.2, 0.6)
+            gc_collider = self.player.add_component(components.BoxCollider())
             gc_collider.is_trigger = True
             gc_collider.draw_collider = True
-            gc_collider.size = glm.vec3(0.5, 0.2, 0.5)
+            gc_collider.size = glm.vec3(0.2, 0.2, 0.2)
+            gc_collider.offset = glm.vec3(0, -1, 0)
             gc_collider.use_transform_model_matrix = False
 
-            ground_checker.add_component(components.GroundChecker())
+            self.app.physic_world.add_collider(gc_collider)
+
+            # self.ground_checker.add_component(components.GroundChecker())
+            gc_component = self.player.add_component(components.GroundChecker())
+
+            gc_component.set_collider(gc_collider)
 
             self.add_object(self.player)
 
@@ -328,6 +335,7 @@ class Level:
             self.weapon.remove_component_by_name("Box Collider")
 
             pool_object = object_m.Object(self, "bullet pool")
+            pool_object.id = 1000
             self.add_object(pool_object)
 
             weapon_component = self.weapon.add_component(
@@ -360,8 +368,8 @@ class Level:
 
         if file_path:
             data_manager_m.DataManager.load_scene(self, file_path)
-        else:
-            self._default_load()
+        # else:
+        #     self._default_load()
         for obj in self.objects.values():
             light = obj.get_component_by_name("Light")
             if light:
@@ -370,7 +378,7 @@ class Level:
     def add_object(self, obj):
         self.objects[obj.id] = obj
         collider = obj.get_component_by_name("Collider")
-        if collider:
+        if collider and self.app.NAME == "Game":
             self.app.physic_world.add_object(obj)
 
         if self.app.NAME == "Editor":
@@ -419,6 +427,9 @@ class Level:
     def apply_components(self):
         if not self.is_game:
             self.camera.apply_components()
+        # else:
+        # print(f"Ground checker pos: {self.ground_checker.transformation.global_pos.to_tuple()}")
+        # print(f"Player pos: {self.player.transformation.global_pos.to_tuple()}")
         for obj in self.objects.values():
             obj.apply_components()
 
@@ -455,6 +466,7 @@ class Level:
 
     def spawn_player(self, pos):
         self.player.transformation.pos = pos
+        pass
 
     def create_and_spawn_client(self, pos, client_id):
         wrapper = object_creator_m.ObjectCreator.create_client_wrapper(client_id)
