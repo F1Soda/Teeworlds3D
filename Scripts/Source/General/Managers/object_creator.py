@@ -90,7 +90,7 @@ class ObjectCreator:
         bullet.transformation.scale = (0.1, 0.1, 0.5)
         collider = bullet.get_component_by_name("Box Collider")
         collider.is_trigger = True
-        collider.draw_collider = True
+        collider.draw_collider = False
         if parent:
             parent.add_children(bullet)
         return bullet

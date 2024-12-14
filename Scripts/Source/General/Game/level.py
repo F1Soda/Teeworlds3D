@@ -278,7 +278,7 @@ class Level:
             self.player_rb = self.player.add_component(components.RigidBody(1))
             self.player_rb.restitution = 0
             self.player_rb.static_friction = 0
-            self.player_rb.dynamic_friction = 3
+            self.player_rb.dynamic_friction = 1
             # self.player_rb.enable = False
             player_collider = self.player.add_component(components.BoxCollider())
             player_collider.draw_collider = False
@@ -374,6 +374,10 @@ class Level:
             light = obj.get_component_by_name("Light")
             if light:
                 self.light = light
+
+    def set_cheats(self, value):
+        for client in self.client_wrappers.values():
+            client["collider"].draw_collider = value
 
     def add_object(self, obj):
         self.objects[obj.id] = obj
@@ -476,7 +480,8 @@ class Level:
         self.client_wrappers[client_id] = {
             "wrapper": wrapper,
             "bp": weapon_component.pool_object,
-            "weapon_component": weapon_component
+            "weapon_component": weapon_component,
+            "collider": wrapper.get_component_by_name("Collider")
         }
 
     def send_kill_client(self, client_id):

@@ -45,6 +45,8 @@ class PlayerController(component_m.Component):
         self.weapon_component = None
         self.in_jump = False
 
+        self.cheats_is_bad_but_for_project_i_need_do_that = False
+
     def init(self, app, rely_object):
         super().init(app, rely_object)
         self._transformation = self.rely_object.transformation
@@ -134,6 +136,10 @@ class PlayerController(component_m.Component):
         self._move(keys)
         if keys[pg.K_r]:
             self.weapon_component.reload()
+        if keys[pg.K_p]:
+            self.cheats_is_bad_but_for_project_i_need_do_that = not self.cheats_is_bad_but_for_project_i_need_do_that
+            self.app.level.set_cheats(self.cheats_is_bad_but_for_project_i_need_do_that)
+
         return True
 
     def _handle_mouse_right_press(self, mouse_pos):

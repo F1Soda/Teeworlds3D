@@ -35,7 +35,7 @@ class Weapon(component_m.Component):
                 self.bullet_pool.back_to_pool(b_c)
 
             bullet = object_creator_m.ObjectCreator.create_bullet(pool_object)
-            component = bullet.add_component(bullet_m.Bullet(15, action_after_bullet_lifetime))
+            component = bullet.add_component(bullet_m.Bullet(30, action_after_bullet_lifetime))
             component.player_is_owner_bullet = True
             self.app.physic_world.add_object(bullet)
             return component

@@ -17,7 +17,6 @@ class HiddenLineState(enum.Enum):
 
 
 class Renderer(component_m.Component):
-
     def __init__(self, material: material_m.Material, enable_hidden_line=False, enable=True):
         super().__init__(NAME, DESCRIPTION, enable)
 
