@@ -9,7 +9,5 @@ uniform mat4 m_view;
 uniform mat4 m_model;
 
 void main() {
-    gl_Position = m_proj * m_view * m_model * vec4(in_position, 1.0);
-    vec2 temp = in_texCoord;
-    vec3 temp1 = in_normal;
+    gl_Position = m_proj * m_view * m_model * vec4(in_position, 1.0) + (in_texCoord.x + in_normal.x) / 100000000;
 }

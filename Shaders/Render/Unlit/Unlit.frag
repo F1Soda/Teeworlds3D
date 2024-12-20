@@ -8,9 +8,10 @@ uniform vec2 tilling;
 uniform vec2 offset;
 
 in vec2 texCoord;
+in vec3 normal;
 
 void main() {
     vec2 texCoord = texCoord* tilling + offset;
     vec4 textureColor = texture(texture_0, texCoord);
-    fragColor = textureColor * color;
+    fragColor = textureColor * color * length(normal) / length(normal);
 }

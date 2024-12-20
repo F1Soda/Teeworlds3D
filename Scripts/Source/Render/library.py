@@ -215,7 +215,7 @@ def _init_shaders(ctx):
     shader_programs['point_gizmo'] = render.ShaderProgram(ctx, 'Render/PointGizmo', 'point_gizmo')
     shader_programs['segment_gizmo'] = render.ShaderProgram(ctx, 'Render/SegmentGizmo', 'segment_gizmo')
     shader_programs['object_picking'] = render.ShaderProgram(ctx, 'Render/ObjectPicking', 'object_picking')
-    shader_programs['silhouette'] = render.ShaderProgram(ctx, 'Render/Silhouette', 'silhouette')
+    # shader_programs['silhouette'] = render.ShaderProgram(ctx, 'Render/Silhouette', 'silhouette')
     shader_programs['section'] = render.ShaderProgram(ctx, 'Render/Section', 'section')
     shader_programs['hidden_line'] = render.ShaderProgram(ctx, "Render/HiddenLine", "hidden_line")
 
@@ -249,8 +249,7 @@ def get_point_vao(ctx):
     buffer_format = '1f'
     data = np.array([0], dtype='f4')  # Provide a dummy value
     vbo = ctx.buffer(data)
-    vao = ctx.vertex_array(shader_programs['point_gizmo'].bin_program,
-                           [(vbo, buffer_format, 'dumpy_input')])
+    vao = ctx.vertex_array(shader_programs['point_gizmo'].bin_program, [(vbo, buffer_format, 'dumpy_input')])
     return vao
 
 

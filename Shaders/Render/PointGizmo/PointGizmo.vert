@@ -7,6 +7,6 @@ uniform mat4 m_view;
 uniform vec3 position;
 
 void main() {
-    float dumpy = dumpy_input;
-    gl_Position = m_proj * m_view  * (vec4(position, 1.0));
+    float nothing = (dumpy_input + 1)/(dumpy_input + 1);
+    gl_Position = m_proj * m_view  * (vec4(position, 1.0)) * a;
 }

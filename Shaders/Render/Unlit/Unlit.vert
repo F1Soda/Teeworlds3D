@@ -9,9 +9,10 @@ uniform mat4 m_view;
 uniform mat4 m_model;
 
 out vec2 texCoord;
+out vec3 normal;
 
 void main() {
     gl_Position = m_proj * m_view * m_model * vec4(in_position, 1.0);
-    vec3 temp = in_normal;
     texCoord = in_texCoord;
+    normal = in_normal;
 }

@@ -10,7 +10,6 @@ uniform mat4 m_model;
 
 
 void main() {
-    gl_Position = m_proj * m_view * m_model * vec4(in_position, 1.0);
-    vec3 temp = in_normal;
-    vec2 temp_1 = in_texCoord;
+    float nothing = (1 + in_texCoord.x + in_normal.x)/(1 + in_texCoord.x + in_normal.x);
+    gl_Position = m_proj * m_view * m_model * vec4(in_position, 1.0) * nothing;
 }
