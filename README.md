@@ -24,6 +24,13 @@ python .\Scripts\Source\General\Game\teeworlds.py
 python .\Scripts\Source\Multiplayer\server.py
 ```
 
+## Скриншоты
+
+![Multiplayer](imgs/multiplayer.png)
+![You died](imgs/yoy_died.png)
+![Server List](imgs/server_list.png)
+![Editor](imgs/editor.png)
+
 ## Управление
 
 ### Перемещение
