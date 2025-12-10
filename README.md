@@ -1,6 +1,6 @@
 # Teeworlds3D
 
-**Описание:** Teeworlds но в 3D на кастомном движке!
+**Описание:** Teeworlds но в 3D на кастомном [движке](https://github.com/F1Soda/3D-Editor)!
 
 ## Использование
 
